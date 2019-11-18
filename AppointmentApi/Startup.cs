@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AppointmentApi.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +19,11 @@ namespace AppointmentApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            // Recreating db.
+            using var dbContext = new AppDbContext();
+            //dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
         }
 
         public IConfiguration Configuration { get; }
