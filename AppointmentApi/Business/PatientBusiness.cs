@@ -1,6 +1,6 @@
 ﻿using AppointmentApi.Database;
-using AppointmentApi.Model;
 using AppointmentApi.Tools;
+using AppointmentModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace AppointmentApi.Model
+namespace AppointmentModel
 {
     public class Patient
     {
@@ -29,6 +25,6 @@ namespace AppointmentApi.Model
         public DateTime BirthDate { get; set; }
 
         [Required]
-        public DateTime DateTimeAdd { get; set ; }
+        public DateTime DateTimeAdd { get; set; }
     }
 }

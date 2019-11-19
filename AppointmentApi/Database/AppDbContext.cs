@@ -1,4 +1,5 @@
 ﻿using AppointmentApi.Model;
+using AppointmentModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
