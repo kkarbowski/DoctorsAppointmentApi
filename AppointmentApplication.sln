@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppointmentApi", "AppointmentApi\AppointmentApi.csproj", "{3BDBA23A-7517-477F-9320-5D8C31A4966D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Front", "Front", "{4A0D6D5E-8AED-4C57-927F-61A783EEEF3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Back", "Back", "{3AD89E8A-5AC0-48C5-9965-E723DF814E0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{59362781-A3DE-4F97-932B-84E5303D2FD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentRazor", "AppointmentRazor\AppointmentRazor.csproj", "{BEA745DD-AC86-4DE0-9C0F-2F078FDBE628}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentModel", "AppointmentModel\AppointmentModel.csproj", "{3E3E5FFA-4542-469E-8724-F2927BC0894F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BDBA23A-7517-477F-9320-5D8C31A4966D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BDBA23A-7517-477F-9320-5D8C31A4966D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BDBA23A-7517-477F-9320-5D8C31A4966D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BDBA23A-7517-477F-9320-5D8C31A4966D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEA745DD-AC86-4DE0-9C0F-2F078FDBE628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEA745DD-AC86-4DE0-9C0F-2F078FDBE628}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEA745DD-AC86-4DE0-9C0F-2F078FDBE628}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEA745DD-AC86-4DE0-9C0F-2F078FDBE628}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E3E5FFA-4542-469E-8724-F2927BC0894F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E3E5FFA-4542-469E-8724-F2927BC0894F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E3E5FFA-4542-469E-8724-F2927BC0894F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E3E5FFA-4542-469E-8724-F2927BC0894F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3BDBA23A-7517-477F-9320-5D8C31A4966D} = {3AD89E8A-5AC0-48C5-9965-E723DF814E0D}
+		{BEA745DD-AC86-4DE0-9C0F-2F078FDBE628} = {4A0D6D5E-8AED-4C57-927F-61A783EEEF3B}
+		{3E3E5FFA-4542-469E-8724-F2927BC0894F} = {59362781-A3DE-4F97-932B-84E5303D2FD5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBEB71E3-F954-42D1-8D37-413CB7464E18}
+	EndGlobalSection
+EndGlobal
