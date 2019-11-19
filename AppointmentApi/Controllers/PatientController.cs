@@ -1,5 +1,4 @@
 ﻿using AppointmentApi.Business;
-using AppointmentApi.Model;
 using AppointmentModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
