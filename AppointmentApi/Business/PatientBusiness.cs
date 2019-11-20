@@ -1,5 +1,7 @@
-﻿using AppointmentApi.Database;
+﻿using AppointmentApi.DataAccess.Interfaces;
+using AppointmentApi.Database;
 using AppointmentApi.Tools;
+using AppointmentApi.Tools.Interfaces;
 using AppointmentModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,31 +13,32 @@ using System.Threading.Tasks;
 
 namespace AppointmentApi.Business
 {
-    public static class PatientBusiness
+    public class PatientBusiness : IPatientBusiness
     {
-        public static Patient[] GetPatients()
-        {
-            using var dbContext = new AppDbContext();
+        private readonly IHashGenerator _hashGenerator;
+        private readonly IPatientDataAccess _patientDataAccess;
 
-            return dbContext.Patients.ToArray();
+        public PatientBusiness(IHashGenerator hashGenerator, IPatientDataAccess patientDataAccess)
+        {
+            _hashGenerator = hashGenerator;
+            _patientDataAccess = patientDataAccess;
         }
 
-        public static Patient AddPatient(Patient patient)
+        public Patient[] GetPatients()
         {
-            using var dbContext = new AppDbContext();
-            
-            patient.Password = HashGenerator.GenerateHash(patient.Password);
-            var newPatient = dbContext.Patients.Add(patient);
-            dbContext.SaveChanges();
-
-            return newPatient.Entity;
+            return _patientDataAccess.GetPatients();
         }
 
-        public static Patient GetPatient(int patientId)
-        {
-            using var dbContext = new AppDbContext();
+        public Patient AddPatient(Patient patient)
+        {           
+            patient.Password = _hashGenerator.GenerateHash(patient.Password);
 
-            return dbContext.Patients.Find(patientId);
+            return _patientDataAccess.AddPatient(patient);
+        }
+
+        public Patient GetPatient(int patientId)
+        {
+            return _patientDataAccess.GetPatient(patientId);
         }
     }
 }

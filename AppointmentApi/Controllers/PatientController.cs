@@ -14,16 +14,18 @@ namespace AppointmentApi.Controllers
     public class PatientController : ControllerBase
     {
         private readonly ILogger<PatientController> _logger;
+        private readonly IPatientBusiness _patientBusiness;
 
-        public PatientController(ILogger<PatientController> logger)
+        public PatientController(ILogger<PatientController> logger, IPatientBusiness patientBusiness)
         {
             _logger = logger;
+            _patientBusiness = patientBusiness;
         }
 
         [HttpGet]
         public IActionResult GetPatients()
         {
-            var patients = PatientBusiness.GetPatients();
+            var patients = _patientBusiness.GetPatients();
 
             return Ok(patients);
         }
@@ -31,7 +33,7 @@ namespace AppointmentApi.Controllers
         [HttpGet("/{patientId}")]
         public IActionResult GetPatient(int patientId)
         {
-            var patient = PatientBusiness.GetPatient(patientId);
+            var patient = _patientBusiness.GetPatient(patientId);
 
             return Ok(patient);
         }
@@ -39,7 +41,7 @@ namespace AppointmentApi.Controllers
         [HttpPost]
         public IActionResult AddPatient(Patient patient)
         {
-            var newPatient = PatientBusiness.AddPatient(patient);
+            var newPatient = _patientBusiness.AddPatient(patient);
 
             return Created(nameof(GetPatient), newPatient);
         }
