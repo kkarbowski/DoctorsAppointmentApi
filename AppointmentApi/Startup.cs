@@ -16,6 +16,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace AppointmentApi
 {
@@ -38,6 +40,11 @@ namespace AppointmentApi
         {
             services.AddControllers();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = Config.SwaggerApiTitle, Version = Config.SwaggerApiVersion });
+            });
+
             services.AddTransient<AppDbContext>();
             services.AddTransient<IPatientBusiness, PatientBusiness>();
             services.AddTransient<IPatientDataAccess, PatientDataAccess>();
@@ -51,6 +58,15 @@ namespace AppointmentApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint(Config.SwaggerApiUrl, $"{Config.SwaggerApiTitle} - {Config.SwaggerApiVersion}");
+            });
+
+            //
 
             app.UseRouting();
 
