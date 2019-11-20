@@ -68,5 +68,32 @@ namespace AppointmentApi {
                 return ResourceManager.GetString("DbPath", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Doctor Appointments Api.
+        /// </summary>
+        public static string SwaggerApiTitle {
+            get {
+                return ResourceManager.GetString("SwaggerApiTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /swagger/v1/swagger.json.
+        /// </summary>
+        public static string SwaggerApiUrl {
+            get {
+                return ResourceManager.GetString("SwaggerApiUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to v1.
+        /// </summary>
+        public static string SwaggerApiVersion {
+            get {
+                return ResourceManager.GetString("SwaggerApiVersion", resourceCulture);
+            }
+        }
     }
 }

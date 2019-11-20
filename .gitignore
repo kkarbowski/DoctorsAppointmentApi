@@ -338,3 +338,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/AppointmentApi/Database/DoctorsAppointmentDatabase/DoctorsAppointment.db
