@@ -120,4 +120,13 @@
   <data name="DbPath" xml:space="preserve">
     <value>Database/DoctorsAppointmentDatabase/DoctorsAppointment.db</value>
   </data>
+  <data name="SwaggerApiTitle" xml:space="preserve">
+    <value>Doctor Appointments Api</value>
+  </data>
+  <data name="SwaggerApiUrl" xml:space="preserve">
+    <value>/swagger/v1/swagger.json</value>
+  </data>
+  <data name="SwaggerApiVersion" xml:space="preserve">
+    <value>v1</value>
+  </data>
 </root>

@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AppointmentApi.Business;
+using AppointmentApi.DataAccess;
+using AppointmentApi.DataAccess.Interfaces;
 using AppointmentApi.Database;
+using AppointmentApi.Tools;
+using AppointmentApi.Tools.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +16,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
 
 namespace AppointmentApi
 {
@@ -22,7 +29,7 @@ namespace AppointmentApi
 
             // Recreating db.
             using var dbContext = new AppDbContext();
-            //dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
         }
 
@@ -32,6 +39,16 @@ namespace AppointmentApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = Config.SwaggerApiTitle, Version = Config.SwaggerApiVersion });
+            });
+
+            services.AddTransient<AppDbContext>();
+            services.AddTransient<IPatientBusiness, PatientBusiness>();
+            services.AddTransient<IPatientDataAccess, PatientDataAccess>();
+            services.AddTransient<IHashGenerator, HashGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +58,15 @@ namespace AppointmentApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint(Config.SwaggerApiUrl, $"{Config.SwaggerApiTitle} - {Config.SwaggerApiVersion}");
+            });
+
+            //
 
             app.UseRouting();
 
