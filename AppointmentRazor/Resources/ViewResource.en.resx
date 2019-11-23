@@ -126,6 +126,9 @@
   <data name="homePageTitle" xml:space="preserve">
     <value>Home page</value>
   </data>
+  <data name="pageTitle" xml:space="preserve">
+    <value>Doctors appointments</value>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
   </data>

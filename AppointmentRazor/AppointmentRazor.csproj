@@ -24,7 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Helpers\" />
     <Folder Include="Services\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>

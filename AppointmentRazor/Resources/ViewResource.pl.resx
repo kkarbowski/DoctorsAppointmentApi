@@ -126,6 +126,9 @@
   <data name="homePageTitle" xml:space="preserve">
     <value>Strona główna</value>
   </data>
+  <data name="pageTitle" xml:space="preserve">
+    <value>Wizyty u lekarza</value>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>Profil</value>
   </data>

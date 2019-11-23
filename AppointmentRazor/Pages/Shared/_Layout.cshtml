@@ -1,7 +1,5 @@
 ﻿@{ 
-    var requestCulture = CultureInfo.CurrentCulture;
-    var routeData = new Dictionary<string, string>();
-    routeData["culture"] = requestCulture.Name;
+    var routeData = CurentCultureUtils.GetCurrentCultureRouteData();
 }
 
 <!DOCTYPE html>
@@ -27,13 +25,10 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-all-route-data="@routeData" asp-area="" asp-page="/Appointments">@Localizer.Text("Appointments")</a>
                     </li>
-                    <li class="nav-item">
-                        @Html.Raw(@Html.CultureLink("/Appointments", "Appointments"))
-                    </li>
                 </ul>
             </div>
             <div class="mx-auto order-0">
-                <a class="navbar-brand mx-auto" href="#">Doctors appointments</a>
+                <a class="navbar-brand mx-auto" href="#">@Localizer.Text("pageTitle")</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -55,7 +50,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - Doctors Appointment
+            &copy; 2019 - @Localizer.Text("pageTitle")
         </div>
     </footer>
 
