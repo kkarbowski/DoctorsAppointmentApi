@@ -126,10 +126,22 @@
   <data name="homePageTitle" xml:space="preserve">
     <value>Home page</value>
   </data>
+  <data name="InvalidLogin" xml:space="preserve">
+    <value>Username or password are incorrect</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
   <data name="pageTitle" xml:space="preserve">
     <value>Doctors appointments</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
   </data>
 </root>

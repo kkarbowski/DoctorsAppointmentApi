@@ -16,5 +16,12 @@ namespace AppointmentRazor.Utilities.Localization
 
             return routeData;
         }
+
+        public static String GetCurrentCultureLink(string route)
+        {
+            var requestCulture = CultureInfo.CurrentCulture.Name;
+
+            return $"{requestCulture}/{route}";
+        }
     }
 }
