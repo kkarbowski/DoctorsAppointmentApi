@@ -1,4 +1,5 @@
 ﻿using AppointmentModel;
+using AppointmentModel.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace AppointmentApi.Database
 {
     public class AppDbContext : DbContext
     {
+        public DbSet<User> Users { get; set; }
         public DbSet<Patient> Patients { get; set; }
 
 

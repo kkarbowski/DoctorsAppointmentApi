@@ -18,7 +18,7 @@ namespace AppointmentModel.Model
         [StringLength(maximumLength: 12 ,MinimumLength = 6)]
         public string Password { get; set; }
 
-        [Required]
+        [Display(AutoGenerateField = true)]
         public DateTime DateTimeAdd { get; set; }
     }
 }

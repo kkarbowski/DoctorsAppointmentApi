@@ -30,10 +30,16 @@ namespace AppointmentApi.Business
         }
 
         public Patient AddPatient(Patient patient)
-        {           
-            patient.Password = _hashGenerator.GenerateHash(patient.Password);
-
-            return _patientDataAccess.AddPatient(patient);
+        {
+            try
+            {
+                patient.Password = _hashGenerator.GenerateHash(patient.Password);
+                return _patientDataAccess.AddPatient(patient);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public Patient GetPatient(int patientId)

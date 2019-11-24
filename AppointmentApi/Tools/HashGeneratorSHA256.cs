@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AppointmentApi.Tools
 {
-    public class HashGenerator : IHashGenerator
+    public class HashGeneratorSHA256 : IHashGenerator
     {
         public string GenerateHash(string text)
         {

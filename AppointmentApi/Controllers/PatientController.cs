@@ -1,5 +1,6 @@
 ﻿using AppointmentApi.Business;
 using AppointmentModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace AppointmentApi.Controllers
 {
-    [ApiController]
+    //[Authorize]
+    //[ApiController]
     [Route("[controller]")]
     public class PatientController : ControllerBase
     {
@@ -29,8 +31,8 @@ namespace AppointmentApi.Controllers
 
             return Ok(patients);
         }
-
-        [HttpGet("/{patientId}")]
+        
+        [HttpGet("{patientId}")]
         public IActionResult GetPatient(int patientId)
         {
             var patient = _patientBusiness.GetPatient(patientId);
@@ -42,7 +44,8 @@ namespace AppointmentApi.Controllers
         public IActionResult AddPatient(Patient patient)
         {
             var newPatient = _patientBusiness.AddPatient(patient);
-
+            if (newPatient == null)
+                return BadRequest();
             return Created(nameof(GetPatient), newPatient);
         }
 
