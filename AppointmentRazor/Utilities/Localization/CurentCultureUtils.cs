@@ -8,6 +8,10 @@ namespace AppointmentRazor.Utilities.Localization
 {
     public static class CurentCultureUtils
     {
+        public static string DefaultCulture = "en";
+
+        public static string[] SupportedCultures = { "en", "pl" };
+
         public static Dictionary<string, string> GetCurrentCultureRouteData()
         {
             var requestCulture = CultureInfo.CurrentCulture;
@@ -17,11 +21,16 @@ namespace AppointmentRazor.Utilities.Localization
             return routeData;
         }
 
-        public static String GetCurrentCultureLink(string route)
+        public static string GetCurrentCultureLink(string route)
         {
             var requestCulture = CultureInfo.CurrentCulture.Name;
 
-            return $"{requestCulture}/{route}";
+            return $"/{requestCulture}/{route}";
+        }
+
+        public static string GetCurrentCulture()
+        {
+            return CultureInfo.CurrentCulture.Name;
         }
     }
 }

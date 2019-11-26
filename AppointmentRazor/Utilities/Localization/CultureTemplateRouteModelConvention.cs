@@ -19,9 +19,8 @@ namespace AppointmentRazor.Utilities
                     AttributeRouteModel = new AttributeRouteModel
                     {
                         Order = -1,
-                        Template = AttributeRouteModel.CombineTemplates(
-                      "{culture?}",
-                      selector.AttributeRouteModel.Template),
+                        Template = AttributeRouteModel
+                            .CombineTemplates("{culture?}", selector.AttributeRouteModel.Template),
                     }
                 });
             }

@@ -20,16 +20,16 @@
                         <a class="nav-link" asp-all-route-data="@routeData" asp-area="" asp-page="/Index">@Localizer.Text("Home")</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="" asp-page="/Profile">@Localizer.Text("Profile")</a>
+                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="Patients" asp-page="/Profile">@Localizer.Text("Profile")</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="" asp-page="/Appointments">@Localizer.Text("Appointments")</a>
+                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="Patients" asp-page="/Appointments">@Localizer.Text("Appointments")</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="" asp-page="/Login">@Localizer.Text("Login")</a>
+                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="Authentication" asp-page="/Login">@Localizer.Text("Login")</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="" asp-page="/Register">@Localizer.Text("Register")</a>
+                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="Authentication" asp-page="/Register">@Localizer.Text("Register")</a>
                     </li>
                 </ul>
             </div>

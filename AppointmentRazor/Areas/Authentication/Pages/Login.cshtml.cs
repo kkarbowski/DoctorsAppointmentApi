@@ -42,12 +42,14 @@ namespace AppointmentRazor.Pages
             if (ModelState.IsValid)
             {
                 HttpContext.Session.SetString("username", LoginForm.Username);
-                return Redirect("Index");
+
+                HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Index"));
+
+                return null;
             }
             else
             {
-                
-               Msg = _cultureLocalizer.Text("InvalidLogin");
+                Msg = _cultureLocalizer.Text("InvalidLogin");
                 return Page();
             }
         }

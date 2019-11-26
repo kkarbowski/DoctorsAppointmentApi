@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AppointmentRazor.Utilities.Localization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace AppointmentRazor.Utilities
         /// <returns>ProviderCultureResult depends on path {culture} route parameter, or default culture</returns>
         public Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
         {
-            var defaultCulture = "en";
+            var defaultCulture = CurentCultureUtils.DefaultCulture;
 
             var path = httpContext.Request.Path;
 

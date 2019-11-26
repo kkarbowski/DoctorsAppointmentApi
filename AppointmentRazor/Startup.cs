@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Web.Mvc;
+using AppointmentRazor.Middlewares;
 using AppointmentRazor.Resources;
 using AppointmentRazor.Utilities;
 using AppointmentRazor.Utilities.Localization;
@@ -10,6 +12,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,6 +42,7 @@ namespace AppointmentRazor
             });
 
             services.ConfigureRequestLocalization();
+
 
             services.AddRazorPages();
 
@@ -79,6 +83,8 @@ namespace AppointmentRazor
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseRewriter(new RewriteOptions().Add(UrlCultureRewrite.RedirectRequests));
 
             app.UseEndpoints(endpoints =>
             {
