@@ -19,5 +19,7 @@ namespace AppointmentModel.Model
         public string Password { get; set; }
     
         public DateTime DateTimeAdd { get; set; }
+
+        public List<string> Roles { get; set; }
     }
 }

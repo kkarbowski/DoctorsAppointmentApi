@@ -1,11 +1,13 @@
 ﻿using AppointmentApi.Business;
 using AppointmentModel;
+using AppointmentModel.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace AppointmentApi.Controllers
@@ -24,6 +26,7 @@ namespace AppointmentApi.Controllers
             _patientBusiness = patientBusiness;
         }
 
+        [Authorize(Roles = Role.Doctor)]
         [HttpGet]
         public IActionResult GetPatients()
         {
@@ -31,10 +34,14 @@ namespace AppointmentApi.Controllers
 
             return Ok(patients);
         }
-        
+
+        [Authorize(Roles = Role.Patient)]
         [HttpGet("{patientId}")]
         public IActionResult GetPatient(int patientId)
         {
+            if (User.Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value == patientId.ToString())
+                return Forbid();
+            
             var patient = _patientBusiness.GetPatient(patientId);
 
             return Ok(patient);

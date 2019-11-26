@@ -20,11 +20,7 @@ namespace AppointmentApi.Tools
             var key = Encoding.ASCII.GetBytes(Config.JwtSecret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                    new Claim(ClaimTypes.Name, user.Login.ToString())
-                }),
+                Subject = new ClaimsIdentity(GetClaims(user)),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -34,6 +30,13 @@ namespace AppointmentApi.Tools
                 Expiration = (DateTime)tokenDescriptor.Expires,
                 TokenString = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor))
             };
+        }
+
+        private IEnumerable<Claim> GetClaims(User user)
+        {
+            return user.Roles.Select(r => new Claim(ClaimTypes.Role, r))
+                .Append(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()))
+                .Append(new Claim(ClaimTypes.Name, user.Login.ToString()));
         }
     }
 }
