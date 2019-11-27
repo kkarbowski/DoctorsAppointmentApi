@@ -1,4 +1,5 @@
-﻿using AppointmentApi.Business;
+﻿using AppointmentApi.Authorization;
+using AppointmentApi.Business;
 using AppointmentModel;
 using AppointmentModel.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -19,11 +20,13 @@ namespace AppointmentApi.Controllers
     {
         private readonly ILogger<PatientController> _logger;
         private readonly IPatientBusiness _patientBusiness;
+        private readonly IPatientAuthorization _patientAuthorization;
 
-        public PatientController(ILogger<PatientController> logger, IPatientBusiness patientBusiness)
+        public PatientController(ILogger<PatientController> logger, IPatientBusiness patientBusiness, IPatientAuthorization patientAuthorization)
         {
             _logger = logger;
             _patientBusiness = patientBusiness;
+            _patientAuthorization = patientAuthorization;
         }
 
         [Authorize(Roles = Role.Doctor)]
@@ -39,7 +42,7 @@ namespace AppointmentApi.Controllers
         [HttpGet("{patientId}")]
         public IActionResult GetPatient(int patientId)
         {
-            if (User.Claims.Single(c => c.Type == ClaimTypes.NameIdentifier).Value == patientId.ToString())
+            if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(patientId, User))
                 return Forbid();
             
             var patient = _patientBusiness.GetPatient(patientId);
@@ -50,10 +53,23 @@ namespace AppointmentApi.Controllers
         [HttpPost]
         public IActionResult AddPatient(Patient patient)
         {
-            var newPatient = _patientBusiness.AddPatient(patient);
+            var newPatient = _patientBusiness.AddPatient((Patient)patient.NoUserId());
             if (newPatient == null)
                 return BadRequest();
             return Created(nameof(GetPatient), newPatient);
+        }
+
+        [Authorize(Roles = Role.Patient)]
+        [HttpPut]
+        public IActionResult UpdatePatient(Patient patient)
+        {
+            if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(patient.UserId, User))
+                return Forbid();
+
+            var updatedPatient = _patientBusiness.UpdatePatient(patient);
+            if (updatedPatient == null)
+                return BadRequest();
+            return Created(nameof(GetPatient), updatedPatient);
         }
 
     }

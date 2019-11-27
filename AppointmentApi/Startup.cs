@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AppointmentApi.Business.Interfaces;
+using AppointmentApi.Authorization;
 
 namespace AppointmentApi
 {
@@ -77,6 +78,8 @@ namespace AppointmentApi
 
             services.AddTransient<IHashGenerator, HashGeneratorSHA256>();
             services.AddTransient<ITokenGenerator, TokenGeneratorJWT>();
+
+            services.AddTransient<IPatientAuthorization, PatientAuthorization>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
