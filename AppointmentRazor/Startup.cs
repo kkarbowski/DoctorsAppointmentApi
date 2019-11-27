@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using AppointmentRazor.Middlewares;
 using AppointmentRazor.Resources;
+using AppointmentRazor.Services;
+using AppointmentRazor.Services.Interfaces;
 using AppointmentRazor.Utilities;
 using AppointmentRazor.Utilities.Localization;
 using Microsoft.AspNetCore.Builder;
@@ -62,6 +64,7 @@ namespace AppointmentRazor
                 });
 
             services.AddSingleton<CultureLocalizer>();
+            services.AddSingleton<IPatientsProfileService>(new PatientsProfileService());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

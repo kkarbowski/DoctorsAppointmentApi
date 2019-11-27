@@ -123,6 +123,9 @@
   <data name="Appointments" xml:space="preserve">
     <value>Wizyty</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Strona Główna</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Hasło</value>
+  </data>
+  <data name="Phone number" xml:space="preserve">
+    <value>Numer telefonu</value>
   </data>
   <data name="Please enter value for {0}" xml:space="preserve">
     <value>Należy podać {0}</value>

@@ -4,5 +4,13 @@
     ViewData["Title"] = "Profile";
 }
 
-<h1>Profile</h1>
+<div class="d-flex justify-content-center">
+    <div>
+        <h1 class="text-center my-5">@Model.Patient.FirstName @Model.Patient.LastName</h1>
+        <p class="h2 my-5"><strong>@Localizer.Text("Phone number"): </strong>@Model.Patient.Phone</p>
+        <p class="h2 my-5"><strong>@Localizer.Text("Email"): </strong>@Model.Patient.Mail</p>
+    </div>
+</div>
+
+
 
