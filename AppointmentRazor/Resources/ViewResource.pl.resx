@@ -120,11 +120,23 @@
   <data name="'{0}' must be at least {1} and maximum {2} characters" xml:space="preserve">
     <value>'{0}' musi zawierać od {2} do {1} znaków</value>
   </data>
+  <data name="Add a note" xml:space="preserve">
+    <value>Dodaj swoje uwagi</value>
+  </data>
   <data name="Appointments" xml:space="preserve">
     <value>Wizyty</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Potwierdź</value>
+  </data>
+  <data name="Dear, Patient" xml:space="preserve">
+    <value>Drogi pacjencie</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="Go to your appointments" xml:space="preserve">
+    <value>Przejdź do twoich wizyt</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Strona Główna</value>
@@ -138,6 +150,9 @@
   <data name="Login" xml:space="preserve">
     <value>Zaloguj się</value>
   </data>
+  <data name="Make an appointment" xml:space="preserve">
+    <value>Umów wizytę</value>
+  </data>
   <data name="pageTitle" xml:space="preserve">
     <value>Wizyty u lekarza</value>
   </data>
@@ -146,6 +161,15 @@
   </data>
   <data name="Phone number" xml:space="preserve">
     <value>Numer telefonu</value>
+  </data>
+  <data name="Pick a date" xml:space="preserve">
+    <value>Wybierz termin</value>
+  </data>
+  <data name="Pick a doctor" xml:space="preserve">
+    <value>Wybierz lekarza</value>
+  </data>
+  <data name="Pick a reson" xml:space="preserve">
+    <value>Wybierz przyczynę</value>
   </data>
   <data name="Please enter value for {0}" xml:space="preserve">
     <value>Należy podać {0}</value>
@@ -156,7 +180,13 @@
   <data name="Register" xml:space="preserve">
     <value>Zarejestruj się</value>
   </data>
+  <data name="Success" xml:space="preserve">
+    <value>Sukces</value>
+  </data>
   <data name="Username" xml:space="preserve">
     <value>Nazwa użytkownika</value>
+  </data>
+  <data name="Your appointment has been made correctly" xml:space="preserve">
+    <value>Twoja wizyta została zarezerwowana</value>
   </data>
 </root>

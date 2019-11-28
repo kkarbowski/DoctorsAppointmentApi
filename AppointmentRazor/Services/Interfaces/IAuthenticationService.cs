@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace AppointmentRazor.Services.Interfaces
 {
-    public interface AppointmentsService
+    public interface IAuthenticationService
     {
-        public List<Appointment> GetAllAppointmentsForCurrentUser();
-        public List<Appointment> GetAllAppointmentsForUser(string userId);
+        public bool Register(User user);
+
+        public bool Login(string username, string password);
     }
 }

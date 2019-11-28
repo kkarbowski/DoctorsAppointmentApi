@@ -26,6 +26,9 @@
                         <a class="nav-link" asp-all-route-data="@routeData" asp-area="Patients" asp-page="/Appointments">@Localizer.Text("Appointments")</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="Appointments" asp-page="/MakeAnAppointment">@Localizer.Text("Make an appointment")</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" asp-all-route-data="@routeData" asp-area="Authentication" asp-page="/Login">@Localizer.Text("Login")</a>
                     </li>
                     <li class="nav-item">
@@ -63,7 +66,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>
