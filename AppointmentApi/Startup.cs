@@ -33,9 +33,9 @@ namespace AppointmentApi
             Configuration = configuration;
 
             // Recreating db.
-            //using var dbContext = new AppDbContext();
-            //dbContext.Database.EnsureDeleted();
-            //dbContext.Database.EnsureCreated();
+            using var dbContext = new AppDbContext();
+            dbContext.Database.EnsureDeleted();
+            dbContext.Database.EnsureCreated();
         }
 
         public IConfiguration Configuration { get; }

@@ -29,7 +29,7 @@ namespace AppointmentApi.Controllers
             _patientAuthorization = patientAuthorization;
         }
 
-        [Authorize(Roles = Role.Doctor)]
+        //[Authorize(Roles = Role.Doctor)]
         [HttpGet]
         public IActionResult GetPatients()
         {
@@ -38,7 +38,7 @@ namespace AppointmentApi.Controllers
             return Ok(patients);
         }
 
-        [Authorize(Roles = Role.Patient)]
+        //[Authorize(Roles = Role.Patient)]
         [HttpGet("{patientId}")]
         public IActionResult GetPatient(int patientId)
         {
@@ -53,13 +53,13 @@ namespace AppointmentApi.Controllers
         [HttpPost]
         public IActionResult AddPatient(Patient patient)
         {
-            var newPatient = _patientBusiness.AddPatient((Patient)patient.NoUserId());
+            var newPatient = _patientBusiness.AddPatient(patient);
             if (newPatient == null)
                 return BadRequest();
             return Created(nameof(GetPatient), newPatient);
         }
 
-        [Authorize(Roles = Role.Patient)]
+        //[Authorize(Roles = Role.Patient)]
         [HttpPut]
         public IActionResult UpdatePatient(Patient patient)
         {

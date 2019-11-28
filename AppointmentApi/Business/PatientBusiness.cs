@@ -33,16 +33,7 @@ namespace AppointmentApi.Business
 
         public Patient AddPatient(Patient patient)
         {
-            try
-            {
-                patient.Password = _hashGenerator.GenerateHash(patient.Password);
-                patient.Roles = new List<string> { Role.Patient };
-                return _patientDataAccess.AddPatient(patient);
-            }
-            catch
-            {
-                return null;
-            }
+            return UpdatePatient((Patient)patient.NoUserId());
         }
 
         public Patient GetPatient(int patientId)
@@ -52,7 +43,16 @@ namespace AppointmentApi.Business
 
         public Patient UpdatePatient(Patient patient)
         {
-            return AddPatient(patient);
+            try
+            {
+                patient.Password = _hashGenerator.GenerateHash(patient.Password);
+                patient.Roles = new List<string> { Role.Patient };
+                return _patientDataAccess.UpdatePatient((Patient)patient.NoDateTimeAdd());
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

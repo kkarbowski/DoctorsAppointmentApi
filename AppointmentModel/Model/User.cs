@@ -41,5 +41,11 @@ namespace AppointmentModel.Model
             UserId = default;
             return this;
         }
+
+        public User NoDateTimeAdd()
+        {
+            DateTimeAdd = default;
+            return this;
+        }
     }
 }
