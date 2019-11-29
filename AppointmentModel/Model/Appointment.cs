@@ -24,7 +24,7 @@ namespace AppointmentModel.Model
     {
         public Patient Patient { get; set; }
         public DateTime AppointmentDate { get; set; }
-        public User Doctor { get; set; }
+        public Doctor Doctor { get; set; }
         public string Description { get; set; }
         public List<Dictionary<string, string>> Reasons { get; set; }
     }
