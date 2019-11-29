@@ -1,0 +1,17 @@
+﻿@page
+@{
+    var routeData = CurentCultureUtils.GetCurrentCultureRouteData();
+}
+
+<div class="row text-center">
+    <div class="col-6 offset-3">
+        <br><br> <h2 style="color:#0fad00">@Localizer.Text("Success")</h2>
+        <img class="mb-4" src="https://images.unsplash.com/photo-1530497610245-94d3c16cda28?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=80">
+        <h3>@Localizer.Text("Dear, Patient")</h3>
+        <p style="font-size:20px;color:#5C5C5C;">
+            @Localizer.Text("Your appointment has been made correctly")
+        </p>
+        <a class="btn btn-success" asp-all-route-data="@routeData" asp-area="Patients" asp-page="/Appointments">@Localizer.Text("Go to your appointments")</a>
+        <br><br>
+    </div>
+</div>

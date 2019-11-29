@@ -1,10 +1,11 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = Localizer.Text("homePageTitle");
+    var routeData = CurentCultureUtils.GetCurrentCultureRouteData();
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+    <div class="text-center">
+        <a class="nav-link" asp-all-route-data="@routeData" asp-area="" asp-page="/Appointments">@Localizer.Text("Appointments")</a>
+    </div>

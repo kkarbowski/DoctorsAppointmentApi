@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Back", "Back", "{3AD89E8A-5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{59362781-A3DE-4F97-932B-84E5303D2FD5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentRazor", "AppointmentRazor\AppointmentRazor.csproj", "{BEA745DD-AC86-4DE0-9C0F-2F078FDBE628}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppointmentRazor", "AppointmentRazor\AppointmentRazor.csproj", "{BEA745DD-AC86-4DE0-9C0F-2F078FDBE628}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentModel", "AppointmentModel\AppointmentModel.csproj", "{3E3E5FFA-4542-469E-8724-F2927BC0894F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppointmentModel", "AppointmentModel\AppointmentModel.csproj", "{3E3E5FFA-4542-469E-8724-F2927BC0894F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
