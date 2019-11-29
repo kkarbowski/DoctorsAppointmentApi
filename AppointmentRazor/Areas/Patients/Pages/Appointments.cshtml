@@ -37,7 +37,8 @@
         <tbody>
             @foreach (var appointment in Model.Appointments)
             {
-                <tr>
+
+                <tr class="@(appointment.AppointmentDate > DateTime.UtcNow ? "table-warning" :"")">
                     <td>
                         @Html.DisplayFor(modelItem => appointment.AppointmentDate)
                     </td>
