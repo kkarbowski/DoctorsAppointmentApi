@@ -22,6 +22,7 @@ namespace AppointmentModel.Model
 
     public class Appointment
     {
+        public int Id { get; set; }
         public Patient Patient { get; set; }
         public DateTime AppointmentDate { get; set; }
         public Doctor Doctor { get; set; }

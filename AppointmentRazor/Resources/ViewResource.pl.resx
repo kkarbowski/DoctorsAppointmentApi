@@ -123,6 +123,9 @@
   <data name="Add a note" xml:space="preserve">
     <value>Dodaj swoje uwagi</value>
   </data>
+  <data name="Appointment date" xml:space="preserve">
+    <value>Data wizyty</value>
+  </data>
   <data name="Appointments" xml:space="preserve">
     <value>Wizyty</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="Dear, Patient" xml:space="preserve">
     <value>Drogi pacjencie</value>
+  </data>
+  <data name="Doctor" xml:space="preserve">
+    <value>Lekarz</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
@@ -177,8 +183,20 @@
   <data name="Profile" xml:space="preserve">
     <value>Profil</value>
   </data>
+  <data name="Reasons" xml:space="preserve">
+    <value>Przyczyny wizyty</value>
+  </data>
   <data name="Register" xml:space="preserve">
     <value>Zarejestruj się</value>
+  </data>
+  <data name="Remarks" xml:space="preserve">
+    <value>Uwagi</value>
+  </data>
+  <data name="Show all appointments" xml:space="preserve">
+    <value>Pokaż wszystkie wizyty</value>
+  </data>
+  <data name="Show only active" xml:space="preserve">
+    <value>Pokaż tylko przyszłe wizyty</value>
   </data>
   <data name="Success" xml:space="preserve">
     <value>Sukces</value>

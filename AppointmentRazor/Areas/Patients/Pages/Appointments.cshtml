@@ -1,8 +1,58 @@
 ﻿@page
 @model AppointmentRazor.Pages.AppointmentsModel
 @{
-    ViewData["Title"] = "Appointments";
+    ViewData["Title"] = Localizer.Text("Appointments");
 }
 
-<h1>Appointments</h1>
+<h1 class="mb-4">@Localizer.Text("Appointments")</h1>
+
+<form method="post" asp-page="MakeAnAppointment">
+    <div class="form-group">
+        <a class="btn btn-primary" asp-page-handler="ShowOnlyActive">
+            @Localizer.Text("Show only active")
+        </a>
+        <a class="btn btn-primary" asp-page-handler="ShowAll">
+            @Localizer.Text("Show all appointments")
+        </a>
+    </div>
+</form>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Localizer.Text("Appointment date")
+                </th>
+                <th>
+                    @Localizer.Text("Doctor")
+                </th>
+                <th>
+                    @Localizer.Text("Reasons")
+                </th>
+                <th>
+                    @Localizer.Text("Remarks")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var appointment in Model.Appointments)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => appointment.AppointmentDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => appointment.Doctor.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.LocalizedReasons[appointment.Id])
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => appointment.Description)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
