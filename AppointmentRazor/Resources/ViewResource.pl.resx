@@ -141,6 +141,9 @@
   <data name="Doctor" xml:space="preserve">
     <value>Lekarz</value>
   </data>
+  <data name="Doctor not available" xml:space="preserve">
+    <value>Doktor nie jest dostępny</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
@@ -179,6 +182,9 @@
   </data>
   <data name="Pick a reson" xml:space="preserve">
     <value>Wybierz przyczynę</value>
+  </data>
+  <data name="Picked date not available" xml:space="preserve">
+    <value>Wybrana data nie jest dostępna</value>
   </data>
   <data name="Please enter value for {0}" xml:space="preserve">
     <value>Należy podać {0}</value>

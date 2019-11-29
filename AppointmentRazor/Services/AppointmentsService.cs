@@ -176,13 +176,13 @@ namespace AppointmentRazor.Services
             return new List<Doctor>()
             {
                new Doctor(){ UserId = 0, FullName = "Edward Snowden"},
-               new Doctor(){ UserId = 0, FullName = "Samantha Becker"},
+               new Doctor(){ UserId = 1, FullName = "Samantha Becker"},
             };
         }
 
         public AppointmentSetResponse SetAppointment(Appointment appointment)
         {
-            throw new NotImplementedException();
+            return AppointmentSetResponse.CORRECT;
         }
     }
 }
