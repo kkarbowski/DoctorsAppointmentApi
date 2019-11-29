@@ -10,6 +10,12 @@ namespace AppointmentRazor.Services
 {
     public class AppointmentsService : IAppointmentsService
     {
+        public bool CancelAppointment(int appointmentId)
+        {
+            //TODO: Implement me
+            return true;
+        }
+
         public List<Dictionary<string, string>> GetAllAppointmentReasons()
         {
             return new List<Dictionary<string, string>>

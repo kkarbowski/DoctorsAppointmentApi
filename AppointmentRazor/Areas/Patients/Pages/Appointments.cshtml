@@ -32,26 +32,32 @@
                 <th>
                     @Localizer.Text("Remarks")
                 </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var appointment in Model.Appointments)
             {
 
-                <tr class="@(appointment.AppointmentDate > DateTime.UtcNow ? "table-warning" :"")">
-                    <td>
-                        @Html.DisplayFor(modelItem => appointment.AppointmentDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => appointment.Doctor.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => Model.LocalizedReasons[appointment.Id])
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => appointment.Description)
-                    </td>
-                </tr>
+            <tr class="@(appointment.AppointmentDate > DateTime.UtcNow ? "table-warning" :"")">
+                <td>
+                    @Html.DisplayFor(modelItem => appointment.AppointmentDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => appointment.Doctor.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.LocalizedReasons[appointment.Id])
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => appointment.Description)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-page-handler="CancelAppointment" asp-route-id="@appointment.Id">
+                        @Localizer.Text("Cancel appointment")
+                    </a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

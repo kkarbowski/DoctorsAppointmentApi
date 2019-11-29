@@ -41,6 +41,12 @@ namespace AppointmentRazor.Pages
             GetAppointments();
         }
 
+        public void OnGetCancelAppointment(int appointmentId)
+        {
+            appointmentsService.CancelAppointment(appointmentId);
+            GetAppointments();
+        }
+
         private void GetAppointments()
         {
             if (Appointments == null)

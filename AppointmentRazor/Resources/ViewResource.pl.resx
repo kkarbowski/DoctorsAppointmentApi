@@ -129,6 +129,9 @@
   <data name="Appointments" xml:space="preserve">
     <value>Wizyty</value>
   </data>
+  <data name="Cancel appointment" xml:space="preserve">
+    <value>Anuluj wizytę</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Potwierdź</value>
   </data>
