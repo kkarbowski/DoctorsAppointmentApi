@@ -53,9 +53,14 @@
                     @Html.DisplayFor(modelItem => appointment.Description)
                 </td>
                 <td>
-                    <a class="btn btn-primary" asp-page-handler="CancelAppointment" asp-route-id="@appointment.Id">
-                        @Localizer.Text("Cancel appointment")
-                    </a>
+                    @{
+                        if (appointment.AppointmentDate > DateTime.UtcNow)
+                        {
+                            <a class="btn btn-primary" asp-page-handler="CancelAppointment" asp-route-id="@appointment.Id">
+                                @Localizer.Text("Cancel appointment")
+                            </a>
+                        }
+                    }
                 </td>
             </tr>
             }
