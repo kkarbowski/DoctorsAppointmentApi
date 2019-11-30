@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using AppointmentRazor.Services.Interfaces;
 using AppointmentRazor.Utilities.Localization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ namespace AppointmentRazor.Pages
     public class LoginModel : PageModel
     {
         private readonly CultureLocalizer _cultureLocalizer;
+        private readonly IAuthenticationService authenticationService;
 
-        public LoginModel([FromServices] CultureLocalizer cultureLocalizer)
+        public LoginModel([FromServices] CultureLocalizer cultureLocalizer, IAuthenticationService authenticationService)
         {
             _cultureLocalizer = cultureLocalizer;
+            this.authenticationService = authenticationService;
         }
 
         public class _LoginForm
@@ -41,17 +44,21 @@ namespace AppointmentRazor.Pages
         {
             if (ModelState.IsValid)
             {
-                HttpContext.Session.SetString("username", LoginForm.Username);
+                var authenticationReponse = authenticationService.Login(LoginForm.Username, LoginForm.Password);
 
-                HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Index"));
+                if(authenticationReponse.WasAuthenticationCorrect)
+                {
+                    HttpContext.Session.SetString("token", authenticationReponse.Token);
+                    HttpContext.Session.SetString("role", authenticationReponse.Role.ToString());
 
-                return null;
-            }
-            else
-            {
+                    HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Index"));
+
+                    return null;
+                }
                 Msg = _cultureLocalizer.Text("InvalidLogin");
-                return Page();
             }
+
+            return Page();
         }
     }
 }

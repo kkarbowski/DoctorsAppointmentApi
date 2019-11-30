@@ -9,9 +9,11 @@ namespace AppointmentRazor.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        public bool Login(string username, string password)
+        public AuthenticationReponse Login(string username, string password)
         {
-            throw new NotImplementedException();
+            //TODO: Implement me
+            return new AuthenticationReponse() 
+                { WasAuthenticationCorrect = true, Role = Role.PATIENT, Token = "sometoken" };
         }
 
         public bool Register(User user)

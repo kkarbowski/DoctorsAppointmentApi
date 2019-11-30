@@ -4,6 +4,7 @@ using System.Text;
 
 namespace AppointmentModel.Model
 {
+    [Serializable]
     public class Doctor : User
     {
         public string FirstName { get; set; }

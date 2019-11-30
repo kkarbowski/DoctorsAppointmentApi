@@ -5,6 +5,7 @@ using System.Text;
 
 namespace AppointmentModel.Model
 {
+    [Serializable]
     public class User
     {
         [Key]

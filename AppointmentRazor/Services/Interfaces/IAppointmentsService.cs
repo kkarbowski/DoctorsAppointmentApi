@@ -39,5 +39,12 @@ namespace AppointmentRazor.Services.Interfaces
         /// </summary>
         /// <returns>A list of appointments reasons, like a sore throat</returns>
         public List<Dictionary<string, string>> GetAllAppointmentReasons();
+
+        /// <summary>
+        /// This function tries to cancel a given appointment
+        /// </summary>
+        /// <param name="appointmentId">id of an appointment we want to cancel</param>
+        /// <returns>whenever opperation was successuf</returns>
+        public bool CancelAppointment(int appointmentId);
     }
 }

@@ -30,11 +30,14 @@ namespace AppointmentRazor.Areas.Patients.Pages
 
         public SelectList AvailableReasons { get; set; }
 
-        public int[] SelectedResons { get; set; }
+        public string[] SelectedResons { get; set; }
 
+        [TempData]
         public string Description { get; set; }
 
-        public DateTime Date { get; set; } = DateTime.UtcNow;
+        public DateTime Date { get; set; } = DateTime.Now;
+
+        public AppointmentSetResponse appointmentsSetResponse { get; set; }
 
         public void OnGet()
         {
@@ -49,19 +52,25 @@ namespace AppointmentRazor.Areas.Patients.Pages
                 var resons = appointmentsService.GetAllAppointmentReasons().Select(resonDict => resonDict[curentCulture]);
                 AvailableReasons = new SelectList(resons);
             }
+
         }
 
      
 
-        public IActionResult OnPost()
+        public IActionResult OnPost(int selectedDoctorId, string[] selectedReasonsIds, DateTime pickedDate)
         {
-            if(true)
+            appointmentsSetResponse = appointmentsService.SetAppointment(Appointment);
+            if(appointmentsSetResponse == AppointmentSetResponse.CORRECT)
             {
                 HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Appointments/AppointmentMade"));
 
                 return null;
             } else
             {
+                OnGet();
+                SelectedDoctor = selectedDoctorId;
+                SelectedResons = selectedReasonsIds;
+                Date = pickedDate;
                 return Page();
             }
    
