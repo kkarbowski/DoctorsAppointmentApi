@@ -15,6 +15,7 @@ namespace AppointmentApi.Database
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Patient> Patients { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
 
         public static void InitializeDatabase()
@@ -72,6 +73,8 @@ namespace AppointmentApi.Database
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.Login).IsUnique();
+                entity.Property(e => e.Login).IsRequired();
+                entity.Property(e => e.Password).IsRequired();
                 entity.Property(e => e.DateTimeAdd).HasDefaultValueSql("CURRENT_TIMESTAMP");
                 entity.Property(e => e.Roles).HasConversion(
                     v => string.Join(',', v),

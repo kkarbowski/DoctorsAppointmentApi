@@ -28,6 +28,9 @@ namespace AppointmentApi.DataAccess
 
         public Appointment UpdateAppointment(Appointment appointment)
         {
+            _appDbContext.Patients.Attach(appointment.Patient);
+            _appDbContext.Doctors.Attach(appointment.Doctor);
+            
             var newAppointment = _appDbContext.Appointments.Update(appointment);
             _appDbContext.SaveChanges();
 
