@@ -25,7 +25,7 @@ namespace AppointmentApi.Controllers
 
 
         [HttpPost("login")]
-        public IActionResult Login(User user)
+        public IActionResult Login([FromBody] User user)
         {
             var token = _userBusiness.Login(user);
             if (token == null)
@@ -34,7 +34,7 @@ namespace AppointmentApi.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register(User user)
+        public IActionResult Register([FromBody] User user)
         {
             var dbUser = _userBusiness.Register(user);
             if (dbUser == null)
