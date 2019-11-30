@@ -120,6 +120,9 @@
   <data name="DbPath" xml:space="preserve">
     <value>Database/DoctorsAppointmentDatabase/DoctorsAppointment.db</value>
   </data>
+  <data name="JwtSecret" xml:space="preserve">
+    <value>36260991567323964782201347</value>
+  </data>
   <data name="SwaggerApiTitle" xml:space="preserve">
     <value>Doctor Appointments Api</value>
   </data>

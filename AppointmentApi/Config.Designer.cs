@@ -70,6 +70,15 @@ namespace AppointmentApi {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 36260991567323964782201347.
+        /// </summary>
+        public static string JwtSecret {
+            get {
+                return ResourceManager.GetString("JwtSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Doctor Appointments Api.
         /// </summary>
         public static string SwaggerApiTitle {

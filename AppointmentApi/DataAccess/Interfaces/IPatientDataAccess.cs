@@ -10,6 +10,6 @@ namespace AppointmentApi.DataAccess.Interfaces
     {
         public Patient GetPatient(int patientId);
         public Patient[] GetPatients();
-        public Patient AddPatient(Patient patient);
+        public Patient UpdatePatient(Patient patient);
     }
 }
