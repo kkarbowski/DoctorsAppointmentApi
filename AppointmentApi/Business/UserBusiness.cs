@@ -45,7 +45,7 @@ namespace AppointmentApi.Business
             try
             {
                 user.Password = _hashGenerator.GenerateHash(user.Password);
-                return _userDataAccess.AddUser(user);
+                return _userDataAccess.AddUser(user.NoRoles().NoDateTimeAdd());
             }
             catch
             {
