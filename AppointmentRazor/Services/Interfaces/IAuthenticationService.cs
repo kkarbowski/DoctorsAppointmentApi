@@ -6,19 +6,13 @@ using System.Threading.Tasks;
 
 namespace AppointmentRazor.Services.Interfaces
 {
-    public enum Role
-    {
-        PATIENT,
-        DOCTOR
-    }
-
     public class AuthenticationReponse
     {
         public bool WasAuthenticationCorrect { get; set; }
 
         public string Token { get; set; }
 
-        public Role Role { get; set; }
+        public string Role { get; set; }
     }
     public interface IAuthenticationService
     {

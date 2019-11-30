@@ -13,7 +13,7 @@ namespace AppointmentRazor.Services
         {
             //TODO: Implement me
             return new AuthenticationReponse() 
-                { WasAuthenticationCorrect = true, Role = Role.PATIENT, Token = "sometoken" };
+                { WasAuthenticationCorrect = true, Role = Role.Patient, Token = "sometoken" };
         }
 
         public bool Register(User user)
