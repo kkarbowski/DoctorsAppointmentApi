@@ -17,10 +17,10 @@ namespace AppointmentRazor.Utilities.Authentication
         public static bool IsUserInRole(HttpContext httpContext, string role)
         {
             byte[] sessionRole;
-            if(httpContext.Session.TryGetValue("role", out sessionRole))
+            if(httpContext.Session.TryGetValue("roles", out sessionRole))
             {
-                string sessionRoleString = Encoding.UTF8.GetString(sessionRole, 0, sessionRole.Length); ;
-                return role == sessionRoleString;
+                string[] sessionRoleString = Encoding.UTF8.GetString(sessionRole, 0, sessionRole.Length).Split(",");
+                return sessionRoleString.Contains(role);
             }
 
             return false;

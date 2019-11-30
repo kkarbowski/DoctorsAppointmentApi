@@ -46,7 +46,7 @@ namespace AppointmentApi.Controllers
 
         //[Authorize(Roles = Role.Patient)]
         [HttpPost]
-        public IActionResult AddAppointment(Appointment appointment)
+        public IActionResult AddAppointment([FromBody] Appointment appointment)
         {
             if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
                 return Unauthorized();
@@ -59,7 +59,7 @@ namespace AppointmentApi.Controllers
 
         //[Authorize(Roles = Role.Patient)]
         [HttpPut("{appointmentId}")]
-        public IActionResult UpdateAppointment(int appointmentId, Appointment appointment)
+        public IActionResult UpdateAppointment(int appointmentId, [FromBody] Appointment appointment)
         {
             if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
                 return Unauthorized();
