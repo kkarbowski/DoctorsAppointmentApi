@@ -25,7 +25,7 @@ namespace AppointmentModel.Model
 
         public User NoRoles()
         {
-            Roles = default;
+            Roles = new List<string>();
             return this;
         }
 

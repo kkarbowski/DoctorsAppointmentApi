@@ -34,7 +34,7 @@ namespace AppointmentApi.Business
 
                 return _tokenGenerator.GenerateToken(dbUser);
             }
-            catch
+            catch (Exception e)
             {
                 return null;
             }
