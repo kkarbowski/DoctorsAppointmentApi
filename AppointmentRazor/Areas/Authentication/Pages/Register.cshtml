@@ -22,7 +22,7 @@
                 <input asp-for="RegistrationForm.Password" class="form-control" type="password" />
                 <span asp-validation-for="RegistrationForm.Password" class="text-danger"></span>
             </div>
-
+            <span class="invalid-feedback d-block mb-2">@Model.Msg</span>
             <button type="submit" class="btn btn-primary">@Localizer.Text("Register")</button>
         </form>
     </div>
