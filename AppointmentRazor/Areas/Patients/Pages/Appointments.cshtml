@@ -41,7 +41,7 @@
 
             <tr class="@(appointment.AppointmentDate > DateTime.UtcNow ? "table-warning" :"")">
                 <td>
-                    @Html.DisplayFor(modelItem => appointment.AppointmentDate)
+                    @appointment.AppointmentDate.ToString("yyyy-MM-dd hh:mm")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => appointment.Doctor.FullName)

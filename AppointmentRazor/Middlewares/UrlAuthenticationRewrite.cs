@@ -18,8 +18,8 @@ namespace AppointmentRazor.Middlewares
             var publicRoutes = new List<string>
             {
                "Index",
-               "Login",
-               "Register"
+               "Authentication/Login",
+               "Authentication/Register"
             };
 
             var isUserLoggedIn = AuthenticationUtils.IsUserLoggedIn(context.HttpContext);
