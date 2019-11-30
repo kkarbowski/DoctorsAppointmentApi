@@ -162,6 +162,9 @@
   <data name="Login" xml:space="preserve">
     <value>Zaloguj się</value>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Wyloguj się</value>
+  </data>
   <data name="Make an appointment" xml:space="preserve">
     <value>Umów wizytę</value>
   </data>
