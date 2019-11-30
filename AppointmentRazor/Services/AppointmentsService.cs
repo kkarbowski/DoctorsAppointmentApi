@@ -49,7 +49,7 @@ namespace AppointmentRazor.Services
             {
                 new Appointment()
                 {
-                    Id = 1,
+                    AppointmentId = 1,
                     Reasons = new List<Dictionary<string, string>>
                     {
                         new Dictionary<string,string>()
@@ -78,7 +78,7 @@ namespace AppointmentRazor.Services
                 },
                 new Appointment()
                 {
-                    Id = 2,
+                    AppointmentId = 2,
                     Reasons = new List<Dictionary<string, string>>
                     {
                         new Dictionary<string,string>()
@@ -107,7 +107,7 @@ namespace AppointmentRazor.Services
                 },
                 new Appointment()
                 {
-                    Id = 3,
+                    AppointmentId = 3,
                     Reasons = new List<Dictionary<string, string>>
                     {
                         new Dictionary<string,string>()
@@ -136,7 +136,7 @@ namespace AppointmentRazor.Services
                 },
                 new Appointment()
                 {
-                    Id = 4,
+                    AppointmentId = 4,
                     Reasons = new List<Dictionary<string, string>>
                     {
                         new Dictionary<string,string>()

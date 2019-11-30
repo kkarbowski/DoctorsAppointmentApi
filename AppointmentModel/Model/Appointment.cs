@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace AppointmentModel.Model
@@ -23,7 +24,8 @@ namespace AppointmentModel.Model
     [Serializable]
     public class Appointment
     {
-        public int Id { get; set; }
+        [Key]
+        public int AppointmentId { get; set; }
         public Patient Patient { get; set; }
         public DateTime AppointmentDate { get; set; }
         public Doctor Doctor { get; set; }

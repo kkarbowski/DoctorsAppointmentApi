@@ -58,7 +58,7 @@ namespace AppointmentRazor.Pages
 
                 Appointments.ForEach(appointment =>
                 {
-                    LocalizedReasons.Add(appointment.Id, GetLozalizedReasons(appointment));
+                    LocalizedReasons.Add(appointment.AppointmentId, GetLozalizedReasons(appointment));
                 });
             }
         }
