@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using AppointmentModel.Model;
 using AppointmentRazor.Services.Interfaces;
 using AppointmentRazor.Utilities.Localization;
 using Microsoft.AspNetCore.Http;
@@ -40,16 +42,24 @@ namespace AppointmentRazor.Pages
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {
-                var authenticationReponse = authenticationService.Login(LoginForm.Username, LoginForm.Password);
+                var authenticationReponse = 
+                    await authenticationService.Login(
+                        new User() 
+                        { 
+                            Login = LoginForm.Username, 
+                            Password = LoginForm.Password 
+                        });
 
                 if(authenticationReponse.WasAuthenticationCorrect)
                 {
                     HttpContext.Session.SetString("token", authenticationReponse.Token);
-                    HttpContext.Session.SetString("role", authenticationReponse.Role.ToString());
+
+                    string roles = string.Join(",", authenticationReponse.Roles);
+                    HttpContext.Session.SetString("roles", roles);
 
                     HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Index"));
 
