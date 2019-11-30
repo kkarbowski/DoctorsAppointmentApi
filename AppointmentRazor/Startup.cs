@@ -92,6 +92,7 @@ namespace AppointmentRazor
             app.UseAuthorization();
 
             app.UseRewriter(new RewriteOptions().Add(UrlCultureRewrite.RedirectRequests));
+            app.UseRewriter(new RewriteOptions().Add(UrlAuthenticationRewrite.RedirectRequests));
 
             app.UseEndpoints(endpoints =>
             {
