@@ -17,9 +17,9 @@ namespace AppointmentApi.DataAccess
             _appDbContext = appDbContext;
         }
 
-        public Patient AddPatient(Patient patient)
+        public Patient UpdatePatient(Patient patient)
         {
-            var newPatient = _appDbContext.Patients.Add(patient);
+            var newPatient = _appDbContext.Patients.Update(patient);
             _appDbContext.SaveChanges();
 
             return newPatient.Entity;

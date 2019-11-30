@@ -1,4 +1,5 @@
 ﻿using AppointmentModel;
+using AppointmentModel.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace AppointmentApi.Database
 {
     public class AppDbContext : DbContext
     {
+        public DbSet<User> Users { get; set; }
         public DbSet<Patient> Patients { get; set; }
 
 
@@ -27,10 +29,13 @@ namespace AppointmentApi.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Patient>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.Login).IsUnique();
                 entity.Property(e => e.DateTimeAdd).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.Roles).HasConversion(
+                    v => string.Join(',', v),
+                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList());
             });
 
             base.OnModelCreating(modelBuilder);
