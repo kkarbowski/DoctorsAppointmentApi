@@ -43,7 +43,7 @@ namespace AppointmentApi.Controllers
         public IActionResult GetPatient(int patientId)
         {
             if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(patientId, User))
-                return Forbid();
+                return Unauthorized();
             
             var patient = _patientBusiness.GetPatient(patientId);
 
@@ -60,10 +60,12 @@ namespace AppointmentApi.Controllers
         }
 
         //[Authorize(Roles = Role.Patient)]
-        [HttpPut]
-        public IActionResult UpdatePatient(Patient patient)
+        [HttpPut("{patientId}")]
+        public IActionResult UpdatePatient(int patientId, Patient patient)
         {
             if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(patient.UserId, User))
+                return Unauthorized();
+            if (patientId != patient.UserId)
                 return Forbid();
 
             var updatedPatient = _patientBusiness.UpdatePatient(patient);
