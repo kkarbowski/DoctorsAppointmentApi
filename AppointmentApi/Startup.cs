@@ -32,10 +32,9 @@ namespace AppointmentApi
         {
             Configuration = configuration;
 
+
             // Recreating db.
-            using var dbContext = new AppDbContext();
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
+            AppDbContext.InitializeDatabase();
         }
 
         public IConfiguration Configuration { get; }
@@ -75,6 +74,8 @@ namespace AppointmentApi
             services.AddTransient<IPatientDataAccess, PatientDataAccess>();
             services.AddTransient<IUserBusiness, UserBusiness>();
             services.AddTransient<IUserDataAccess, UserDataAccess>();
+            services.AddTransient<IAppointmentBusiness, AppointmentBusiness>();
+            services.AddTransient<IAppointmentDataAccess, AppointmentDataAccess>();
 
             services.AddTransient<IHashGenerator, HashGeneratorSHA256>();
             services.AddTransient<ITokenGenerator, TokenGeneratorJWT>();

@@ -30,6 +30,6 @@ namespace AppointmentModel.Model
         public DateTime AppointmentDate { get; set; }
         public Doctor Doctor { get; set; }
         public string Description { get; set; }
-        public List<Dictionary<string, string>> Reasons { get; set; }
+        public virtual ICollection<Appointment2Reason> AppointmentReasons { get; set; }
     }
 }
