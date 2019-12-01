@@ -8,6 +8,6 @@ namespace AppointmentRazor.Services.Interfaces
 {
     public interface IPatientsProfileService
     {
-        public Patient GetCurrentPatient();
+        public Task<Patient> GetCurrentPatient(int patientId);
     }
 }

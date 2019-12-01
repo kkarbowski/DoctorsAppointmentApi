@@ -12,39 +12,39 @@ namespace AppointmentRazor.Services.Interfaces
         /// Fetches list of all appointments for currently logged user
         /// </summary>
         /// <returns>A list of all appointmes for currently logged user or null if no user is logged</returns>
-        public List<Appointment> GetAllAppointmentsForCurrentUser();
+        public Task<List<Appointment>> GetAllAppointmentsForCurrentUser();
 
         /// <summary>
         /// Fetches appointment list for given user
         /// </summary>
         /// <param name="userId">id of a user that we want to fetch appointments for</param>
         /// <returns>A list of appointments</returns>
-        public List<Appointment> GetAllAppointmentsForUser(string userId);
+        public Task<List<Appointment>> GetAllAppointmentsForUser(string userId);
 
         /// <summary>
         /// Tries to set an appointment
         /// </summary>
         /// <param name="appointment">An appointment to be set</param>
         /// <returns>an appontment set response</returns>
-        public AppointmentSetResponse SetAppointment(Appointment appointment);
+        public Task<AppointmentSetResponse> SetAppointment(Appointment appointment);
 
         /// <summary>
         /// Fetches all available doctors
         /// </summary>
         /// <returns>a list of available doctors that can be picked for an appointment</returns>
-        public List<Doctor> GetAllAvailableDoctors();
+        public Task<List<Doctor>> GetAllAvailableDoctors();
 
         /// <summary>
         /// Fetches all appointments reasons
         /// </summary>
         /// <returns>A list of appointments reasons, like a sore throat</returns>
-        public List<Dictionary<string, string>> GetAllAppointmentReasons();
+        public Task<List<Appointment2Reason>> GetAllAppointmentReasons();
 
         /// <summary>
         /// This function tries to cancel a given appointment
         /// </summary>
         /// <param name="appointmentId">id of an appointment we want to cancel</param>
         /// <returns>whenever opperation was successuf</returns>
-        public bool CancelAppointment(int appointmentId);
+        public Task<bool> CancelAppointment(int appointmentId);
     }
 }

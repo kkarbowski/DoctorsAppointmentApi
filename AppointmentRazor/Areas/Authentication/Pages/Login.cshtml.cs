@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AppointmentModel.Model;
 using AppointmentRazor.Services.Interfaces;
+using AppointmentRazor.Utilities.Authentication;
 using AppointmentRazor.Utilities.Localization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,10 +57,7 @@ namespace AppointmentRazor.Pages
 
                 if(authenticationReponse.WasAuthenticationCorrect)
                 {
-                    HttpContext.Session.SetString("token", authenticationReponse.Token);
-
-                    string roles = string.Join(",", authenticationReponse.Roles);
-                    HttpContext.Session.SetString("roles", roles);
+                    AuthenticationUtils.SaveUserToSession(HttpContext, authenticationReponse);
 
                     HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Index"));
 

@@ -22,36 +22,36 @@ namespace AppointmentRazor.Pages
         public List<Appointment> Appointments { get; set; }
         public Dictionary<int, string> LocalizedReasons { get; set; }
 
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            GetAppointments();
+            await GetAppointments();
         }
 
-        public void OnGetShowOnlyActive()
+        public async Task OnGetShowOnlyActiveAsync()
         {
-            GetAppointments();
+            await GetAppointments();
             if(Appointments != null)
             {
                 Appointments = Appointments.Where(apt => apt.AppointmentDate > DateTime.UtcNow).ToList();
             }
         }
 
-        public void OnGetShowAll()
+        public async Task OnGetShowAllAsync()
         {
-            GetAppointments();
+            await GetAppointments();
         }
 
-        public void OnGetCancelAppointment(int appointmentId)
+        public async Task OnGetCancelAppointmentAsync(int appointmentId)
         {
-            appointmentsService.CancelAppointment(appointmentId);
-            GetAppointments();
+            await appointmentsService.CancelAppointment(appointmentId);
+            await GetAppointments();
         }
 
-        private void GetAppointments()
+        private async Task GetAppointments()
         {
             if (Appointments == null)
             {
-                Appointments = appointmentsService.GetAllAppointmentsForCurrentUser();
+                Appointments = await appointmentsService.GetAllAppointmentsForCurrentUser();
                 Appointments.OrderBy(apt => apt.AppointmentDate).ToList();
 
                 LocalizedReasons = new Dictionary<int, string>();
