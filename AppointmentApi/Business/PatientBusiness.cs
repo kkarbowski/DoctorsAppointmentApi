@@ -21,7 +21,7 @@ namespace AppointmentApi.Business
         private readonly IHashGenerator _hashGenerator;
         private readonly IPatientDataAccess _patientDataAccess;
 
-        public PatientBusiness(IHashGenerator hashGenerator, IPatientDataAccess patientDataAccess, IAppointmentDataAccess appointmentDataAccess)
+        public PatientBusiness(IHashGenerator hashGenerator, IPatientDataAccess patientDataAccess)
         {
             _hashGenerator = hashGenerator;
             _patientDataAccess = patientDataAccess;
