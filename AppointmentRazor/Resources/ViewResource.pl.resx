@@ -138,6 +138,9 @@
   <data name="Confirm" xml:space="preserve">
     <value>Potwierdź</value>
   </data>
+  <data name="Could not load the appointments" xml:space="preserve">
+    <value>Nie udało się wczytać wizyt</value>
+  </data>
   <data name="Could not load the profile" xml:space="preserve">
     <value>Nie udało się wczytać profilu</value>
   </data>
@@ -233,6 +236,9 @@
   </data>
   <data name="Success" xml:space="preserve">
     <value>Sukces</value>
+  </data>
+  <data name="There are no appointments yet" xml:space="preserve">
+    <value>Nie masz jeszcze żadnych wizyt</value>
   </data>
   <data name="This value is invalid" xml:space="preserve">
     <value>Ta wartość jest nieprawidłowa</value>

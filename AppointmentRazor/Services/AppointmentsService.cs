@@ -79,7 +79,7 @@ namespace AppointmentRazor.Services
             };
         }
 
-        public async Task<List<Appointment>> GetAllAppointmentsForCurrentUser()
+        public async Task<List<Appointment>> GetAllAppointmentsForUser(string userId)
         {
             return new List<Appointment>
             {
@@ -248,11 +248,6 @@ namespace AppointmentRazor.Services
                     }
                 }
             };
-        }
-
-        public async Task<List<Appointment>> GetAllAppointmentsForUser(string userId)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<List<Doctor>> GetAllAvailableDoctors()

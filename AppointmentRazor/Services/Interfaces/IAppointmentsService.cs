@@ -9,17 +9,11 @@ namespace AppointmentRazor.Services.Interfaces
     public interface IAppointmentsService
     {
         /// <summary>
-        /// Fetches list of all appointments for currently logged user
-        /// </summary>
-        /// <returns>A list of all appointmes for currently logged user or null if no user is logged</returns>
-        public Task<List<Appointment>> GetAllAppointmentsForCurrentUser();
-
-        /// <summary>
         /// Fetches appointment list for given user
         /// </summary>
-        /// <param name="userId">id of a user that we want to fetch appointments for</param>
+        /// <param name="patientId">id of a user that we want to fetch appointments for</param>
         /// <returns>A list of appointments</returns>
-        public Task<List<Appointment>> GetAllAppointmentsForUser(string userId);
+        public Task<List<Appointment>> GetAllAppointmentsForUser(int patientId);
 
         /// <summary>
         /// Tries to set an appointment

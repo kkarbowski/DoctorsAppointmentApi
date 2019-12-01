@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppointmentModel.Model;
 using AppointmentRazor.Services.Interfaces;
+using AppointmentRazor.Utilities.Authentication;
 using AppointmentRazor.Utilities.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -51,15 +52,19 @@ namespace AppointmentRazor.Pages
         {
             if (Appointments == null)
             {
-                Appointments = await appointmentsService.GetAllAppointmentsForCurrentUser();
-                Appointments.OrderBy(apt => apt.AppointmentDate).ToList();
-
-                LocalizedReasons = new Dictionary<int, string>();
-
-                Appointments.ForEach(appointment =>
+                var patientId = AuthenticationUtils.GetPatientId(HttpContext);
+                if(patientId.HasValue)
                 {
-                    LocalizedReasons.Add(appointment.AppointmentId, GetLozalizedReasons(appointment));
-                });
+                    Appointments = await appointmentsService.GetAllAppointmentsForUser(patientId.Value);
+                    Appointments.OrderBy(apt => apt.AppointmentDate).ToList();
+
+                    LocalizedReasons = new Dictionary<int, string>();
+
+                    Appointments.ForEach(appointment =>
+                    {
+                        LocalizedReasons.Add(appointment.AppointmentId, GetLozalizedReasons(appointment));
+                    });
+                }
             }
         }
 
