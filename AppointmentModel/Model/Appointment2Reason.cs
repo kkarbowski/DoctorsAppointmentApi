@@ -13,7 +13,14 @@ namespace AppointmentModel.Model
         [ForeignKey(nameof(ReasonId))]
         public int ReasonId { get; set; }
 
-        public Appointment Appointment { get; set; }
-        public Reason Reason { get; set; }
+        public virtual Appointment Appointment { get; set; }
+        public virtual Reason Reason { get; set; }
+
+        public Appointment2Reason RemoveReferenceLoop()
+        {
+            Appointment = default;
+            Reason = default;
+            return this;
+        }
     }
 }

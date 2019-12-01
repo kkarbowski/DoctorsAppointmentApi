@@ -19,11 +19,16 @@ namespace AppointmentApi.DataAccess
 
         public Appointment GetAppointment(int appointmentId)
         {
-            return _appDbContext.Appointments
+            var appointment = _appDbContext.Appointments
                 .Include(a => a.Doctor)
                 .Include(a => a.Patient)
-                .Include(a => a.AppointmentReasons).ThenInclude(ar => ar.Reason)
+                .Include(a => a.AppointmentReasons)
                 .Single(a => a.AppointmentId == appointmentId);
+
+            foreach (var ar in appointment.AppointmentReasons)
+                ar.RemoveReferenceLoop();
+
+            return appointment;
         }
 
         public IEnumerable<Appointment> GetAppointments()
