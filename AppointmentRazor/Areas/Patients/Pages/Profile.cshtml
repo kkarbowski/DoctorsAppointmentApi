@@ -5,10 +5,25 @@
 }
 
 <div class="d-flex justify-content-center">
-    <div>
-        <h1 class="text-center my-5">@Model.Patient.FirstName @Model.Patient.LastName</h1>
-        <p class="h2 my-5"><strong>@Localizer.Text("Phone number"): </strong>@Model.Patient.Phone</p>
-        <p class="h2 my-5"><strong>@Localizer.Text("Email"): </strong>@Model.Patient.Mail</p>
+    <div class="flex-column d-flex">
+        @{
+            if (Model.Patient == null)
+            {
+                <h2 class="mb-3">@Localizer.Text("Could not load the profile")</h2>
+                <img class="mx-auto" src="~/img/sad_doctor.jpg"/>
+            }
+            else
+            {
+                <h1 class="text-center my-5">@Model.Patient.FirstName @Model.Patient.LastName</h1>
+                <p class="h2 my-5">
+                    <strong>@Localizer.Text("Phone number"): </strong>
+
+                    @Model.Patient.Phone
+                </p>
+                <p class="h2 my-5"><strong>@Localizer.Text("Email"): </strong>@Model.Patient.Mail</p>
+                <p class="h2 my-5"><strong>@Localizer.Text("Birthday"): </strong>@Model.Patient.BirthDate.ToString("yyyy-MM-dd")</p>
+            }
+        }
     </div>
 </div>
 

@@ -18,40 +18,68 @@ namespace AppointmentRazor.Services
             _httpClient = httpClient;
         }
 
-        public bool CancelAppointment(int appointmentId)
+        public async Task<bool> CancelAppointment(int appointmentId)
         {
             //TODO: Implement me
             return true;
         }
 
-        public List<Dictionary<string, string>> GetAllAppointmentReasons()
+        public async Task<List<Appointment2Reason>> GetAllAppointmentReasons()
         {
-            return new List<Dictionary<string, string>>
+            return new List<Appointment2Reason>
             {
-                new Dictionary<string,string>()
+                new Appointment2Reason()
                 {
-                    {"pl","Kaszel"},
-                    {"en","Coughing"},
+                    Reason = new Reason()
+                    {
+                        ReasonId = 0,
+                        LangReasonDictionary =  new Dictionary<string,string>()
+                        {
+                            {"pl","Kaszel"},
+                            {"en","Coughing"},
+                        }
+                    }
                 },
-                new Dictionary<string,string>()
+                new Appointment2Reason()
                 {
-                    {"pl","Ból gardła"},
-                    {"en","Sore throat"},
+                    Reason = new Reason()
+                    {
+                        ReasonId = 1,
+                        LangReasonDictionary =   new Dictionary<string,string>()
+                        {
+                            {"pl","Ból gardła"},
+                            {"en","Sore throat"},
+                        }
+                    }
                 },
-                new Dictionary<string,string>()
+                new Appointment2Reason()
                 {
-                    {"pl","Katar"},
-                    {"en","Runny nose"},
+                    Reason = new Reason()
+                    {
+                        ReasonId = 2,
+                        LangReasonDictionary =  new Dictionary<string,string>()
+                        {
+                            {"pl","Katar"},
+                            {"en","Runny nose"},
+                        }
+                    }
                 },
-                new Dictionary<string,string>()
+                new Appointment2Reason()
                 {
-                    {"pl","Inne"},
-                    {"en","Other"},
-                },
+                    Reason = new Reason()
+                    {
+                        ReasonId = 3,
+                        LangReasonDictionary =  new Dictionary<string,string>()
+                        {
+                            {"pl","Inne"},
+                            {"en","Other"},
+                        }
+                    }
+                }
             };
         }
 
-        public List<Appointment> GetAllAppointmentsForCurrentUser()
+        public async Task<List<Appointment>> GetAllAppointmentsForUser(int patientId)
         {
             return new List<Appointment>
             {
@@ -222,12 +250,7 @@ namespace AppointmentRazor.Services
             };
         }
 
-        public List<Appointment> GetAllAppointmentsForUser(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Doctor> GetAllAvailableDoctors()
+        public async Task<List<Doctor>> GetAllAvailableDoctors()
         {
             return new List<Doctor>()
             {
@@ -236,7 +259,7 @@ namespace AppointmentRazor.Services
             };
         }
 
-        public AppointmentSetResponse SetAppointment(Appointment appointment)
+        public async Task<AppointmentSetResponse> SetAppointment(Appointment appointment)
         {
             return AppointmentSetResponse.CORRECT;
         }

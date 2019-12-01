@@ -14,6 +14,8 @@ namespace AppointmentRazor.Services.Interfaces
         public string Token { get; set; }
 
         public List<string> Roles { get; set; }
+
+        public int PatientId { get; set; }
     }
     public interface IAuthenticationService
     {

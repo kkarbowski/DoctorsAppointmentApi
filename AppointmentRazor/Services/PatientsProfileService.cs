@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AppointmentModel;
 using AppointmentRazor.Services.Interfaces;
+using AppointmentRazor.Utilities.Authentication;
 
 namespace AppointmentRazor.Services
 {
@@ -17,7 +18,7 @@ namespace AppointmentRazor.Services
             _httpClient = httpClient;
         }
 
-        public Patient GetCurrentPatient()
+        public async Task<Patient> GetCurrentPatient(int patientId)
         {
             return new Patient()
             {
