@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AppointmentModel;
 using AppointmentModel.Model;
@@ -10,6 +11,13 @@ namespace AppointmentRazor.Services
 {
     public class AppointmentsService : IAppointmentsService
     {
+        private readonly HttpClient _httpClient;
+
+        public AppointmentsService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
         public bool CancelAppointment(int appointmentId)
         {
             //TODO: Implement me
@@ -50,17 +58,29 @@ namespace AppointmentRazor.Services
                 new Appointment()
                 {
                     AppointmentId = 1,
-                    Reasons = new List<Dictionary<string, string>>
+                    AppointmentReasons = new List<Appointment2Reason>
                     {
-                        new Dictionary<string,string>()
+                        new Appointment2Reason()
                         {
-                            {"pl","Kaszel"},
-                            {"en","Coughing"},
+                            Reason = new Reason
+                            {
+                                LangReasonDictionary = new Dictionary<string,string>()
+                                {
+                                    {"pl","Kaszel"},
+                                    {"en","Coughing"},
+                                }
+                            }
                         },
-                        new Dictionary<string,string>()
+                        new Appointment2Reason()
                         {
-                            {"pl","Ból gardła"},
-                            {"en","Sore throat"},
+                            Reason = new Reason
+                            {
+                                LangReasonDictionary = new Dictionary<string,string>()
+                                {
+                                    {"pl","Ból gardła"},
+                                    {"en","Sore throat"},
+                                }
+                            }
                         }
                     },
                     AppointmentDate = new DateTime(2019, 5, 10),
@@ -79,18 +99,30 @@ namespace AppointmentRazor.Services
                 new Appointment()
                 {
                     AppointmentId = 2,
-                    Reasons = new List<Dictionary<string, string>>
+                    AppointmentReasons = new List<Appointment2Reason>
                     {
-                        new Dictionary<string,string>()
+                        new Appointment2Reason()
                         {
-                            {"pl","Katar"},
-                            {"en","Runny nose"},
+                            Reason = new Reason
+                            {
+                                LangReasonDictionary = new Dictionary<string,string>()
+                                {
+                                    {"pl","Katar"},
+                                    {"en","Runny nose"},
+                                }
+                            }
                         },
-                        new Dictionary<string,string>()
+                        new Appointment2Reason()
                         {
-                            {"pl","Inne"},
-                            {"en","Other"},
-                        },
+                            Reason = new Reason
+                            {
+                                LangReasonDictionary =  new Dictionary<string,string>()
+                                {
+                                    {"pl","Inne"},
+                                    {"en","Other"},
+                                }
+                            }
+                        }
                     },
                     AppointmentDate = new DateTime(2019, 8, 24),
                     Description = "To jest przykładowy opis",
@@ -108,18 +140,30 @@ namespace AppointmentRazor.Services
                 new Appointment()
                 {
                     AppointmentId = 3,
-                    Reasons = new List<Dictionary<string, string>>
+                   AppointmentReasons = new List<Appointment2Reason>
                     {
-                        new Dictionary<string,string>()
+                        new Appointment2Reason()
                         {
-                            {"pl","Katar"},
-                            {"en","Runny nose"},
+                            Reason = new Reason
+                            {
+                                LangReasonDictionary = new Dictionary<string,string>()
+                                {
+                                    {"pl","Katar"},
+                                    {"en","Runny nose"},
+                                }
+                            }
                         },
-                        new Dictionary<string,string>()
+                        new Appointment2Reason()
                         {
-                            {"pl","Inne"},
-                            {"en","Other"},
-                        },
+                            Reason = new Reason
+                            {
+                                LangReasonDictionary =  new Dictionary<string,string>()
+                                {
+                                    {"pl","Inne"},
+                                    {"en","Other"},
+                                }
+                            }
+                        }
                     },
                     AppointmentDate = new DateTime(2020, 8, 24),
                     Description = "To jest przykładowy opis",
@@ -137,18 +181,30 @@ namespace AppointmentRazor.Services
                 new Appointment()
                 {
                     AppointmentId = 4,
-                    Reasons = new List<Dictionary<string, string>>
+                    AppointmentReasons = new List<Appointment2Reason>
                     {
-                        new Dictionary<string,string>()
+                        new Appointment2Reason()
                         {
-                            {"pl","Katar"},
-                            {"en","Runny nose"},
+                            Reason = new Reason
+                            {
+                                LangReasonDictionary = new Dictionary<string,string>()
+                                {
+                                    {"pl","Kaszel"},
+                                    {"en","Coughing"},
+                                }
+                            }
                         },
-                        new Dictionary<string,string>()
+                        new Appointment2Reason()
                         {
-                            {"pl","Inne"},
-                            {"en","Other"},
-                        },
+                            Reason = new Reason
+                            {
+                                LangReasonDictionary = new Dictionary<string,string>()
+                                {
+                                    {"pl","Ból gardła"},
+                                    {"en","Sore throat"},
+                                }
+                            }
+                        }
                     },
                     AppointmentDate = new DateTime(2020, 10, 14),
                     Description = "To jest przykładowy opis",

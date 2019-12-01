@@ -14,7 +14,7 @@ namespace AppointmentRazor.Pages
     {
         private IAppointmentsService appointmentsService;
 
-        public AppointmentsModel(IAppointmentsService appointmentsService) : base()
+        public AppointmentsModel(IAppointmentsService appointmentsService)
         {
             this.appointmentsService = appointmentsService;
         }
@@ -67,7 +67,8 @@ namespace AppointmentRazor.Pages
         {
             string currentCulture = CurentCultureUtils.GetCurrentCulture();
 
-            return string.Join(", ", appointment.Reasons.Select(reason => reason[currentCulture]).ToList());
+            return string.Join(", ", 
+                appointment.AppointmentReasons.Select(appToReas => appToReas.Reason.LangReasonDictionary[currentCulture]).ToList());
         }
     }
 }

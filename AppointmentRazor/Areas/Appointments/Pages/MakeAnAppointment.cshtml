@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label for="reason">@Localizer.Text("Pick a reson"):</label>
                 <select name="selectedReasonsIds" class="custom-select custom-select-lg mb-3" asp-for="SelectedResons" asp-items="Model.AvailableReasons"></select>
-                <span asp-validation-for="Appointment.Reasons" class="text-danger"></span>
+                <span asp-validation-for="Appointment.AppointmentReasons" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="date">@Localizer.Text("Pick a date"):</label>

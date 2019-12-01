@@ -38,7 +38,7 @@ namespace AppointmentApi.Business
             {
                 return _appointmentDataAccess.UpdateAppointment(appointment);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
