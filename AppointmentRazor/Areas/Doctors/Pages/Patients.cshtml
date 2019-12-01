@@ -1,7 +1,7 @@
 ﻿@page
 @model AppointmentRazor.Areas.Doctors.Pages.PatientsModel
 @{
-        ViewData["Title"] = Localizer.Text("Patients");
+    ViewData["Title"] = Localizer.Text("Patients");
 }
 <h1>@Localizer.Text("Patients")</h1>
 
@@ -16,7 +16,7 @@
         };
         <partial name="_ErrorSituationPartial" model='model' />
     }
-    else if (Model.Patients.Count == 0)
+    else if (Model.Patients.Count == 0 && !Model.Filter)
     {
         var model = new ErrorSituationPartialViewModel
         {
@@ -27,6 +27,14 @@
     }
     else
     {
+        <form method="get" asp-page-handler="Filtered" >
+            <div class="form-group col-3">
+                <input class="form-control mb-3" type="text" name="filterQuery" />
+                <button class="btn btn-primary" type="submit">
+                    @Localizer.Text("Filter by Full name")
+                </button>
+            </div>
+        </form>
         <div class="table-responsive">
             <table class="table">
                 <thead>

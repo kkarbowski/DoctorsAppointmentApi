@@ -21,11 +21,25 @@ namespace AppointmentRazor.Areas.Doctors.Pages
 
         public List<Patient> Patients;
 
-        public async Task OnGetAsync()
+        public bool Filter { get; set; }
+
+        public async Task OnGetAsync(string filterQuery)
         {
             if (Patients == null)
             {
-                Patients = await patientsProfileService.GetAllPatients();   
+                Patients = await patientsProfileService.GetAllPatients();
+                if(Patients != null && filterQuery != null)
+                {
+                    Patients = Patients.Where(patient => {
+                        if(patient.FullName == null)
+                        {
+                            return false;
+                        }
+                        return patient.FullName.Contains(filterQuery);
+                    }).ToList();
+
+                    Filter = true;
+                }
             }
         }
     }
