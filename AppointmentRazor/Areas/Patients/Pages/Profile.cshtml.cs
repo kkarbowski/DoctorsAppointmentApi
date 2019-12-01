@@ -14,7 +14,7 @@ namespace AppointmentRazor.Pages
     {
         IPatientsProfileService patientsProfileService;
 
-        public ProfileModel(IPatientsProfileService patientsProfileService) : base()
+        public ProfileModel(IPatientsProfileService patientsProfileService)
         {
             this.patientsProfileService = patientsProfileService;
         }
@@ -32,7 +32,7 @@ namespace AppointmentRazor.Pages
                 var patientId = AuthenticationUtils.GetPatientId(HttpContext);
                 if(patientId.HasValue)
                 {
-                    Patient = await patientsProfileService.GetCurrentPatient(patientId.Value);
+                    Patient = await patientsProfileService.GetPatient(patientId.Value);
                 }
             }
 

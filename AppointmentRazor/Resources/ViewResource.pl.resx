@@ -144,6 +144,9 @@
   <data name="Could not load the appointments" xml:space="preserve">
     <value>Nie udało się wczytać wizyt</value>
   </data>
+  <data name="Could not load the patients list" xml:space="preserve">
+    <value>Nie udało się wczytać listy pacjentów</value>
+  </data>
   <data name="Could not load the profile" xml:space="preserve">
     <value>Nie udało się wczytać profilu</value>
   </data>
@@ -165,8 +168,17 @@
   <data name="First name" xml:space="preserve">
     <value>Imie</value>
   </data>
+  <data name="Full name" xml:space="preserve">
+    <value>Imię i nazwisko</value>
+  </data>
   <data name="Go to your appointments" xml:space="preserve">
     <value>Przejdź do twoich wizyt</value>
+  </data>
+  <data name="Hello" xml:space="preserve">
+    <value>Witaj</value>
+  </data>
+  <data name="Hello, Doctor" xml:space="preserve">
+    <value>Witaj doktorku</value>
   </data>
   <data name="Hello, Patient" xml:space="preserve">
     <value>Witaj pacjencie</value>
@@ -198,6 +210,9 @@
   <data name="Make an appointment" xml:space="preserve">
     <value>Umów wizytę</value>
   </data>
+  <data name="No data" xml:space="preserve">
+    <value>Brak danych</value>
+  </data>
   <data name="Not a valid Email address" xml:space="preserve">
     <value>Nieprawidłowy adres email</value>
   </data>
@@ -206,6 +221,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Hasło</value>
+  </data>
+  <data name="Patients" xml:space="preserve">
+    <value>Pacjenci</value>
   </data>
   <data name="Phone number" xml:space="preserve">
     <value>Numer telefonu</value>
@@ -251,6 +269,9 @@
   </data>
   <data name="There are no appointments yet" xml:space="preserve">
     <value>Nie masz jeszcze żadnych wizyt</value>
+  </data>
+  <data name="There are no patients yet" xml:space="preserve">
+    <value>Nie ma jeszcze żadnych pacjentów</value>
   </data>
   <data name="This value is invalid" xml:space="preserve">
     <value>Ta wartość jest nieprawidłowa</value>

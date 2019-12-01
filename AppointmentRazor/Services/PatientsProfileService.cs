@@ -23,7 +23,33 @@ namespace AppointmentRazor.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<Patient> GetCurrentPatient(int patientId)
+        public async Task<List<Patient>> GetAllPatients()
+        {
+            var uri = $"{ApiConfiguration.baseUrl}/Patient";
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
+
+            HttpResponseMessage response;
+            try
+            {
+                response = await _httpClient.GetAsync(uri);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            List<Patient> patients = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                patients = JsonUtils.Deserialize<List<Patient>>(await response.Content.ReadAsStringAsync());
+            }
+
+            return patients;
+        }
+
+        public async Task<Patient> GetPatient(int patientId)
         {
             var uri = $"{ApiConfiguration.baseUrl}/Patient/{patientId}";
             _httpClient.DefaultRequestHeaders.Authorization =

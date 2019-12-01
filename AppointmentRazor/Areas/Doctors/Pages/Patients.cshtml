@@ -1,0 +1,70 @@
+﻿@page
+@model AppointmentRazor.Areas.Doctors.Pages.PatientsModel
+@{
+        ViewData["Title"] = Localizer.Text("Patients");
+}
+<h1>@Localizer.Text("Patients")</h1>
+
+
+@{
+    if (Model.Patients == null)
+    {
+        var model = new ErrorSituationPartialViewModel
+        {
+            ImgUrl = "~/img/app_error.jpg",
+            ErrorText = @Localizer.Text("Could not load the patients list")
+        };
+        <partial name="_ErrorSituationPartial" model='model' />
+    }
+    else if (Model.Patients.Count == 0)
+    {
+        var model = new ErrorSituationPartialViewModel
+        {
+            ImgUrl = "~/img/no_app.jp",
+            ErrorText = @Localizer.Text("There are no patients yet")
+        };
+        <partial name="_ErrorSituationPartial" model='model' />
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Localizer.Text("Full name")
+                        </th>
+                        <th>
+                            @Localizer.Text("Phone number")
+                        </th>
+                        <th>
+                            @Localizer.Text("Email")
+                        </th>
+                        <th>
+                            @Localizer.Text("Birthday")
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var patient in Model.Patients)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => patient.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => patient.Phone, new { @Value = @Localizer.Text("No data") })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => patient.Mail)
+                            </td>
+                            <td>
+                                @patient.BirthDate.ToString("yyyy-MM-dd hh:mm")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}

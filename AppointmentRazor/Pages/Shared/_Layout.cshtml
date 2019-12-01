@@ -28,9 +28,18 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-all-route-data="@routeData" asp-area="Patients" asp-page="/Appointments">@Localizer.Text("Appointments")</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-all-route-data="@routeData" asp-area="Appointments" asp-page="/MakeAnAppointment">@Localizer.Text("Make an appointment")</a>
-                            </li>
+                            if (AuthenticationUtils.IsUserInRole(Context, Role.Patient))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-all-route-data="@routeData" asp-area="Appointments" asp-page="/MakeAnAppointment">@Localizer.Text("Make an appointment")</a>
+                                </li>
+                            }
+                            if (AuthenticationUtils.IsUserInRole(Context, Role.Doctor))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-all-route-data="@routeData" asp-area="Doctors" asp-page="/Patients">@Localizer.Text("Patients")</a>
+                                </li>
+                            }
                         }
                         else
                         {

@@ -36,7 +36,7 @@ namespace AppointmentApi.Database
             string pass1 = hashGenerator.GenerateHash("Password1");
             string pass2 = hashGenerator.GenerateHash("Password2");
             
-            var patient1 = new Patient { Login = "Patient1", Password = pass1, Roles = new List<string> { Role.Patient } };
+            var patient1 = new Patient { Login = "Patient1", Password = pass1, Roles = new List<string> { Role.Patient }, FullName = "Jon Snow" };
             var patient2 = new Patient { Login = "Patient2", Password = pass2, Roles = new List<string> { Role.Patient } };
 
             var doctor1 = new Doctor { Login = "Doctor1", Password = pass1, Roles = new List<string> { Role.Doctor }, UserId = 10, FullName = "Robert Bogacki" };
