@@ -25,10 +25,7 @@ namespace AppointmentApi.DataAccess
                 .Include(a => a.AppointmentReasons)
                 .Single(a => a.AppointmentId == appointmentId);
 
-            foreach (var ar in appointment.AppointmentReasons)
-                ar.RemoveReferenceLoop();
-
-            return appointment;
+            return appointment.RemoveReferenceLoop();
         }
 
         public IEnumerable<Appointment> GetAppointments()
@@ -40,11 +37,11 @@ namespace AppointmentApi.DataAccess
         {
             _appDbContext.Patients.Attach(appointment.Patient);
             _appDbContext.Doctors.Attach(appointment.Doctor);
-            
-            var newAppointment = _appDbContext.Appointments.Update(appointment);
+
+            var newAppointment = _appDbContext.Appointments.Update(appointment.RemoveReferenceLoop());
             _appDbContext.SaveChanges();
 
-            return newAppointment.Entity;
+            return newAppointment.Entity.RemoveReferenceLoop();
         }
     }
 }

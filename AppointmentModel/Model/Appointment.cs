@@ -34,5 +34,13 @@ namespace AppointmentModel.Model
         [DefaultValue(false)]
         public bool IsCanceled { get; set; }
         public virtual ICollection<Appointment2Reason> AppointmentReasons { get; set; }
+
+        public Appointment RemoveReferenceLoop()
+        {
+            foreach (var ar in AppointmentReasons)
+                ar.RemoveReferenceLoop();
+
+            return this;
+        }
     }
 }

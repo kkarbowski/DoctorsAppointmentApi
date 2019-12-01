@@ -23,28 +23,28 @@ namespace AppointmentApi.Controllers
             _reasonBusiness = reasonBusiness;
         }
 
-        [Authorize(Roles = Role.Patient)]
+        //[Authorize(Roles = Role.Patient)]
         [HttpGet]
         public IActionResult GetReasons()
         {
             return Ok(_reasonBusiness.GetReasons());
         }
 
-        [Authorize(Roles = Role.Patient)]
+        //[Authorize(Roles = Role.Patient)]
         [HttpGet("{reasonId}")]
         public IActionResult GetReason(int reasonId)
         {
             return Ok(_reasonBusiness.GetReason(reasonId));
         }
 
-        [Authorize(Roles = Role.Doctor)]
+        //[Authorize(Roles = Role.Doctor)]
         [HttpPost]
         public IActionResult AddReason([FromBody] Reason reason)
         {
             return Created(nameof(GetReason), _reasonBusiness.AddReason(reason));
         }
 
-        [Authorize(Roles = Role.Doctor)]
+        //[Authorize(Roles = Role.Doctor)]
         [HttpPut("{reasonId}")]
         public IActionResult UpdateReason(int reasonId, [FromBody] Reason reason)
         {
