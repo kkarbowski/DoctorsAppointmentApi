@@ -56,14 +56,17 @@ namespace AppointmentRazor.Pages
                 if(patientId.HasValue)
                 {
                     Appointments = await appointmentsService.GetAllAppointmentsForUser(patientId.Value);
-                    Appointments.OrderBy(apt => apt.AppointmentDate).ToList();
-
-                    LocalizedReasons = new Dictionary<int, string>();
-
-                    Appointments.ForEach(appointment =>
+                    if(Appointments != null)
                     {
-                        LocalizedReasons.Add(appointment.AppointmentId, GetLozalizedReasons(appointment));
-                    });
+                        Appointments.OrderBy(apt => apt.AppointmentDate).ToList();
+
+                        LocalizedReasons = new Dictionary<int, string>();
+
+                        Appointments.ForEach(appointment =>
+                        {
+                            LocalizedReasons.Add(appointment.AppointmentId, GetLozalizedReasons(appointment));
+                        });
+                    }
                 }
             }
         }

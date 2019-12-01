@@ -9,17 +9,21 @@
 @{
     if (Model.Appointments == null)
     {
-        <div class="flex-column d-flex">
-            <h2 class="mb-3">@Localizer.Text("Could not load the appointments")</h2>
-            <img class="mx-auto" src="~/img/app_error.jpg" />
-        </div>
+        var model = new ErrorSituationPartialViewModel
+        {
+            ImgUrl = "~/img/app_error.jpg",
+            ErrorText = @Localizer.Text("Could not load the appointments")
+        };
+        <partial name="_ErrorSituationPartial" model='model' />
     }
     else if (Model.Appointments.Count == 0)
     {
-        <div class="flex-column d-flex">
-            <h2 class="mb-3">@Localizer.Text("There are no appointments yet")</h2>
-            <img class="mx-auto" src="~/img/no_app.jpg" />
-        </div>
+        var model = new ErrorSituationPartialViewModel
+        {
+            ImgUrl = "~/img/no_app.jp",
+            ErrorText = @Localizer.Text("There are no appointments yet")
+        };
+        <partial name="_ErrorSituationPartial" model='model' />
     }
     else
     {

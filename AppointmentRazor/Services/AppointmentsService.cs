@@ -79,7 +79,7 @@ namespace AppointmentRazor.Services
             };
         }
 
-        public async Task<List<Appointment>> GetAllAppointmentsForUser(string userId)
+        public async Task<List<Appointment>> GetAllAppointmentsForUser(int patientId)
         {
             return new List<Appointment>
             {

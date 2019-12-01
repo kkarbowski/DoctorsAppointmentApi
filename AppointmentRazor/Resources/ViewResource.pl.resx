@@ -165,6 +165,9 @@
   <data name="Go to your appointments" xml:space="preserve">
     <value>Przejdź do twoich wizyt</value>
   </data>
+  <data name="Hello, Patient" xml:space="preserve">
+    <value>Witaj pacjencie</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Strona Główna</value>
   </data>
