@@ -1,8 +1,94 @@
 ﻿@page
 @model AppointmentRazor.Pages.AppointmentsModel
 @{
-    ViewData["Title"] = "Appointments";
+    ViewData["Title"] = Localizer.Text("Appointments");
 }
 
-<h1>Appointments</h1>
+<h1 class="mb-4">@Localizer.Text("Appointments")</h1>
+
+@{
+    if (Model.Appointments == null)
+    {
+        var model = new ErrorSituationPartialViewModel
+        {
+            ImgUrl = "~/img/app_error.jpg",
+            ErrorText = @Localizer.Text("Could not load the appointments")
+        };
+        <partial name="_ErrorSituationPartial" model='model' />
+    }
+    else if (Model.Appointments.Count == 0)
+    {
+        var model = new ErrorSituationPartialViewModel
+        {
+            ImgUrl = "~/img/no_app.jp",
+            ErrorText = @Localizer.Text("There are no appointments yet")
+        };
+        <partial name="_ErrorSituationPartial" model='model' />
+    }
+    else
+    {
+        <form method="post" asp-page="Appointments">
+            <div class="form-group">
+                <a class="btn btn-primary" asp-page-handler="ShowOnlyActive">
+                    @Localizer.Text("Show only active")
+                </a>
+                <a class="btn btn-primary" asp-page-handler="ShowAll">
+                    @Localizer.Text("Show all appointments")
+                </a>
+            </div>
+        </form>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Localizer.Text("Appointment date")
+                        </th>
+                        <th>
+                            @Localizer.Text("Doctor")
+                        </th>
+                        <th>
+                            @Localizer.Text("Reasons")
+                        </th>
+                        <th>
+                            @Localizer.Text("Remarks")
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var appointment in Model.Appointments)
+                    {
+
+                        <tr class="@(appointment.AppointmentDate > DateTime.UtcNow ? "table-warning" :"")">
+                            <td>
+                                @appointment.AppointmentDate.ToString("yyyy-MM-dd hh:mm")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => appointment.Doctor.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.LocalizedReasons[appointment.AppointmentId])
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => appointment.Description)
+                            </td>
+                            <td>
+                                @{
+                                    if (appointment.AppointmentDate > DateTime.UtcNow)
+                                    {
+                                        <a class="btn btn-primary" asp-page-handler="CancelAppointment" asp-route-id="@appointment.AppointmentId">
+                                            @Localizer.Text("Cancel appointment")
+                                        </a>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
 

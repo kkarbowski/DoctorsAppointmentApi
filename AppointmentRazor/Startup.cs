@@ -66,9 +66,9 @@ namespace AppointmentRazor
 
             // Configure DI
             services.AddSingleton<CultureLocalizer>();
-            services.AddSingleton<IPatientsProfileService>(new PatientsProfileService());
-            services.AddSingleton<IAppointmentsService>(new AppointmentsService());
-            services.AddSingleton<IAuthenticationService>(new AuthenticationService());
+            services.AddHttpClient<IPatientsProfileService, PatientsProfileService>();
+            services.AddHttpClient<IAppointmentsService, AppointmentsService>();
+            services.AddHttpClient<IAuthenticationService, AuthenticationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,6 +92,7 @@ namespace AppointmentRazor
             app.UseAuthorization();
 
             app.UseRewriter(new RewriteOptions().Add(UrlCultureRewrite.RedirectRequests));
+            app.UseRewriter(new RewriteOptions().Add(UrlAuthenticationRewrite.RedirectRequests));
 
             app.UseEndpoints(endpoints =>
             {

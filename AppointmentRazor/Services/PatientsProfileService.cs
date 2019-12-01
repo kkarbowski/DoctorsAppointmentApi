@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AppointmentModel;
 using AppointmentRazor.Services.Interfaces;
+using AppointmentRazor.Utilities.Authentication;
 
 namespace AppointmentRazor.Services
 {
     public class PatientsProfileService : IPatientsProfileService
     {
-        public Patient GetCurrentPatient()
+        private readonly HttpClient _httpClient;
+
+        public PatientsProfileService(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
+        public async Task<Patient> GetCurrentPatient(int patientId)
         {
             return new Patient()
             {

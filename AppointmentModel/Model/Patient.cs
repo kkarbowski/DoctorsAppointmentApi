@@ -4,12 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AppointmentModel
 {
-    public class Patient : User
+    [Serializable]
+    public class Patient : Human
     {
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
         public string Phone { get; set; }
 
         public string Mail { get; set; }

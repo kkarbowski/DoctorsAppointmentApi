@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppointmentModel;
 using AppointmentRazor.Services.Interfaces;
+using AppointmentRazor.Utilities.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -21,12 +22,18 @@ namespace AppointmentRazor.Pages
 
         public Patient Patient;
 
+        public string Msg { get; set; }
 
-        public void OnGet()
+
+        public async Task OnGetAsync()
         {
             if(Patient == null)
             {
-                Patient = patientsProfileService.GetCurrentPatient();
+                var patientId = AuthenticationUtils.GetPatientId(HttpContext);
+                if(patientId.HasValue)
+                {
+                    Patient = await patientsProfileService.GetCurrentPatient(patientId.Value);
+                }
             }
 
         }

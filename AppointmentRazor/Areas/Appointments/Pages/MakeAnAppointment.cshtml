@@ -10,18 +10,30 @@
             <div asp-validation-summary="All" class="alert-danger"></div>
             <div class="form-group">
                 <label for="doctor">@Localizer.Text("Pick a doctor"):</label>
-                <select class="custom-select custom-select-lg mb-3" asp-for="SelectedDoctor" asp-items="Model.AvailableDoctors"></select>
-                <span asp-validation-for="Appointment.Doctor" class="text-danger"></span>
+                <select name="selectedDoctorId" class="custom-select custom-select-lg mb-3" asp-for="SelectedDoctor" asp-items="Model.AvailableDoctors"></select>
+                <span asp-validation-for="SelectedDoctor" class="text-danger"></span>
+                @{
+                    if (Model.appointmentsSetResponse == AppointmentModel.Model.AppointmentSetResponse.DOCTOR_NOT_AVAILABLE)
+                    {
+                        <span class="text-danger">@Localizer.Text("Doctor not available")</span>
+                    }
+                }
             </div>
             <div class="form-group">
                 <label for="reason">@Localizer.Text("Pick a reson"):</label>
-                <select class="custom-select custom-select-lg mb-3" asp-for="SelectedResons" asp-items="Model.AvailableReasons"></select>
-                <span asp-validation-for="Appointment.Reasons" class="text-danger"></span>
+                <select name="selectedReasonsIds" class="custom-select custom-select-lg mb-3" asp-for="SelectedResons" asp-items="Model.AvailableReasons"></select>
+                <span asp-validation-for="SelectedResons" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="date">@Localizer.Text("Pick a date"):</label>
-                <input class="form-control" asp-for="Date" value="@DateTime.Now.ToString("yyyy-MM-dd\\Thh:mm")"/>
-                <span asp-validation-for="Appointment.Reasons" class="text-danger"></span>
+                <input name="pickedDate" class="form-control" asp-for="Date" value="@Model.Date.ToString("yyyy-MM-dd\\Thh:mm")" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+                @{
+                    if (Model.appointmentsSetResponse == AppointmentModel.Model.AppointmentSetResponse.DATE_NOT_AVAILABLE)
+                    {
+                        <span class="text-danger">@Localizer.Text("Picked date not available")</span>
+                    }
+                }
             </div>
             <div class="form-group">
                 <label for="doctor">@Localizer.Text("Add a note"):</label>

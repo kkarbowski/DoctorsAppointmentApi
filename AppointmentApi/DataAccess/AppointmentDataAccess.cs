@@ -1,0 +1,47 @@
+﻿using AppointmentApi.Database;
+using AppointmentModel.Model;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace AppointmentApi.DataAccess
+{
+    public class AppointmentDataAccess : IAppointmentDataAccess
+    {
+        private readonly AppDbContext _appDbContext;
+
+        public AppointmentDataAccess(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
+
+        public Appointment GetAppointment(int appointmentId)
+        {
+            var appointment = _appDbContext.Appointments
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Include(a => a.AppointmentReasons)
+                .Single(a => a.AppointmentId == appointmentId);
+
+            return appointment.RemoveReferenceLoop();
+        }
+
+        public IEnumerable<Appointment> GetAppointments()
+        {
+            return _appDbContext.Appointments.ToList();
+        }
+
+        public Appointment UpdateAppointment(Appointment appointment)
+        {
+            _appDbContext.Patients.Attach(appointment.Patient);
+            _appDbContext.Doctors.Attach(appointment.Doctor);
+
+            var newAppointment = _appDbContext.Appointments.Update(appointment.RemoveReferenceLoop());
+            _appDbContext.SaveChanges();
+
+            return newAppointment.Entity.RemoveReferenceLoop();
+        }
+    }
+}

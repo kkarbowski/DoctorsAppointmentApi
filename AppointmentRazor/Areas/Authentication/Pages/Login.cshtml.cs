@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using AppointmentModel.Model;
+using AppointmentRazor.Services.Interfaces;
+using AppointmentRazor.Utilities.Authentication;
 using AppointmentRazor.Utilities.Localization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +17,12 @@ namespace AppointmentRazor.Pages
     public class LoginModel : PageModel
     {
         private readonly CultureLocalizer _cultureLocalizer;
+        private readonly IAuthenticationService authenticationService;
 
-        public LoginModel([FromServices] CultureLocalizer cultureLocalizer)
+        public LoginModel([FromServices] CultureLocalizer cultureLocalizer, IAuthenticationService authenticationService)
         {
             _cultureLocalizer = cultureLocalizer;
+            this.authenticationService = authenticationService;
         }
 
         public class _LoginForm
@@ -37,21 +43,30 @@ namespace AppointmentRazor.Pages
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (ModelState.IsValid)
             {
-                HttpContext.Session.SetString("username", LoginForm.Username);
+                var authenticationReponse = 
+                    await authenticationService.Login(
+                        new User() 
+                        { 
+                            Login = LoginForm.Username, 
+                            Password = LoginForm.Password 
+                        });
 
-                HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Index"));
+                if(authenticationReponse.WasAuthenticationCorrect)
+                {
+                    AuthenticationUtils.SaveUserToSession(HttpContext, authenticationReponse);
 
-                return null;
-            }
-            else
-            {
+                    HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Index"));
+
+                    return null;
+                }
                 Msg = _cultureLocalizer.Text("InvalidLogin");
-                return Page();
             }
+
+            return Page();
         }
     }
 }

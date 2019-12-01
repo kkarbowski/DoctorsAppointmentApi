@@ -32,39 +32,68 @@ namespace AppointmentRazor.Areas.Patients.Pages
 
         public int[] SelectedResons { get; set; }
 
+        [TempData]
         public string Description { get; set; }
 
-        public DateTime Date { get; set; } = DateTime.UtcNow;
+        public DateTime Date { get; set; } = DateTime.Now;
 
-        public void OnGet()
+        public AppointmentSetResponse appointmentsSetResponse { get; set; }
+
+        public async Task OnGetAsync()
         {
             if(AvailableDoctors == null)
             {
-                var availableDoctors = appointmentsService.GetAllAvailableDoctors();
+                var availableDoctors = await appointmentsService.GetAllAvailableDoctors();
                 AvailableDoctors = new SelectList(availableDoctors, nameof(Doctor.UserId),nameof(Doctor.FullName));
             }
-            if(SelectedResons == null)
+            if(AvailableReasons == null)
             {
                 var curentCulture = CurentCultureUtils.GetCurrentCulture();
-                var resons = appointmentsService.GetAllAppointmentReasons().Select(resonDict => resonDict[curentCulture]);
-                AvailableReasons = new SelectList(resons);
+                var reasonFromApi = await appointmentsService.GetAllAppointmentReasons();
+                var reasons = reasonFromApi.Select(appToReas => 
+                                        new 
+                                        { 
+                                            Id = appToReas.Reason.ReasonId, 
+                                            Value = appToReas.Reason.LangReasonDictionary[curentCulture] 
+                                        })
+                                       .ToList();
+                AvailableReasons = new SelectList(reasons, "Id", "Value");
             }
+
         }
 
      
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync(int selectedDoctorId, int[] selectedReasonsIds, DateTime pickedDate)
         {
-            if(true)
+            if(ModelState.IsValid)
             {
-                HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Appointments/AppointmentMade"));
+                Appointment.Doctor = new Doctor(){ UserId = selectedDoctorId };
+                if(selectedReasonsIds.Length > 0)
+                {
+                    Appointment.AppointmentReasons = new List<Appointment2Reason>();
+                    Array.ForEach(selectedReasonsIds, (reasonId) =>
+                    {
+                        Appointment.AppointmentReasons.Add(new Appointment2Reason() { ReasonId = reasonId });
+                    });
+                }
+                
+                Appointment.AppointmentDate = pickedDate;
+                appointmentsSetResponse = await appointmentsService.SetAppointment(Appointment);
+                if (appointmentsSetResponse == AppointmentSetResponse.CORRECT)
+                {
+                    HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Appointments/AppointmentMade"));
 
-                return null;
-            } else
-            {
-                return Page();
+                    return null;
+                }
             }
-   
+            
+
+            await OnGetAsync();
+            SelectedDoctor = selectedDoctorId;
+            SelectedResons = selectedReasonsIds;
+            Date = pickedDate;
+            return Page();
         }
     }
 }

@@ -18,6 +18,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using AppointmentApi.Business.Interfaces;
+using AppointmentApi.Authorization;
 
 namespace AppointmentApi
 {
@@ -27,10 +32,9 @@ namespace AppointmentApi
         {
             Configuration = configuration;
 
+
             // Recreating db.
-            using var dbContext = new AppDbContext();
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
+            AppDbContext.InitializeDatabase();
         }
 
         public IConfiguration Configuration { get; }
@@ -45,10 +49,42 @@ namespace AppointmentApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = Config.SwaggerApiTitle, Version = Config.SwaggerApiVersion });
             });
 
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config.JwtSecret)),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
             services.AddTransient<AppDbContext>();
             services.AddTransient<IPatientBusiness, PatientBusiness>();
             services.AddTransient<IPatientDataAccess, PatientDataAccess>();
-            services.AddTransient<IHashGenerator, HashGenerator>();
+            services.AddTransient<IUserBusiness, UserBusiness>();
+            services.AddTransient<IUserDataAccess, UserDataAccess>();
+            services.AddTransient<IAppointmentBusiness, AppointmentBusiness>();
+            services.AddTransient<IAppointmentDataAccess, AppointmentDataAccess>();
+            services.AddTransient<IReasonBusiness, ReasonBusiness>();
+            services.AddTransient<IReasonDataAccess, ReasonDataAccess>();
+            services.AddTransient<IDoctorBusiness, DoctorBusiness>();
+            services.AddTransient<IDoctorDataAccess, DoctorDataAccess>();
+
+            services.AddTransient<IHashGenerator, HashGeneratorSHA256>();
+            services.AddTransient<ITokenGenerator, TokenGeneratorJWT>();
+
+            services.AddTransient<IPatientAuthorization, PatientAuthorization>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +105,8 @@ namespace AppointmentApi
             //
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

@@ -117,26 +117,56 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="'{0}' must be at least {1} and maximum {2} characters" xml:space="preserve">
+  <data name="'{0}' must be at least {2} and maximum {1} characters" xml:space="preserve">
     <value>'{0}' musi zawierać od {2} do {1} znaków</value>
   </data>
   <data name="Add a note" xml:space="preserve">
     <value>Dodaj swoje uwagi</value>
   </data>
+  <data name="Appointment date" xml:space="preserve">
+    <value>Data wizyty</value>
+  </data>
   <data name="Appointments" xml:space="preserve">
     <value>Wizyty</value>
+  </data>
+  <data name="Birthday" xml:space="preserve">
+    <value>Data urodzin</value>
+  </data>
+  <data name="Cancel appointment" xml:space="preserve">
+    <value>Anuluj wizytę</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Potwierdź</value>
   </data>
+  <data name="Could not load the appointments" xml:space="preserve">
+    <value>Nie udało się wczytać wizyt</value>
+  </data>
+  <data name="Could not load the profile" xml:space="preserve">
+    <value>Nie udało się wczytać profilu</value>
+  </data>
+  <data name="Date must be from the past" xml:space="preserve">
+    <value>Data musi pochodzić z przeszłości</value>
+  </data>
   <data name="Dear, Patient" xml:space="preserve">
     <value>Drogi pacjencie</value>
+  </data>
+  <data name="Doctor" xml:space="preserve">
+    <value>Lekarz</value>
+  </data>
+  <data name="Doctor not available" xml:space="preserve">
+    <value>Doktor nie jest dostępny</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="First name" xml:space="preserve">
+    <value>Imie</value>
+  </data>
   <data name="Go to your appointments" xml:space="preserve">
     <value>Przejdź do twoich wizyt</value>
+  </data>
+  <data name="Hello, Patient" xml:space="preserve">
+    <value>Witaj pacjencie</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Strona Główna</value>
@@ -147,11 +177,20 @@
   <data name="InvalidLogin" xml:space="preserve">
     <value>Podany login lub hasło są nieprawidłowe</value>
   </data>
+  <data name="Last name" xml:space="preserve">
+    <value>Nazwisko</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Zaloguj się</value>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Wyloguj się</value>
+  </data>
   <data name="Make an appointment" xml:space="preserve">
     <value>Umów wizytę</value>
+  </data>
+  <data name="Not a valid Email address" xml:space="preserve">
+    <value>Nieprawidłowy adres email</value>
   </data>
   <data name="pageTitle" xml:space="preserve">
     <value>Wizyty u lekarza</value>
@@ -171,17 +210,41 @@
   <data name="Pick a reson" xml:space="preserve">
     <value>Wybierz przyczynę</value>
   </data>
+  <data name="Picked date not available" xml:space="preserve">
+    <value>Wybrana data nie jest dostępna</value>
+  </data>
   <data name="Please enter value for {0}" xml:space="preserve">
     <value>Należy podać {0}</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profil</value>
   </data>
+  <data name="Reasons" xml:space="preserve">
+    <value>Przyczyny wizyty</value>
+  </data>
   <data name="Register" xml:space="preserve">
     <value>Zarejestruj się</value>
   </data>
+  <data name="Registration failed" xml:space="preserve">
+    <value>Rejestracja nie powiodła się</value>
+  </data>
+  <data name="Remarks" xml:space="preserve">
+    <value>Uwagi</value>
+  </data>
+  <data name="Show all appointments" xml:space="preserve">
+    <value>Pokaż wszystkie wizyty</value>
+  </data>
+  <data name="Show only active" xml:space="preserve">
+    <value>Pokaż tylko przyszłe wizyty</value>
+  </data>
   <data name="Success" xml:space="preserve">
     <value>Sukces</value>
+  </data>
+  <data name="There are no appointments yet" xml:space="preserve">
+    <value>Nie masz jeszcze żadnych wizyt</value>
+  </data>
+  <data name="This value is invalid" xml:space="preserve">
+    <value>Ta wartość jest nieprawidłowa</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Nazwa użytkownika</value>

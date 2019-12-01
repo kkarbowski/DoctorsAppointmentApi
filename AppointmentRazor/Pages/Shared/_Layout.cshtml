@@ -19,21 +19,29 @@
                     <li class="nav-item active">
                         <a class="nav-link" asp-all-route-data="@routeData" asp-area="" asp-page="/Index">@Localizer.Text("Home")</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="Patients" asp-page="/Profile">@Localizer.Text("Profile")</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="Patients" asp-page="/Appointments">@Localizer.Text("Appointments")</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="Appointments" asp-page="/MakeAnAppointment">@Localizer.Text("Make an appointment")</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="Authentication" asp-page="/Login">@Localizer.Text("Login")</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-all-route-data="@routeData" asp-area="Authentication" asp-page="/Register">@Localizer.Text("Register")</a>
-                    </li>
+                    @{
+                        if (AuthenticationUtils.IsUserLoggedIn(Context))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-all-route-data="@routeData" asp-area="Patients" asp-page="/Profile">@Localizer.Text("Profile")</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-all-route-data="@routeData" asp-area="Patients" asp-page="/Appointments">@Localizer.Text("Appointments")</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-all-route-data="@routeData" asp-area="Appointments" asp-page="/MakeAnAppointment">@Localizer.Text("Make an appointment")</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-all-route-data="@routeData" asp-area="Authentication" asp-page="/Login">@Localizer.Text("Login")</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-all-route-data="@routeData" asp-area="Authentication" asp-page="/Register">@Localizer.Text("Register")</a>
+                            </li>
+                        }
+                    }
                 </ul>
             </div>
             <div class="mx-auto order-0">
@@ -44,7 +52,15 @@
             </div>
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
+                    @{
+                        if (AuthenticationUtils.IsUserLoggedIn(Context))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-all-route-data="@routeData" asp-area="Authentication" asp-page="/Logout">@Localizer.Text("Logout")</a>
+                            </li>
+                        }
+                    }
+                    <li class="nav-item mt-2 ml-md-4 ml-0">
                         <partial name="_LanguagePartial" />
                     </li>
                 </ul>

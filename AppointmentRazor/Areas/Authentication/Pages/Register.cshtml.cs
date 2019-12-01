@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using AppointmentModel;
+using AppointmentModel.Model;
+using AppointmentRazor.Services.Interfaces;
 using AppointmentRazor.Utilities.Localization;
+using AppointmentRazor.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -11,32 +15,52 @@ namespace AppointmentRazor.Pages
 {
     public class RegisterModel : PageModel
     {
-        public class _RegistrationForm
+        [BindProperty]
+        public RegistrationForm RegistrationForm { get; set; }
+
+        private readonly CultureLocalizer _cultureLocalizer;
+        private readonly IAuthenticationService authenticationService;
+
+        public RegisterModel([FromServices] CultureLocalizer cultureLocalizer, IAuthenticationService authenticationService)
         {
-            [Required(ErrorMessage = "Please enter value for {0}")]
-            [StringLength( maximumLength: 50, MinimumLength = 7,
-                ErrorMessage = "'{0}' must be at least {1} and maximum {2} characters")]
-            [Display(Name = "Username")]
-            public string Login { get; set; }
-            [Required(ErrorMessage = "Please enter value for {0}")]
-            [StringLength(maximumLength: 50, MinimumLength = 7,
-                ErrorMessage = "'{0}' must be at least {1} and maximum {2} characters")]
-            [Display(Name = "Password")]
-            public string Password { get; set; }
+            _cultureLocalizer = cultureLocalizer;
+            this.authenticationService = authenticationService;
         }
 
-        [BindProperty]
-        public _RegistrationForm RegistrationForm { get; set; }
+        public string Msg { get; set; }
 
         public void OnGet()
         {
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            if(ModelState.IsValid)
+            if (RegistrationForm.Birthday > DateTime.Today)
             {
-                return Redirect("Login");
+                ModelState.AddModelError("RegistrationForm.Birthday", _cultureLocalizer.Text("Date must be from the past"));
+                return Page();
+            }
+
+            if (ModelState.IsValid)
+            {
+                var wasRegistrationCorrect = await authenticationService
+                        .Register(new Patient() 
+                        { 
+                            Login = RegistrationForm.Login, 
+                            Password = RegistrationForm.Password,
+                            BirthDate = RegistrationForm.Birthday.Value,
+                            FirstName = RegistrationForm.FirstName,
+                            LastName = RegistrationForm.LastName,
+                            FullName = RegistrationForm.FirstName + RegistrationForm.LastName,
+                            Mail = RegistrationForm.Mail,
+                            Phone = RegistrationForm.Phone
+                        });
+                if(wasRegistrationCorrect)
+                {
+                    return Redirect("Login");
+                }
+
+                Msg = _cultureLocalizer.Text("Registration failed");
             }
 
             return Page();

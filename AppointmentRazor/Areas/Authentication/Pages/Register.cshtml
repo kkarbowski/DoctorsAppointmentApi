@@ -4,8 +4,6 @@
     ViewData["Title"] = "Register";
 }
 
-
-
 <div class="row">
     <div class="col-sm-6 offset-sm-3">
         <h1>@Localizer.Text("Register")</h1>
@@ -18,11 +16,42 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="RegistrationForm.Login">@Localizer.Text("Password")</label>
+                <label asp-for="RegistrationForm.Password">@Localizer.Text("Password")</label>
                 <input asp-for="RegistrationForm.Password" class="form-control" type="password" />
                 <span asp-validation-for="RegistrationForm.Password" class="text-danger"></span>
             </div>
 
+            <div class="form-group">
+                <label asp-for="RegistrationForm.FirstName">@Localizer.Text("First name")</label>
+                <input asp-for="RegistrationForm.FirstName" class="form-control" />
+                <span asp-validation-for="RegistrationForm.FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RegistrationForm.LastName">@Localizer.Text("Last name")</label>
+                <input asp-for="RegistrationForm.LastName" class="form-control" />
+                <span asp-validation-for="RegistrationForm.LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RegistrationForm.Phone">@Localizer.Text("Phone number")</label>
+                <input asp-for="RegistrationForm.Phone" class="form-control" type="tel" />
+                <span asp-validation-for="RegistrationForm.Phone" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RegistrationForm.Mail">@Localizer.Text("Email")</label>
+                <input asp-for="RegistrationForm.Mail" class="form-control" type="email" />
+                <span asp-validation-for="RegistrationForm.Mail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RegistrationForm.Birthday">@Localizer.Text("Birthday")</label>
+                <input asp-for="RegistrationForm.Birthday" class="form-control" type="date" />
+                <span asp-validation-for="RegistrationForm.Birthday" class="text-danger"></span>
+            </div>
+
+            <span class="invalid-feedback d-block mb-2">@Model.Msg</span>
             <button type="submit" class="btn btn-primary">@Localizer.Text("Register")</button>
         </form>
     </div>
