@@ -1,4 +1,5 @@
-﻿using AppointmentApi.DataAccess.Interfaces;
+﻿using AppointmentApi.DataAccess;
+using AppointmentApi.DataAccess.Interfaces;
 using AppointmentApi.Database;
 using AppointmentApi.Tools;
 using AppointmentApi.Tools.Interfaces;
@@ -20,7 +21,7 @@ namespace AppointmentApi.Business
         private readonly IHashGenerator _hashGenerator;
         private readonly IPatientDataAccess _patientDataAccess;
 
-        public PatientBusiness(IHashGenerator hashGenerator, IPatientDataAccess patientDataAccess)
+        public PatientBusiness(IHashGenerator hashGenerator, IPatientDataAccess patientDataAccess, IAppointmentDataAccess appointmentDataAccess)
         {
             _hashGenerator = hashGenerator;
             _patientDataAccess = patientDataAccess;
@@ -53,6 +54,11 @@ namespace AppointmentApi.Business
             {
                 return null;
             }
+        }
+
+        public IEnumerable<Appointment> GetPatientAppointments(int patientId)
+        {
+            return _patientDataAccess.GetPatientAppointments(patientId);
         }
     }
 }

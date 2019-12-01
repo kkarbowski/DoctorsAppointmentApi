@@ -1,5 +1,6 @@
 ﻿using AppointmentApi.Database;
 using AppointmentModel.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,11 @@ namespace AppointmentApi.DataAccess
 
         public Appointment GetAppointment(int appointmentId)
         {
-            return _appDbContext.Appointments.Find(appointmentId);
+            return _appDbContext.Appointments
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Include(a => a.AppointmentReasons).ThenInclude(ar => ar.Reason)
+                .Single(a => a.AppointmentId == appointmentId);
         }
 
         public IEnumerable<Appointment> GetAppointments()

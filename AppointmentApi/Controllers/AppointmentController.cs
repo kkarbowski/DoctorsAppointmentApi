@@ -71,5 +71,21 @@ namespace AppointmentApi.Controllers
                 return BadRequest();
             return Created(nameof(GetAppointment), updatedAppointment);
         }
+
+        //[Authorize(Roles = Role.Patient)]
+        [HttpDelete("{appointmentId}")]
+        public IActionResult CancelAppointment(int appointmentId, [FromBody] Appointment appointment)
+        {
+            if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
+                return Unauthorized();
+            if (appointmentId != appointment.AppointmentId)
+                return Forbid();
+
+            appointment.IsCanceled = true;
+            var updatedAppointment = _appointmentBusiness.UpdateAppointment(appointment);
+            if (updatedAppointment == null)
+                return BadRequest();
+            return Created(nameof(GetAppointment), updatedAppointment);
+        }
     }
 }

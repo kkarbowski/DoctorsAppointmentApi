@@ -28,7 +28,9 @@ namespace AppointmentApi.Tools
             return new Token
             {
                 Expiration = (DateTime)tokenDescriptor.Expires,
-                TokenString = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor))
+                TokenString = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor)),
+                Roles = user.Roles,
+                UserId = user.UserId
             };
         }
 

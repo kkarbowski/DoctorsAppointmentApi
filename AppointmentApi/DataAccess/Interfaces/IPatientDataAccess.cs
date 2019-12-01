@@ -1,4 +1,5 @@
 ﻿using AppointmentModel;
+using AppointmentModel.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace AppointmentApi.DataAccess.Interfaces
         public Patient GetPatient(int patientId);
         public Patient[] GetPatients();
         public Patient UpdatePatient(Patient patient);
+        IEnumerable<Appointment> GetPatientAppointments(int patientId);
     }
 }
