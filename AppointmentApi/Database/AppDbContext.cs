@@ -1,4 +1,5 @@
-﻿using AppointmentModel;
+﻿using AppointmentApi.Tools;
+using AppointmentModel;
 using AppointmentModel.Model;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -30,20 +31,30 @@ namespace AppointmentApi.Database
 
         private static void InsertTestData(AppDbContext dbContext)
         {
-            var patient1 = new Patient { Login = "Patient1", Password = "Password1", Roles = new List<string> { Role.Patient } };
-            var patient2 = new Patient { Login = "Patient2", Password = "Password2", Roles = new List<string> { Role.Patient } };
+            var hashGenerator = new HashGeneratorSHA256();
 
-            var doctor1 = new Doctor { Login = "Doctor1", Password = "Password1", Roles = new List<string> { Role.Doctor } };
+            string pass1 = hashGenerator.GenerateHash("Password1");
+            string pass2 = hashGenerator.GenerateHash("Password2");
+            
+            var patient1 = new Patient { Login = "Patient1", Password = pass1, Roles = new List<string> { Role.Patient } };
+            var patient2 = new Patient { Login = "Patient2", Password = pass2, Roles = new List<string> { Role.Patient } };
 
-            var reason1 = new Reason { LangReasonDictionary = new Dictionary<string, string> { { "PL", "Powod1" }, { "EN", "Reason1" } } };
-            var reason2 = new Reason { LangReasonDictionary = new Dictionary<string, string> { { "PL", "Powod2" }, { "EN", "Reason2" } } };
+            var doctor1 = new Doctor { Login = "Doctor1", Password = pass1, Roles = new List<string> { Role.Doctor }, UserId = 10, FullName = "Robert Bogacki" };
 
-            var appointment1 = new Appointment { Doctor = doctor1, Patient = patient1, Description = "Blabla1" };
-            var appointment2 = new Appointment { Doctor = doctor1, Patient = patient2, Description = "Blabla2" };
+            var reason1 = new Reason { LangReasonDictionary = new Dictionary<string, string> { { "pl", "Powod1" }, { "en", "Reason1" } } };
+            var reason2 = new Reason { LangReasonDictionary = new Dictionary<string, string> { { "pl", "Powod2" }, { "en", "Reason2" } } };
 
-            var appointmentReason1 = new Appointment2Reason { Appointment = appointment1, Reason = reason1 };
-            var appointmentReason2 = new Appointment2Reason { Appointment = appointment2, Reason = reason2 };
+            var appointmentReason1 = new Appointment2Reason { Reason = reason1 };
+            var appointmentReason3 = new Appointment2Reason { Reason = reason1 };
+            var appointmentReason2 = new Appointment2Reason { Reason = reason2 };
 
+            var appointment1 = new Appointment { Doctor = doctor1, Patient = patient1, Description = "Blabla1", AppointmentDate = new DateTime(2019, 5, 10), AppointmentId = 1, AppointmentReasons = new List<Appointment2Reason> { appointmentReason1 } };
+            var appointment3 = new Appointment { Doctor = doctor1, Patient = patient1, Description = "Blabla3", AppointmentDate = new DateTime(2020, 5, 10), AppointmentId = 2, AppointmentReasons = new List<Appointment2Reason> { appointmentReason3 } };
+            var appointment2 = new Appointment { Doctor = doctor1, Patient = patient2, Description = "Blabla2" , AppointmentId = 3, AppointmentDate = new DateTime(2020, 5, 10), AppointmentReasons = new List<Appointment2Reason> { appointmentReason1 } };
+
+            appointmentReason1.Appointment = appointment1;
+            appointmentReason3.Appointment = appointment3;
+            appointmentReason2.Appointment = appointment2;
 
             dbContext.AddRange(
                 patient1,
@@ -54,7 +65,8 @@ namespace AppointmentApi.Database
                 appointment1,
                 appointment2,
                 appointmentReason1,
-                appointmentReason2);
+                appointmentReason2,
+                appointmentReason3);
             dbContext.SaveChanges();
         }
 

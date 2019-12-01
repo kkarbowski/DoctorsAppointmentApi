@@ -32,7 +32,7 @@ namespace AppointmentRazor.Services.Interfaces
         /// Fetches all appointments reasons
         /// </summary>
         /// <returns>A list of appointments reasons, like a sore throat</returns>
-        public Task<List<Appointment2Reason>> GetAllAppointmentReasons();
+        public Task<List<Reason>> GetAllAppointmentReasons();
 
         /// <summary>
         /// This function tries to cancel a given appointment

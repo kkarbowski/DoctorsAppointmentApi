@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AppointmentModel;
 using AppointmentModel.Model;
 using AppointmentRazor.Services.Interfaces;
+using AppointmentRazor.Utilities.Authentication;
 using AppointmentRazor.Utilities.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -50,11 +52,11 @@ namespace AppointmentRazor.Areas.Patients.Pages
             {
                 var curentCulture = CurentCultureUtils.GetCurrentCulture();
                 var reasonFromApi = await appointmentsService.GetAllAppointmentReasons();
-                var reasons = reasonFromApi.Select(appToReas => 
+                var reasons = reasonFromApi.Select(reason => 
                                         new 
                                         { 
-                                            Id = appToReas.Reason.ReasonId, 
-                                            Value = appToReas.Reason.LangReasonDictionary[curentCulture] 
+                                            Id = reason.ReasonId, 
+                                            Value = reason.LangReasonDictionary[curentCulture] 
                                         })
                                        .ToList();
                 AvailableReasons = new SelectList(reasons, "Id", "Value");
@@ -77,6 +79,12 @@ namespace AppointmentRazor.Areas.Patients.Pages
                         Appointment.AppointmentReasons.Add(new Appointment2Reason() { ReasonId = reasonId });
                     });
                 }
+                var patientId = AuthenticationUtils.GetPatientId(HttpContext);
+                if(patientId.HasValue)
+                {
+                    Appointment.Patient = new Patient() { UserId = patientId.Value };
+                }
+
                 
                 Appointment.AppointmentDate = pickedDate;
                 appointmentsSetResponse = await appointmentsService.SetAppointment(Appointment);

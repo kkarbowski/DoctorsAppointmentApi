@@ -20,12 +20,23 @@ namespace AppointmentRazor.Utilities.Authentication
             {
                 httpContext.Session.SetString(tokenSessionKey, authenticationReponse.Token);
 
-                string roles = string.Join(",", authenticationReponse.Roles);
-                httpContext.Session.SetString(rolesSessionKey, roles);
+                if(authenticationReponse.Roles != null || authenticationReponse.Roles.Count > 0)
+                {
+                    string roles = string.Join(",", authenticationReponse.Roles);
+                    httpContext.Session.SetString(rolesSessionKey, roles);
+                }
 
-                httpContext.Session.SetInt32(patientIdSessionKey, authenticationReponse.PatientId);
+                if(authenticationReponse.PatientId.HasValue)
+                {
+                    httpContext.Session.SetInt32(patientIdSessionKey, authenticationReponse.PatientId.Value);
+                }
             }
   
+        }
+
+        public static string GetUserToken(HttpContext httpContext)
+        {
+            return httpContext.Session.GetString(tokenSessionKey);
         }
 
         public static bool IsUserLoggedIn(HttpContext httpContext)

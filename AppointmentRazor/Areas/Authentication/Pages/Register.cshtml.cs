@@ -51,7 +51,7 @@ namespace AppointmentRazor.Pages
                             BirthDate = RegistrationForm.Birthday.Value,
                             FirstName = RegistrationForm.FirstName,
                             LastName = RegistrationForm.LastName,
-                            FullName = RegistrationForm.FirstName + RegistrationForm.LastName,
+                            FullName = $"{RegistrationForm.FirstName} {RegistrationForm.LastName}",
                             Mail = RegistrationForm.Mail,
                             Phone = RegistrationForm.Phone
                         });
