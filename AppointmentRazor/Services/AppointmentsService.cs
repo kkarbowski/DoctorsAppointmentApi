@@ -27,7 +27,26 @@ namespace AppointmentRazor.Services
 
         public async Task<bool> CancelAppointment(int appointmentId)
         {
-            //TODO: Implement me
+            var uri = $"{ApiConfiguration.baseUrl}/Appointment/{appointmentId}";
+            _httpClient.DefaultRequestHeaders.Authorization =
+              new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
+
+            HttpResponseMessage response;
+            try
+            {
+                response = await _httpClient.DeleteAsync(uri);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -59,196 +78,28 @@ namespace AppointmentRazor.Services
 
         public async Task<List<Appointment>> GetAllAppointmentsForUser(int patientId)
         {
-            //TODO: Uncomment this once API return proper response
-            //var uri = $"{ApiConfiguration.baseUrl}/Patient/{patientId}/Appointment";
-            //_httpClient.DefaultRequestHeaders.Authorization =
-            //    new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
+            var uri = $"{ApiConfiguration.baseUrl}/Patient/{patientId}/Appointment";
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
 
-            //HttpResponseMessage response;
-            //try
-            //{
-            //    response = await _httpClient.GetAsync(uri);
-            //}
-            //catch (Exception)
-            //{
-            //    return null;
-            //}
-
-            //List<Appointment> appointments = null;
-
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    appointments = JsonUtils.Deserialize<List<Appointment>>(await response.Content.ReadAsStringAsync());
-            //}
-
-            //return appointments;
-            return new List<Appointment>
+            HttpResponseMessage response;
+            try
             {
-                new Appointment()
-                {
-                    AppointmentId = 1,
-                    AppointmentReasons = new List<Appointment2Reason>
-                    {
-                        new Appointment2Reason()
-                        {
-                            Reason = new Reason
-                            {
-                                LangReasonDictionary = new Dictionary<string,string>()
-                                {
-                                    {"pl","Kaszel"},
-                                    {"en","Coughing"},
-                                }
-                            }
-                        },
-                        new Appointment2Reason()
-                        {
-                            Reason = new Reason
-                            {
-                                LangReasonDictionary = new Dictionary<string,string>()
-                                {
-                                    {"pl","Ból gardła"},
-                                    {"en","Sore throat"},
-                                }
-                            }
-                        }
-                    },
-                    AppointmentDate = new DateTime(2019, 5, 10),
-                    Description = "This is some random description",
-                    Doctor = new Doctor
-                    {
-                        FullName = "Billy Jones",
-                        UserId = 3
-                    },
-                    Patient = new Patient()
-                    {
-                        FirstName = "Elisa",
-                        LastName = "Johnson"
-                    }
-                },
-                new Appointment()
-                {
-                    AppointmentId = 2,
-                    AppointmentReasons = new List<Appointment2Reason>
-                    {
-                        new Appointment2Reason()
-                        {
-                            Reason = new Reason
-                            {
-                                LangReasonDictionary = new Dictionary<string,string>()
-                                {
-                                    {"pl","Katar"},
-                                    {"en","Runny nose"},
-                                }
-                            }
-                        },
-                        new Appointment2Reason()
-                        {
-                            Reason = new Reason
-                            {
-                                LangReasonDictionary =  new Dictionary<string,string>()
-                                {
-                                    {"pl","Inne"},
-                                    {"en","Other"},
-                                }
-                            }
-                        }
-                    },
-                    AppointmentDate = new DateTime(2019, 8, 24),
-                    Description = "To jest przykładowy opis",
-                    Doctor = new Doctor
-                    {
-                        FullName = "Elisabeth Herey",
-                        UserId = 4
-                    },
-                    Patient = new Patient()
-                    {
-                        FirstName = "George",
-                        LastName = "Washington"
-                    }
-                },
-                new Appointment()
-                {
-                    AppointmentId = 3,
-                   AppointmentReasons = new List<Appointment2Reason>
-                    {
-                        new Appointment2Reason()
-                        {
-                            Reason = new Reason
-                            {
-                                LangReasonDictionary = new Dictionary<string,string>()
-                                {
-                                    {"pl","Katar"},
-                                    {"en","Runny nose"},
-                                }
-                            }
-                        },
-                        new Appointment2Reason()
-                        {
-                            Reason = new Reason
-                            {
-                                LangReasonDictionary =  new Dictionary<string,string>()
-                                {
-                                    {"pl","Inne"},
-                                    {"en","Other"},
-                                }
-                            }
-                        }
-                    },
-                    AppointmentDate = new DateTime(2020, 8, 24),
-                    Description = "To jest przykładowy opis",
-                    Doctor = new Doctor
-                    {
-                        FullName = "Elisabeth Herey",
-                        UserId = 4
-                    },
-                    Patient = new Patient()
-                    {
-                        FirstName = "George",
-                        LastName = "Washington"
-                    }
-                },
-                new Appointment()
-                {
-                    AppointmentId = 4,
-                    AppointmentReasons = new List<Appointment2Reason>
-                    {
-                        new Appointment2Reason()
-                        {
-                            Reason = new Reason
-                            {
-                                LangReasonDictionary = new Dictionary<string,string>()
-                                {
-                                    {"pl","Kaszel"},
-                                    {"en","Coughing"},
-                                }
-                            }
-                        },
-                        new Appointment2Reason()
-                        {
-                            Reason = new Reason
-                            {
-                                LangReasonDictionary = new Dictionary<string,string>()
-                                {
-                                    {"pl","Ból gardła"},
-                                    {"en","Sore throat"},
-                                }
-                            }
-                        }
-                    },
-                    AppointmentDate = new DateTime(2020, 10, 14),
-                    Description = "To jest przykładowy opis",
-                    Doctor = new Doctor
-                    {
-                        FullName = "Elisabeth Herey",
-                        UserId = 4
-                    },
-                    Patient = new Patient()
-                    {
-                        FirstName = "George",
-                        LastName = "Washington"
-                    }
-                }
-            };
+                response = await _httpClient.GetAsync(uri);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            List<Appointment> appointments = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                appointments = JsonUtils.Deserialize<List<Appointment>>(await response.Content.ReadAsStringAsync());
+            }
+
+            return appointments;
         }
 
         public async Task<List<Doctor>> GetAllAvailableDoctors()

@@ -135,6 +135,9 @@
   <data name="Cancel appointment" xml:space="preserve">
     <value>Anuluj wizytę</value>
   </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Wizyta anulowana</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Potwierdź</value>
   </data>
@@ -174,6 +177,9 @@
   <data name="homePageTitle" xml:space="preserve">
     <value>Strona główna</value>
   </data>
+  <data name="In Future" xml:space="preserve">
+    <value>Wizyta odbędzie się</value>
+  </data>
   <data name="InvalidLogin" xml:space="preserve">
     <value>Podany login lub hasło są nieprawidłowe</value>
   </data>
@@ -185,6 +191,9 @@
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Wyloguj się</value>
+  </data>
+  <data name="Made" xml:space="preserve">
+    <value>Wizyta odbyta</value>
   </data>
   <data name="Make an appointment" xml:space="preserve">
     <value>Umów wizytę</value>
