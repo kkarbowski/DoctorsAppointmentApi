@@ -38,6 +38,15 @@ namespace AppointmentApi.Controllers
             return Ok(patients);
         }
 
+        //[Authorize(Roles = Role.Doctor)]
+        [HttpGet("{patientId}/Appointment")]
+        public IActionResult GetPatientAppointmenta(int patientId)
+        {
+            var patientAppointment = _patientBusiness.GetPatientAppointments(patientId);
+
+            return Ok(patientAppointment);
+        }
+
         //[Authorize(Roles = Role.Patient)]
         [HttpGet("{patientId}")]
         public IActionResult GetPatient(int patientId)
@@ -50,6 +59,8 @@ namespace AppointmentApi.Controllers
             return Ok(patient);
         }
 
+        //[AllowAnonymous]
+        //[Authorize(Roles = Role.Doctor)]
         [HttpPost]
         public IActionResult AddPatient([FromBody] Patient patient)
         {

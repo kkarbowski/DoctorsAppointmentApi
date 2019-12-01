@@ -1,6 +1,7 @@
 ﻿using AppointmentApi.DataAccess.Interfaces;
 using AppointmentApi.Database;
 using AppointmentModel;
+using AppointmentModel.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,11 @@ namespace AppointmentApi.DataAccess
         public Patient[] GetPatients()
         {
             return _appDbContext.Patients.ToArray();
+        }
+
+        public IEnumerable<Appointment> GetPatientAppointments(int patientId)
+        {
+            return _appDbContext.Appointments.Where(a => a.Patient.UserId == patientId).ToList();
         }
     }
 }

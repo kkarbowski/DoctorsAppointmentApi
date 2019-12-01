@@ -1,4 +1,5 @@
-﻿using AppointmentApi.DataAccess.Interfaces;
+﻿using AppointmentApi.DataAccess;
+using AppointmentApi.DataAccess.Interfaces;
 using AppointmentApi.Database;
 using AppointmentApi.Tools;
 using AppointmentApi.Tools.Interfaces;
@@ -53,6 +54,11 @@ namespace AppointmentApi.Business
             {
                 return null;
             }
+        }
+
+        public IEnumerable<Appointment> GetPatientAppointments(int patientId)
+        {
+            return _patientDataAccess.GetPatientAppointments(patientId);
         }
     }
 }

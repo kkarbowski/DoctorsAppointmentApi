@@ -76,6 +76,10 @@ namespace AppointmentApi
             services.AddTransient<IUserDataAccess, UserDataAccess>();
             services.AddTransient<IAppointmentBusiness, AppointmentBusiness>();
             services.AddTransient<IAppointmentDataAccess, AppointmentDataAccess>();
+            services.AddTransient<IReasonBusiness, ReasonBusiness>();
+            services.AddTransient<IReasonDataAccess, ReasonDataAccess>();
+            services.AddTransient<IDoctorBusiness, DoctorBusiness>();
+            services.AddTransient<IDoctorDataAccess, DoctorDataAccess>();
 
             services.AddTransient<IHashGenerator, HashGeneratorSHA256>();
             services.AddTransient<ITokenGenerator, TokenGeneratorJWT>();
