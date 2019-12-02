@@ -40,7 +40,7 @@ namespace AppointmentApi.Database
             var patient1 = new Patient { Login = "Patient1", Password = pass1, Roles = new List<string> { Role.Patient }, FullName = "Jon Snow" };
             var patient2 = new Patient { Login = "Patient2", Password = pass2, Roles = new List<string> { Role.Patient } };
 
-            var doctor1 = new Doctor { Login = "Doctor1", Password = pass1, Roles = new List<string> { Role.Doctor }, UserId = 10, FullName = "Robert Bogacki" };
+            var doctor1 = new Doctor { Login = "Doctor1", Password = pass1, Roles = new List<string> { Role.Doctor, Role.Patient }, UserId = 10, FullName = "Robert Bogacki" };
 
             var reason1 = new Reason { LangReasonDictionary = new Dictionary<string, string> { { "pl", "Powod1" }, { "en", "Reason1" } } };
             var reason2 = new Reason { LangReasonDictionary = new Dictionary<string, string> { { "pl", "Powod2" }, { "en", "Reason2" } } };
