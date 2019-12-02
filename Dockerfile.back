@@ -1,0 +1,17 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
+WORKDIR /app
+COPY ./AppointmentApi ./AppointmentApi
+COPY ./AppointmentModel ./AppointmentModel
+
+WORKDIR /app/AppointmentApi
+
+RUN dotnet restore
+RUN dotnet build "AppointmentApi.csproj" -c Release -o out
+
+FROM build AS publish
+RUN dotnet publish "AppointmentApi.csproj" -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0 AS runtime
+WORKDIR /app/AppointmentApi
+COPY --from=publish /app/AppointmentApi .
+ENTRYPOINT [ "dotnet", "out/AppointmentApi.dll" ]
