@@ -42,9 +42,9 @@ namespace AppointmentRazor.Pages
             await GetAppointments();
         }
 
-        public async Task OnGetCancelAppointmentAsync(int appointmentId)
+        public async Task OnGetCancelAppointmentAsync(int id)
         {
-            await appointmentsService.CancelAppointment(appointmentId);
+            await appointmentsService.CancelAppointment(id);
             await GetAppointments();
         }
 
@@ -76,7 +76,8 @@ namespace AppointmentRazor.Pages
             string currentCulture = CurentCultureUtils.GetCurrentCulture();
 
             return string.Join(", ", 
-                appointment.AppointmentReasons.Select(appToReas => appToReas.Reason.LangReasonDictionary[currentCulture]).ToList());
+                appointment.AppointmentReasons.Where(appToReas => appToReas.Reason != null && appToReas.Reason.LangReasonDictionary != null)
+                                              .Select(appToReas => appToReas.Reason.LangReasonDictionary[currentCulture]).ToList());
         }
     }
 }
