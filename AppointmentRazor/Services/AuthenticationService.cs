@@ -47,10 +47,8 @@ namespace AppointmentRazor.Services
             return new AuthenticationReponse()
             {
                 WasAuthenticationCorrect = response.IsSuccessStatusCode,
-                //TODO: Get role from Token
-                Roles = new List<string> { Role.Patient },
-                //TODO: Get id from Token
-                PatientId = 1,
+                Roles = token?.Roles.ToList(),
+                PatientId = token?.UserId,
                 Token = token?.TokenString
             };
         }

@@ -58,7 +58,7 @@ namespace AppointmentApi.Business
 
         public IEnumerable<Appointment> GetPatientAppointments(int patientId)
         {
-            return _patientDataAccess.GetPatientAppointments(patientId);
+            return _patientDataAccess.GetPatientAppointments(patientId).Select(a => a.RemoveReferenceLoop());
         }
     }
 }

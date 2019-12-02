@@ -15,7 +15,7 @@ namespace AppointmentRazor.Services.Interfaces
 
         public List<string> Roles { get; set; }
 
-        public int PatientId { get; set; }
+        public int? PatientId { get; set; }
     }
     public interface IAuthenticationService
     {

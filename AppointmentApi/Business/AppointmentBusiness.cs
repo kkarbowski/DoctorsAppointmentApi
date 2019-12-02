@@ -24,19 +24,19 @@ namespace AppointmentApi.Business
 
         public Appointment GetAppointment(int appointmentId)
         {
-            return _appointmentDataAccess.GetAppointment(appointmentId);
+            return _appointmentDataAccess.GetAppointment(appointmentId).RemoveReferenceLoop();
         }
 
         public IEnumerable<Appointment> GetAppointments()
         {
-            return _appointmentDataAccess.GetAppointments();
+            return _appointmentDataAccess.GetAppointments().Select(a => a.RemoveReferenceLoop());
         }
 
         public Appointment UpdateAppointment(Appointment appointment)
         {
             try
             {
-                return _appointmentDataAccess.UpdateAppointment(appointment);
+                return _appointmentDataAccess.UpdateAppointment(appointment).RemoveReferenceLoop();
             }
             catch (Exception e)
             {

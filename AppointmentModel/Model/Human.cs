@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace AppointmentModel.Model
@@ -10,6 +11,7 @@ namespace AppointmentModel.Model
 
         public string LastName { get; set; }
 
+        [DisplayFormat(NullDisplayText = "-")]
         public string FullName { get; set; }
     }
 }

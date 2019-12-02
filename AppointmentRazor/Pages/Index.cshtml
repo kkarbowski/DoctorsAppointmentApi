@@ -5,7 +5,28 @@
     var routeData = CurentCultureUtils.GetCurrentCultureRouteData();
 }
 
-<div class="text-center">
-    <h1 class="mb-3">@Localizer.Text("Hello, Patient")</h1>
-    <img class="mx-auto img-fluid" src="~/img/doctor.jpg" />
-</div>
+    <div class="text-center">
+        @{
+            if (AuthenticationUtils.IsUserLoggedIn(HttpContext))
+            {
+                if (AuthenticationUtils.IsUserInRole(HttpContext, Role.Patient))
+                {
+                    <h1 class="mb-3">@Localizer.Text("Hello, Patient")</h1>
+                }
+                else if (AuthenticationUtils.IsUserInRole(HttpContext, Role.Doctor))
+                {
+                    <h1 class="mb-3">@Localizer.Text("Hello, Doctor")</h1>
+                }
+                else
+                {
+                    <h1 class="mb-3">@Localizer.Text("Hello")</h1>
+                }
+            }
+            else
+            {
+                <h1 class="mb-3">@Localizer.Text("Hello")</h1>
+            }
+        }
+
+        <img class="mx-auto img-fluid" src="~/img/doctor.jpg" />
+    </div>

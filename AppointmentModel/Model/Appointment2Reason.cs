@@ -19,7 +19,8 @@ namespace AppointmentModel.Model
         public Appointment2Reason RemoveReferenceLoop()
         {
             Appointment = default;
-            Reason = default;
+            if (Reason != null)
+                Reason.ReasonAppointments = default;
             return this;
         }
     }
