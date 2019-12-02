@@ -165,7 +165,7 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
-  <data name="Filter by Full name" xml:space="preserve">
+  <data name="Filter by full name" xml:space="preserve">
     <value>Filtruj po imieniu i nazwisku</value>
   </data>
   <data name="First name" xml:space="preserve">
@@ -181,7 +181,7 @@
     <value>Witaj</value>
   </data>
   <data name="Hello, Doctor" xml:space="preserve">
-    <value>Witaj doktorku</value>
+    <value>Witaj doktorze</value>
   </data>
   <data name="Hello, Patient" xml:space="preserve">
     <value>Witaj pacjencie</value>

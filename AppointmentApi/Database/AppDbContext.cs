@@ -42,20 +42,23 @@ namespace AppointmentApi.Database
 
             var doctor1 = new Doctor { Login = "Doctor1", Password = pass1, Roles = new List<string> { Role.Doctor, Role.Patient }, UserId = 10, FullName = "Robert Bogacki" };
 
-            var reason1 = new Reason { LangReasonDictionary = new Dictionary<string, string> { { "pl", "Powod1" }, { "en", "Reason1" } } };
-            var reason2 = new Reason { LangReasonDictionary = new Dictionary<string, string> { { "pl", "Powod2" }, { "en", "Reason2" } } };
+            var reason1 = new Reason { ReasonId = 1, LangReasonDictionary = new Dictionary<string, string> { { "pl", "Powod1" }, { "en", "Reason1" } } };
+            var reason2 = new Reason { ReasonId = 2, LangReasonDictionary = new Dictionary<string, string> { { "pl", "Powod2" }, { "en", "Reason2" } } };
 
-            var appointmentReason1 = new Appointment2Reason { Reason = reason1 };
-            var appointmentReason3 = new Appointment2Reason { Reason = reason1 };
-            var appointmentReason2 = new Appointment2Reason { Reason = reason2 };
+            var appointmentReason1 = new Appointment2Reason { Reason = reason1, ReasonId =  1};
+            var appointmentReason3 = new Appointment2Reason { Reason = reason1, ReasonId = 1 };
+            var appointmentReason2 = new Appointment2Reason { Reason = reason2, ReasonId = 2 };
 
             var appointment1 = new Appointment { Doctor = doctor1, Patient = patient1, Description = "Blabla1", AppointmentDate = new DateTime(2019, 5, 10), AppointmentId = 1, AppointmentReasons = new List<Appointment2Reason> { appointmentReason1 } };
             var appointment3 = new Appointment { Doctor = doctor1, Patient = patient1, Description = "Blabla3", AppointmentDate = new DateTime(2020, 5, 10), AppointmentId = 2, AppointmentReasons = new List<Appointment2Reason> { appointmentReason3 } };
             var appointment2 = new Appointment { Doctor = doctor1, Patient = patient2, Description = "Blabla2" , AppointmentId = 3, AppointmentDate = new DateTime(2020, 5, 10), AppointmentReasons = new List<Appointment2Reason> { appointmentReason1 } };
 
             appointmentReason1.Appointment = appointment1;
+            appointment1.AppointmentId = 1;
             appointmentReason3.Appointment = appointment3;
+            appointment3.AppointmentId = 3;
             appointmentReason2.Appointment = appointment2;
+            appointment2.AppointmentId = 2;
 
             dbContext.AddRange(
                 patient1,
