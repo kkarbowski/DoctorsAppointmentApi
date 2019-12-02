@@ -43,6 +43,7 @@ namespace AppointmentApi.DataAccess
                 .Include(a => a.Doctor)
                 .Include(a => a.Patient)
                 .Include(a => a.AppointmentReasons)
+                    .ThenInclude(ar => ar.Reason)
                 .Where(a => a.Patient.UserId == patientId)
                 .ToList();
         }
