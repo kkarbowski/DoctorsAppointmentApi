@@ -2,6 +2,7 @@
 using AppointmentApi.Database;
 using AppointmentModel;
 using AppointmentModel.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,12 @@ namespace AppointmentApi.DataAccess
 
         public IEnumerable<Appointment> GetPatientAppointments(int patientId)
         {
-            return _appDbContext.Appointments.Where(a => a.Patient.UserId == patientId).ToList();
+            return _appDbContext.Appointments
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Include(a => a.AppointmentReasons)
+                .Where(a => a.Patient.UserId == patientId)
+                .ToList();
         }
     }
 }

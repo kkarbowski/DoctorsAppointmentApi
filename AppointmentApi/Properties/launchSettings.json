@@ -20,7 +20,7 @@
     "AppointmentApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "patient",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
