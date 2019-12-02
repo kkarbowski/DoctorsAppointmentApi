@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Localization;
 
@@ -65,6 +66,7 @@ namespace AppointmentRazor
 
 
             // Configure DI
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<CultureLocalizer>();
             services.AddHttpClient<IPatientsProfileService, PatientsProfileService>();
             services.AddHttpClient<IAppointmentsService, AppointmentsService>();

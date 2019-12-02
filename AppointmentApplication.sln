@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppointmentModel", "Appoint
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UT", "UT", "{EA388358-5772-41ED-9B28-24B34C9E142D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppointmentApiUT", "AppointmentApiUT\AppointmentApiUT.csproj", "{B2B81E6A-06B2-4029-8468-DD31DFEA8D5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppointmentApiUT", "AppointmentApiUT\AppointmentApiUT.csproj", "{B2B81E6A-06B2-4029-8468-DD31DFEA8D5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
