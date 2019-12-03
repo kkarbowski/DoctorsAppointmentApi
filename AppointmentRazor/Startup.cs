@@ -68,7 +68,7 @@ namespace AppointmentRazor
             // Configure DI
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<CultureLocalizer>();
-            services.AddHttpClient<IPatientsProfileService, PatientsProfileService>();
+            services.AddHttpClient<IProfileService, ProfileService>();
             services.AddHttpClient<IAppointmentsService, AppointmentsService>();
             services.AddHttpClient<IAuthenticationService, AuthenticationService>();
         }

@@ -150,6 +150,9 @@
   <data name="Could not load the profile" xml:space="preserve">
     <value>Nie udało się wczytać profilu</value>
   </data>
+  <data name="Date must be from the future" xml:space="preserve">
+    <value>Data musi pochodzić z przyszłości</value>
+  </data>
   <data name="Date must be from the past" xml:space="preserve">
     <value>Data musi pochodzić z przeszłości</value>
   </data>
@@ -275,6 +278,9 @@
   </data>
   <data name="There are no patients yet" xml:space="preserve">
     <value>Nie ma jeszcze żadnych pacjentów</value>
+  </data>
+  <data name="This is your profile, Doctor" xml:space="preserve">
+    <value>To twój profil, doktorze</value>
   </data>
   <data name="This value is invalid" xml:space="preserve">
     <value>Ta wartość jest nieprawidłowa</value>
