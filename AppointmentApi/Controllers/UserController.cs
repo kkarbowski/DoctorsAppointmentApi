@@ -29,7 +29,6 @@ namespace AppointmentApi.Controllers
             var token = _userBusiness.Login(user);
             if (token == null)
             {
-                Log.Error("Wrong credentials - Unauthorized");
                 return Unauthorized();
             }
             Log.Information("Successfully logged in");
@@ -43,7 +42,7 @@ namespace AppointmentApi.Controllers
             var dbUser = _userBusiness.Register(user);
             if (dbUser == null)
             {
-                Log.Error("Bad Request - user was not registered");
+                Log.Warning("Bad Request - user was not registered");
                 return BadRequest();
             }
             Log.Information($"Successfully registered user {user.Login}");

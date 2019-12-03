@@ -51,7 +51,7 @@ namespace AppointmentApi.Controllers
             var newReason = _reasonBusiness.AddReason(reason);
             if (newReason == null)
             {
-                Log.Error("Bad Request - reason was not added");
+                Log.Warning("Bad Request - reason was not added");
                 return BadRequest();
             }
 
@@ -64,7 +64,6 @@ namespace AppointmentApi.Controllers
         public IActionResult UpdateReason(int reasonId, [FromBody] Reason reason)
         {
             if (reason.ReasonId != reasonId) {
-                Log.Error("Reason ID does not match");
                 return Forbid();
             }
 
@@ -72,7 +71,7 @@ namespace AppointmentApi.Controllers
             var updatedReason = _reasonBusiness.UpdateReason(reason);
             if (updatedReason == null)
             {
-                Log.Error("Bad Request - reason was not updated");
+                Log.Warning("Bad Request - reason was not updated");
             }
 
             Log.Information("Reason was updated");

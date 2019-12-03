@@ -74,7 +74,7 @@ namespace AppointmentApi.Controllers
             var newPatient = _patientBusiness.AddPatient(patient);
             if (newPatient == null)
             {
-                Log.Error("Bad Request - patient was not added");
+                Log.Warning("Bad Request - patient was not added");
                 return BadRequest();
             }
 
@@ -88,12 +88,11 @@ namespace AppointmentApi.Controllers
         {
             if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(patient.UserId, User))
             {
-                Log.Error("You are not authorized to do this");
+                Log.Warning("You are not authorized to do this");
                 return Unauthorized();
             }
             if (patientId != patient.UserId)
             {
-                Log.Error("Patient ID does not match");
                 return Forbid();
             }
 
@@ -101,7 +100,7 @@ namespace AppointmentApi.Controllers
             var updatedPatient = _patientBusiness.UpdatePatient(patient);
             if (updatedPatient == null)
             {
-                Log.Error("Bad Request - patient was not updated");
+                Log.Warning("Bad Request - patient was not updated");
                 return BadRequest();
             }
 

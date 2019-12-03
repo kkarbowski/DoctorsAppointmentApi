@@ -25,7 +25,7 @@ namespace AppointmentApi.Filters.Action
                 {
                     logMessage.Append($"{argument.Key}={JsonConvert.SerializeObject(argument.Value)}, ");
                 }
-                logMessage.Length-=2;
+                logMessage.Length -= 2;
             }
             logMessage.Append(".");
             Log.Debug(logMessage.ToString());
@@ -33,9 +33,21 @@ namespace AppointmentApi.Filters.Action
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            Log.Debug($"Finished execution of {context.HttpContext.Request.Method} " +
+            
+            var responseStatusCode = context.HttpContext.Response.StatusCode;
+            String executedMessage = $"Finished execution of {context.HttpContext.Request.Method} " +
                 $"{context.HttpContext.Request.Path}, " +
-                $"response status code = {context.HttpContext.Response.StatusCode}");
+                $"response status code = {responseStatusCode}";
+
+            if (responseStatusCode == Microsoft.AspNetCore.Http.StatusCodes.Status200OK ||
+                responseStatusCode == Microsoft.AspNetCore.Http.StatusCodes.Status201Created)
+            {
+                Log.Debug(executedMessage);
+            }
+            else
+            {
+                Log.Error(executedMessage);
+            }
         }
     }
 }

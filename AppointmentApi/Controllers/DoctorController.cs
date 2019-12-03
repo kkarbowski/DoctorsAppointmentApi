@@ -64,7 +64,7 @@ namespace AppointmentApi.Controllers
             var newDoctor = _doctorBusiness.AddDoctor(doctor);
             if (newDoctor == null)
             {
-                Log.Error("Bad Request - doctor was not added properly");
+                Log.Warning("Bad Request - doctor was not added properly");
                 return BadRequest();
             }
 
@@ -78,7 +78,6 @@ namespace AppointmentApi.Controllers
         {
             if (doctorId != doctor.UserId)
             {
-                Log.Error("Doctor ID does not match");
                 return Forbid();
             }
 
@@ -86,7 +85,7 @@ namespace AppointmentApi.Controllers
             var updatedDoctor = _doctorBusiness.UpdateDoctor(doctor);
             if (updatedDoctor == null)
             {
-                Log.Error("Bad Request - doctor was not updated");
+                Log.Warning("Bad Request - doctor was not updated");
                 return BadRequest();
             }
 

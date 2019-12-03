@@ -57,7 +57,7 @@ namespace AppointmentApi.Controllers
             var newAppointment = _appointmentBusiness.AddAppointment(appointment);
             if (newAppointment == null)
             {
-                Log.Error("Bad Request - appointment was not added");
+                Log.Warning("Bad Request - appointment was not added");
                 return BadRequest();
             }
             
@@ -80,7 +80,7 @@ namespace AppointmentApi.Controllers
             var updatedAppointment = _appointmentBusiness.UpdateAppointment(appointment);
             if (updatedAppointment == null)
             {
-                Log.Error("Bad Request - appointment was not updated");
+                Log.Warning("Bad Request - appointment was not updated");
                 return BadRequest();
             }
 
