@@ -16,6 +16,13 @@ namespace AppointmentRazor.Services.Interfaces
         public Task<List<Appointment>> GetAllAppointmentsForUser(int patientId);
 
         /// <summary>
+        /// Fetches appointment list for given doctor
+        /// </summary>
+        /// <param name="doctorId">id of a doctor that we want to fetch appointments for</param>
+        /// <returns>A list of appointments</returns>
+        public Task<List<Appointment>> GetAllAppointmentsForDoctor(int doctorId);
+
+        /// <summary>
         /// Tries to set an appointment
         /// </summary>
         /// <param name="appointment">An appointment to be set</param>

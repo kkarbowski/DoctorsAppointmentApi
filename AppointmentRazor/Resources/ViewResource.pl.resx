@@ -228,6 +228,9 @@
   <data name="Password" xml:space="preserve">
     <value>Hasło</value>
   </data>
+  <data name="Patient" xml:space="preserve">
+    <value>Pacjent</value>
+  </data>
   <data name="Patients" xml:space="preserve">
     <value>Pacjenci</value>
   </data>

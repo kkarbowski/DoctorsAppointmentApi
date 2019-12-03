@@ -45,7 +45,16 @@
                             @Localizer.Text("Appointment date")
                         </th>
                         <th>
-                            @Localizer.Text("Doctor")
+                            @{
+                                if (Model.IsShownForDoctor)
+                                {
+                                    @Localizer.Text("Patient")
+                                }
+                                else
+                                {
+                                    @Localizer.Text("Doctor")
+                                }
+                            }
                         </th>
                         <th>
                             @Localizer.Text("Reasons")
@@ -67,7 +76,16 @@
                             @appointment.AppointmentDate.ToString("yyyy-MM-dd hh:mm")
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => appointment.Doctor.FullName)
+                            @{
+                                if (Model.IsShownForDoctor)
+                                {
+                                    @Html.DisplayFor(modelItem => appointment.Patient.FullName)
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => appointment.Doctor.FullName)
+                                }
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => Model.LocalizedReasons[appointment.AppointmentId])

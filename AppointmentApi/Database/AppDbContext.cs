@@ -40,7 +40,7 @@ namespace AppointmentApi.Database
 
             //TODO: Remove dummy patients
             var patient1 = new Patient { Login = "Patient1", Password = pass1, Roles = new List<string> { Role.Patient }, FullName = "Jon Snow" };
-            var patient2 = new Patient { Login = "Patient2", Password = pass2, Roles = new List<string> { Role.Patient } };
+            var patient2 = new Patient { Login = "Patient2", Password = pass2, Roles = new List<string> { Role.Patient }, FullName = "Lara Croft" };
 
             var doctor1 = new Doctor { Login = "Doctor1", Password = pass1, Roles = new List<string> { Role.Doctor }, FullName = "Robert Bogacki", FirstName = "Robert", LastName = "Bogacki" };
             var doctor2 = new Doctor { Login = "Doctor2", Password = pass1, Roles = new List<string> { Role.Doctor }, FullName = "Donald Trump", FirstName = "Donald", LastName = "Trump" };
