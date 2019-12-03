@@ -9,13 +9,13 @@
         @{
             if (AuthenticationUtils.IsUserLoggedIn(HttpContext))
             {
-                if (AuthenticationUtils.IsUserInRole(HttpContext, Role.Patient))
-                {
-                    <h1 class="mb-3">@Localizer.Text("Hello, Patient")</h1>
-                }
-                else if (AuthenticationUtils.IsUserInRole(HttpContext, Role.Doctor))
+                if (AuthenticationUtils.IsUserInRole(HttpContext, Role.Doctor))
                 {
                     <h1 class="mb-3">@Localizer.Text("Hello, Doctor")</h1>
+                }
+                else if (AuthenticationUtils.IsUserInRole(HttpContext, Role.Patient))
+                {
+                    <h1 class="mb-3">@Localizer.Text("Hello, Patient")</h1>
                 }
                 else
                 {

@@ -15,12 +15,13 @@ namespace AppointmentRazor.Areas.Patients.Pages
 {
     public class MakeAnAppointmentModel : PageModel
     {
+        private readonly CultureLocalizer _cultureLocalizer;
+        private IAppointmentsService _appointmentsService;
 
-        private IAppointmentsService appointmentsService;
-
-        public MakeAnAppointmentModel(IAppointmentsService appointmentsService) :base()
+        public MakeAnAppointmentModel([FromServices] CultureLocalizer cultureLocalizer, IAppointmentsService appointmentsService)
         {
-            this.appointmentsService = appointmentsService;
+            _cultureLocalizer = cultureLocalizer;
+            _appointmentsService = appointmentsService;
         }
 
         [BindProperty]
@@ -45,13 +46,13 @@ namespace AppointmentRazor.Areas.Patients.Pages
         {
             if(AvailableDoctors == null)
             {
-                var availableDoctors = await appointmentsService.GetAllAvailableDoctors();
+                var availableDoctors = await _appointmentsService.GetAllAvailableDoctors();
                 AvailableDoctors = new SelectList(availableDoctors, nameof(Doctor.UserId),nameof(Doctor.FullName));
             }
             if(AvailableReasons == null)
             {
                 var curentCulture = CurentCultureUtils.GetCurrentCulture();
-                var reasonFromApi = await appointmentsService.GetAllAppointmentReasons();
+                var reasonFromApi = await _appointmentsService.GetAllAppointmentReasons();
                 var reasons = reasonFromApi.Select(reason => 
                                         new 
                                         { 
@@ -63,36 +64,41 @@ namespace AppointmentRazor.Areas.Patients.Pages
             }
 
         }
-
      
 
         public async Task<IActionResult> OnPostAsync(int selectedDoctorId, int[] selectedReasonsIds, DateTime pickedDate)
         {
             if(ModelState.IsValid)
             {
-                Appointment.Doctor = new Doctor(){ UserId = selectedDoctorId };
-                if(selectedReasonsIds.Length > 0)
+                if(pickedDate < DateTime.UtcNow)
                 {
-                    Appointment.AppointmentReasons = new List<Appointment2Reason>();
-                    Array.ForEach(selectedReasonsIds, (reasonId) =>
+                    ModelState.AddModelError("Date", _cultureLocalizer.Text("Date must be from the future"));
+                } else
+                {
+                    Appointment.Doctor = new Doctor() { UserId = selectedDoctorId };
+                    if (selectedReasonsIds.Length > 0)
                     {
-                        Appointment.AppointmentReasons.Add(new Appointment2Reason() { ReasonId = reasonId });
-                    });
-                }
-                var patientId = AuthenticationUtils.GetPatientId(HttpContext);
-                if(patientId.HasValue)
-                {
-                    Appointment.Patient = new Patient() { UserId = patientId.Value };
-                }
+                        Appointment.AppointmentReasons = new List<Appointment2Reason>();
+                        Array.ForEach(selectedReasonsIds, (reasonId) =>
+                        {
+                            Appointment.AppointmentReasons.Add(new Appointment2Reason() { ReasonId = reasonId });
+                        });
+                    }
+                    var patientId = AuthenticationUtils.GetPatientId(HttpContext);
+                    if (patientId.HasValue)
+                    {
+                        Appointment.Patient = new Patient() { UserId = patientId.Value };
+                    }
 
-                
-                Appointment.AppointmentDate = pickedDate;
-                appointmentsSetResponse = await appointmentsService.SetAppointment(Appointment);
-                if (appointmentsSetResponse == AppointmentSetResponse.CORRECT)
-                {
-                    HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Appointments/AppointmentMade"));
 
-                    return null;
+                    Appointment.AppointmentDate = pickedDate;
+                    appointmentsSetResponse = await _appointmentsService.SetAppointment(Appointment);
+                    if (appointmentsSetResponse == AppointmentSetResponse.CORRECT)
+                    {
+                        HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Appointments/AppointmentMade"));
+
+                        return null;
+                    }
                 }
             }
             
