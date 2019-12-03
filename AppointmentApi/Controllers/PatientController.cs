@@ -10,11 +10,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Serilog;
+using AppointmentApi.Filters.Action;
 
 namespace AppointmentApi.Controllers
 {
     //[Authorize]
     //[ApiController]
+    [ServiceFilter(typeof(LoggingFilter))]
     [Route("[controller]")]
     public class PatientController : ControllerBase
     {
@@ -31,7 +33,6 @@ namespace AppointmentApi.Controllers
         [HttpGet]
         public IActionResult GetPatients()
         {
-            Log.Debug("GET patients");
             Log.Information("Getting information about patients");
             var patients = _patientBusiness.GetPatients();
 
@@ -42,7 +43,6 @@ namespace AppointmentApi.Controllers
         [HttpGet("{patientId}/Appointment")]
         public IActionResult GetPatientAppointments(int patientId)
         {
-            Log.Debug($"GET patient/{patientId}/appointment");
             Log.Information("Getting information about appointments of specific patient");
             var patientAppointment = _patientBusiness.GetPatientAppointments(patientId);
 
@@ -59,7 +59,6 @@ namespace AppointmentApi.Controllers
                 return Unauthorized();
             }
 
-            Log.Debug($"GET patient, patientId={patientId}");
             Log.Information("Getting information about patient");
             var patient = _patientBusiness.GetPatient(patientId);
 
@@ -71,9 +70,6 @@ namespace AppointmentApi.Controllers
         [HttpPost]
         public IActionResult AddPatient([FromBody] Patient patient)
         {
-            Log.Debug($"POST patient, " +
-                $"FullName={patient.FullName}, " +
-                $"Login={patient.Login}");
             Log.Information($"Adding new patient {patient.FullName}");
             var newPatient = _patientBusiness.AddPatient(patient);
             if (newPatient == null)
@@ -101,7 +97,6 @@ namespace AppointmentApi.Controllers
                 return Forbid();
             }
 
-            Log.Debug($"PUT patient with Id={patientId}");
             Log.Information($"Updating information about patient {patient.FullName}");
             var updatedPatient = _patientBusiness.UpdatePatient(patient);
             if (updatedPatient == null)

@@ -10,11 +10,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Serilog;
+using AppointmentApi.Filters.Action;
 
 namespace AppointmentApi.Controllers
 {
     //[Authorize]
     //[ApiController]
+    [ServiceFilter(typeof(LoggingFilter))]
     [Route("[controller]")]
     public class DoctorController : ControllerBase
     {
@@ -29,7 +31,6 @@ namespace AppointmentApi.Controllers
         [HttpGet]
         public IActionResult GetDoctors()
         {
-            Log.Debug("GET doctors");
             Log.Information("Getting information about doctors");
             var doctors = _doctorBusiness.GetDoctors();
 
@@ -40,7 +41,6 @@ namespace AppointmentApi.Controllers
         [HttpGet("{doctorId}")]
         public IActionResult GetDoctor(int doctorId)
         {
-            Log.Debug($"GET doctor, doctorId=${doctorId}");
             Log.Information("Getting information about doctor");
             var doctor = _doctorBusiness.GetDoctor(doctorId);
 
@@ -60,8 +60,6 @@ namespace AppointmentApi.Controllers
         [HttpPost]
         public IActionResult AddDoctor([FromBody] Doctor doctor)
         {
-            Log.Debug($"POST doctor, FullName={doctor.FullName}, " +
-                $"Login={doctor.Login}");
             Log.Information($"Adding new doctor {doctor.FullName}");
             var newDoctor = _doctorBusiness.AddDoctor(doctor);
             if (newDoctor == null)
@@ -84,7 +82,6 @@ namespace AppointmentApi.Controllers
                 return Forbid();
             }
 
-            Log.Debug($"PUT doctor with Id=${doctorId}");
             Log.Information($"Updating information about doctor {doctor.FullName}");
             var updatedDoctor = _doctorBusiness.UpdateDoctor(doctor);
             if (updatedDoctor == null)

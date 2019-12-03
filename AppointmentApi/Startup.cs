@@ -24,6 +24,7 @@ using System.Text;
 using AppointmentApi.Business.Interfaces;
 using AppointmentApi.Authorization;
 using Serilog;
+using AppointmentApi.Filters.Action;
 
 namespace AppointmentApi
 {
@@ -44,6 +45,8 @@ namespace AppointmentApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<LoggingFilter>();
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
