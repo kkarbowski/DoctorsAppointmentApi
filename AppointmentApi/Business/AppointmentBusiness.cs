@@ -1,6 +1,7 @@
 ﻿using AppointmentApi.Controllers;
 using AppointmentApi.DataAccess;
 using AppointmentModel.Model;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,8 +50,9 @@ namespace AppointmentApi.Business
             {
                 return _appointmentDataAccess.UpdateAppointment(appointment).RemoveReferenceLoop();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Log.Error(ex, "Encountered an exception while trying to execute AppointmentBusiness.UpdateAppointment");
                 return null;
             }
         }

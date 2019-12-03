@@ -10,6 +10,7 @@ using AppointmentModel.Model;
 using AppointmentModel.ReturnModel;
 using AppointmentRazor.Services.Interfaces;
 using AppointmentRazor.Utilities.Json;
+using Serilog;
 
 namespace AppointmentRazor.Services
 {
@@ -31,9 +32,11 @@ namespace AppointmentRazor.Services
             HttpResponseMessage response;
             try
             {
+                Log.Debug($"POST request, URI = {uri}");
                 response = await _httpClient.PostAsync(uri, new StringContent(userJson, Encoding.UTF8, "application/json"));
-            } catch (Exception)
+            } catch (Exception ex)
             {
+                Log.Error(ex, "POST User/login failed");
                 return new AuthenticationReponse() { WasAuthenticationCorrect = false };
             }
 
@@ -41,7 +44,12 @@ namespace AppointmentRazor.Services
   
             if (response.IsSuccessStatusCode)
             {
+                Log.Debug("POST User/login success");
                 token = JsonUtils.Deserialize<Token>(await response.Content.ReadAsStringAsync());
+            }
+            else
+            {
+                Log.Error($"POST User/login failed, status code = {response.StatusCode}");
             }
 
             return new AuthenticationReponse()
@@ -62,13 +70,26 @@ namespace AppointmentRazor.Services
             HttpResponseMessage response;
             try
             {
+                Log.Debug($"POST request, URI = {uri}");
                 response = await _httpClient.PostAsync(uri, new StringContent(userJson, Encoding.UTF8, "application/json"));
-            } catch (Exception)
+            } catch (Exception ex)
             {
+                Log.Error(ex, "POST Patient failed");
                 return false;
             }
 
-            return response.IsSuccessStatusCode;
+            var success = response.IsSuccessStatusCode;
+
+            if (success)
+            {
+                Log.Debug("POST Patient succeeded");
+            }
+            else
+            {
+                Log.Error($"POST Patient failed, status code = {response.StatusCode}");
+            }
+
+            return success;
         }
     }
 }

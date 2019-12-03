@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AppointmentApi.Business.Interfaces;
 using AppointmentModel.Model;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,12 +14,10 @@ namespace AppointmentApi.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
         private readonly IUserBusiness _userBusiness;
 
-        public UserController(ILogger<UserController> logger, IUserBusiness userBusiness)
+        public UserController(IUserBusiness userBusiness)
         {
-            _logger = logger;
             _userBusiness = userBusiness;
         }
 
@@ -27,18 +25,28 @@ namespace AppointmentApi.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] User user)
         {
+            Log.Information($"Trying to login {user.Login}");
             var token = _userBusiness.Login(user);
             if (token == null)
+            {
+                Log.Error("Wrong credentials - Unauthorized");
                 return Unauthorized();
+            }
+            Log.Information("Successfully logged in");
             return Ok(token);
         }
 
         [HttpPost("register")]
         public IActionResult Register([FromBody] User user)
         {
+            Log.Information($"Trying to register user {user.Login}");
             var dbUser = _userBusiness.Register(user);
             if (dbUser == null)
+            {
+                Log.Error("Bad Request - user was not registered");
                 return BadRequest();
+            }
+            Log.Information($"Successfully registered user {user.Login}");
             return Created(nameof(Login), dbUser);
         }
     }

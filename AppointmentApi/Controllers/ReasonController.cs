@@ -7,19 +7,17 @@ using AppointmentModel.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace AppointmentApi.Controllers
 {
     [Route("[controller]")]
     public class ReasonController : ControllerBase
     {
-        private readonly ILogger<ReasonController> _logger;
         private readonly IReasonBusiness _reasonBusiness;
 
-        public ReasonController(ILogger<ReasonController> logger, IReasonBusiness reasonBusiness)
+        public ReasonController(IReasonBusiness reasonBusiness)
         {
-            _logger = logger;
             _reasonBusiness = reasonBusiness;
         }
 
@@ -27,30 +25,60 @@ namespace AppointmentApi.Controllers
         [HttpGet]
         public IActionResult GetReasons()
         {
-            return Ok(_reasonBusiness.GetReasons());
+            Log.Debug("GET reasons");
+            Log.Information("Getting information about reasons");
+            var reasons = _reasonBusiness.GetReasons();
+
+            return Ok(reasons);
         }
 
         //[Authorize(Roles = Role.Patient)]
         [HttpGet("{reasonId}")]
         public IActionResult GetReason(int reasonId)
         {
-            return Ok(_reasonBusiness.GetReason(reasonId));
+            Log.Debug($"GET reason, reasonId={reasonId}");
+            Log.Information("Getting information about reason");
+            var reason = _reasonBusiness.GetReason(reasonId);
+
+            return Ok(reason);
         }
 
         //[Authorize(Roles = Role.Doctor)]
         [HttpPost]
         public IActionResult AddReason([FromBody] Reason reason)
         {
-            return Created(nameof(GetReason), _reasonBusiness.AddReason(reason));
+            Log.Debug("POST reason");
+            Log.Information("Adding new reason");
+            var newReason = _reasonBusiness.AddReason(reason);
+            if (newReason == null)
+            {
+                Log.Error("Bad Request - reason was not added");
+                return BadRequest();
+            }
+
+            Log.Information("Reason was added");
+            return Created(nameof(GetReason), newReason);
         }
 
         //[Authorize(Roles = Role.Doctor)]
         [HttpPut("{reasonId}")]
         public IActionResult UpdateReason(int reasonId, [FromBody] Reason reason)
         {
-            if (reason.ReasonId != reasonId)
+            if (reason.ReasonId != reasonId) {
+                Log.Error("Reason ID does not match");
                 return Forbid();
-            return Created(nameof(GetReason), _reasonBusiness.UpdateReason(reason));
+            }
+
+            Log.Debug($"PUT reason with Id={reasonId}");
+            Log.Information("Updating reasons");
+            var updatedReason = _reasonBusiness.UpdateReason(reason);
+            if (updatedReason == null)
+            {
+                Log.Error("Bad Request - reason was not updated");
+            }
+
+            Log.Information("Reason was updated");
+            return Created(nameof(GetReason), updatedReason);
         }
     }
 }

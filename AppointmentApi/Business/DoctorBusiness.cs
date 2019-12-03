@@ -6,6 +6,7 @@ using AppointmentApi.Tools.Interfaces;
 using AppointmentModel;
 using AppointmentModel.Model;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,8 +51,9 @@ namespace AppointmentApi.Business
                 doctor.Roles = new List<string> { Role.Doctor, Role.Patient };
                 return _doctorDataAccess.UpdateDoctor((Doctor)doctor.NoDateTimeAdd());
             }
-            catch
+            catch (Exception ex)
             {
+                Log.Error(ex, "Encountered an exception while executing DoctorBusiness.UpdateDoctor");
                 return null;
             }
         }

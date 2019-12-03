@@ -4,12 +4,12 @@ using AppointmentModel;
 using AppointmentModel.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace AppointmentApi.Controllers
 {
@@ -18,13 +18,11 @@ namespace AppointmentApi.Controllers
     [Route("[controller]")]
     public class PatientController : ControllerBase
     {
-        private readonly ILogger<PatientController> _logger;
         private readonly IPatientBusiness _patientBusiness;
         private readonly IPatientAuthorization _patientAuthorization;
 
-        public PatientController(ILogger<PatientController> logger, IPatientBusiness patientBusiness, IPatientAuthorization patientAuthorization)
+        public PatientController(IPatientBusiness patientBusiness, IPatientAuthorization patientAuthorization)
         {
-            _logger = logger;
             _patientBusiness = patientBusiness;
             _patientAuthorization = patientAuthorization;
         }
@@ -33,6 +31,8 @@ namespace AppointmentApi.Controllers
         [HttpGet]
         public IActionResult GetPatients()
         {
+            Log.Debug("GET patients");
+            Log.Information("Getting information about patients");
             var patients = _patientBusiness.GetPatients();
 
             return Ok(patients);
@@ -42,6 +42,8 @@ namespace AppointmentApi.Controllers
         [HttpGet("{patientId}/Appointment")]
         public IActionResult GetPatientAppointments(int patientId)
         {
+            Log.Debug($"GET patient/{patientId}/appointment");
+            Log.Information("Getting information about appointments of specific patient");
             var patientAppointment = _patientBusiness.GetPatientAppointments(patientId);
 
             return Ok(patientAppointment);
@@ -52,8 +54,13 @@ namespace AppointmentApi.Controllers
         public IActionResult GetPatient(int patientId)
         {
             if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(patientId, User))
+            {
+                Log.Error("You are not authorized to do this");
                 return Unauthorized();
-            
+            }
+
+            Log.Debug($"GET patient, patientId={patientId}");
+            Log.Information("Getting information about patient");
             var patient = _patientBusiness.GetPatient(patientId);
 
             return Ok(patient);
@@ -64,9 +71,18 @@ namespace AppointmentApi.Controllers
         [HttpPost]
         public IActionResult AddPatient([FromBody] Patient patient)
         {
+            Log.Debug($"POST patient, " +
+                $"FullName={patient.FullName}, " +
+                $"Login={patient.Login}");
+            Log.Information($"Adding new patient {patient.FullName}");
             var newPatient = _patientBusiness.AddPatient(patient);
             if (newPatient == null)
+            {
+                Log.Error("Bad Request - patient was not added");
                 return BadRequest();
+            }
+
+            Log.Information("Patient was added");
             return Created(nameof(GetPatient), newPatient);
         }
 
@@ -75,13 +91,26 @@ namespace AppointmentApi.Controllers
         public IActionResult UpdatePatient(int patientId, [FromBody] Patient patient)
         {
             if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(patient.UserId, User))
+            {
+                Log.Error("You are not authorized to do this");
                 return Unauthorized();
+            }
             if (patientId != patient.UserId)
+            {
+                Log.Error("Patient ID does not match");
                 return Forbid();
+            }
 
+            Log.Debug($"PUT patient with Id={patientId}");
+            Log.Information($"Updating information about patient {patient.FullName}");
             var updatedPatient = _patientBusiness.UpdatePatient(patient);
             if (updatedPatient == null)
+            {
+                Log.Error("Bad Request - patient was not updated");
                 return BadRequest();
+            }
+
+            Log.Information("Patient was updated");
             return Created(nameof(GetPatient), updatedPatient);
         }
 

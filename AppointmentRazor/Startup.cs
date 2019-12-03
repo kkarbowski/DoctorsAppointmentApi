@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Localization;
+using Serilog;
 
 namespace AppointmentRazor
 {
@@ -78,6 +79,7 @@ namespace AppointmentRazor
         {
             if (env.IsDevelopment())
             {
+                Log.Information("Environment = Development");
                 app.UseDeveloperExceptionPage();
             }
             else
