@@ -46,6 +46,15 @@ namespace AppointmentApi.Controllers
         }
 
         //[Authorize(Roles = Role.Doctor)]
+        [HttpGet("{doctorId}/Appointment")]
+        public IActionResult GetDoctorAppointments(int doctorId)
+        {
+            var doctorAppointments = _doctorBusiness.GetDoctorAppointments(doctorId);
+
+            return Ok(doctorAppointments);
+        }
+
+        //[Authorize(Roles = Role.Doctor)]
         [HttpPost]
         public IActionResult AddDoctor([FromBody] Doctor doctor)
         {

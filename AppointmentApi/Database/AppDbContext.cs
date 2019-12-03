@@ -24,10 +24,11 @@ namespace AppointmentApi.Database
         public static void InitializeDatabase()
         {
             using var dbContext = new AppDbContext();
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
 
-            InsertTestData(dbContext);
+            dbContext.Database.EnsureDeleted();
+
+            if (dbContext.Database.EnsureCreated())
+                InsertTestData(dbContext);
         }
 
         private static void InsertTestData(AppDbContext dbContext)
@@ -45,7 +46,7 @@ namespace AppointmentApi.Database
             var reason1 = new Reason { ReasonId = 1, LangReasonDictionary = new Dictionary<string, string> { { "pl", "Powod1" }, { "en", "Reason1" } } };
             var reason2 = new Reason { ReasonId = 2, LangReasonDictionary = new Dictionary<string, string> { { "pl", "Powod2" }, { "en", "Reason2" } } };
 
-            var appointmentReason1 = new Appointment2Reason { Reason = reason1, ReasonId =  1};
+            var appointmentReason1 = new Appointment2Reason { Reason = reason1, ReasonId = 1 };
             var appointmentReason3 = new Appointment2Reason { Reason = reason1, ReasonId = 1 };
             var appointmentReason2 = new Appointment2Reason { Reason = reason2, ReasonId = 2 };
 

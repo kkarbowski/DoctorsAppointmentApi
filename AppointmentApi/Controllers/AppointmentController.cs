@@ -35,7 +35,7 @@ namespace AppointmentApi.Controllers
             return Ok(appointments);
         }
 
-        //[Authorize(Roles = Role.Doctor)]
+        //[Authorize(Roles = Role.Patient)]
         [HttpGet("{appointmentId}")]
         public IActionResult GetAppointment(int appointmentId)
         {
@@ -48,8 +48,8 @@ namespace AppointmentApi.Controllers
         [HttpPost]
         public IActionResult AddAppointment([FromBody] Appointment appointment)
         {
-            if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
-                return Unauthorized();
+            //if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
+            //    return Unauthorized();
 
             var newAppointment = _appointmentBusiness.AddAppointment(appointment);
             if (newAppointment == null)
@@ -61,10 +61,10 @@ namespace AppointmentApi.Controllers
         [HttpPut("{appointmentId}")]
         public IActionResult UpdateAppointment(int appointmentId, [FromBody] Appointment appointment)
         {
-            if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
-                return Unauthorized();
-            if (appointmentId != appointment.AppointmentId)
-                return Forbid();
+            //if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
+            //    return Unauthorized();
+            //if (appointmentId != appointment.AppointmentId)
+            //    return Forbid();
 
             var updatedAppointment = _appointmentBusiness.UpdateAppointment(appointment);
             if (updatedAppointment == null)
@@ -74,18 +74,12 @@ namespace AppointmentApi.Controllers
 
         //[Authorize(Roles = Role.Patient)]
         [HttpDelete("{appointmentId}")]
-        public IActionResult CancelAppointment(int appointmentId, [FromBody] Appointment appointment)
+        public IActionResult CancelAppointment(int appointmentId)
         {
-            if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
-                return Unauthorized();
-            if (appointmentId != appointment.AppointmentId)
-                return Forbid();
-
+            var appointment = _appointmentBusiness.GetAppointment(appointmentId);
             appointment.IsCanceled = true;
-            var updatedAppointment = _appointmentBusiness.UpdateAppointment(appointment);
-            if (updatedAppointment == null)
-                return BadRequest();
-            return Created(nameof(GetAppointment), updatedAppointment);
+
+            return UpdateAppointment(appointmentId, appointment);
         }
     }
 }

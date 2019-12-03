@@ -10,5 +10,6 @@ namespace AppointmentApi.DataAccess
         Doctor GetDoctor(int doctorId);
 
         IEnumerable<Doctor> GetDoctors();
+        IEnumerable<Appointment> GetDoctorAppointments(int doctorId);
     }
 }

@@ -39,13 +39,37 @@ namespace AppointmentApi.DataAccess
 
         public Appointment UpdateAppointment(Appointment appointment)
         {
-            _appDbContext.Patients.Attach(appointment.Patient);
-            _appDbContext.Doctors.Attach(appointment.Doctor);
+            _appDbContext.Entry(appointment).State = EntityState.Modified;
 
-            var newAppointment = _appDbContext.Appointments.Update(appointment.RemoveReferenceLoop());
+            var reasonsCount = appointment.AppointmentReasons.Count();
+            for (int i = 0; i < reasonsCount; ++i)
+                _appDbContext.Entry(appointment.AppointmentReasons.First()).State = EntityState.Modified;
+
             _appDbContext.SaveChanges();
 
-            return GetAppointment(newAppointment.Entity.AppointmentId);
+            return GetAppointment(appointment.AppointmentId);
+        }
+
+        public Appointment AddAppointment(Appointment appointment)
+        {
+            _appDbContext.Entry(appointment).State = EntityState.Added;
+
+            var reasonsCount = appointment.AppointmentReasons.Count();
+            for (int i = 0; i < reasonsCount; ++i)
+                _appDbContext.Entry(appointment.AppointmentReasons.First()).State = EntityState.Added;
+
+            _appDbContext.SaveChanges();
+
+            return GetAppointment(appointment.AppointmentId);
+        }
+
+        public Appointment GetAppointmentForSpecificDateAndDoctor(DateTime appointmentDate, int doctorid)
+        {
+            return _appDbContext.Appointments
+                .Where(a => a.Doctor.UserId == doctorid
+                    && a.AppointmentDate < appointmentDate.AddMinutes(15)
+                    && a.AppointmentDate > appointmentDate.AddMinutes(-15))
+                .FirstOrDefault();
         }
     }
 }
