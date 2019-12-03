@@ -40,7 +40,7 @@ namespace AppointmentApi.Controllers
 
         //[Authorize(Roles = Role.Doctor)]
         [HttpGet("{patientId}/Appointment")]
-        public IActionResult GetPatientAppointmenta(int patientId)
+        public IActionResult GetPatientAppointments(int patientId)
         {
             var patientAppointment = _patientBusiness.GetPatientAppointments(patientId);
 
