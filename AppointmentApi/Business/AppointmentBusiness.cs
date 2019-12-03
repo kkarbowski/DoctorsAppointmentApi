@@ -18,10 +18,6 @@ namespace AppointmentApi.Business
             _appointmentDataAccess = appointmentDataAccess;
         }
 
-        public Appointment AddAppointment(Appointment appointment)
-        {
-            return UpdateAppointment(appointment);
-        }
 
         public Appointment GetAppointment(int appointmentId)
         {
@@ -31,6 +27,21 @@ namespace AppointmentApi.Business
         public IEnumerable<Appointment> GetAppointments()
         {
             return _appointmentDataAccess.GetAppointments().Select(a => a.RemoveReferenceLoop());
+        }
+
+        public Appointment AddAppointment(Appointment appointment)
+        {
+            try
+            {
+                if (!IsAppointmentDateAvailableForGivenDoctor(appointment.AppointmentDate, appointment.Doctor.UserId))
+                    throw new Exception();
+
+                return _appointmentDataAccess.AddAppointment(appointment).RemoveReferenceLoop();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public Appointment UpdateAppointment(Appointment appointment)
@@ -45,5 +56,11 @@ namespace AppointmentApi.Business
                 return null;
             }
         }
+
+        private bool IsAppointmentDateAvailableForGivenDoctor(DateTime appointmentDate, int doctorid)
+        {
+            var appointment = _appointmentDataAccess.GetAppointmentForSpecificDateAndDoctor(appointmentDate, doctorid);
+            return appointment == null ? true : false;
+        } 
     }
 }

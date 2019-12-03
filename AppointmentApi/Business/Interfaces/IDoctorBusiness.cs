@@ -12,5 +12,6 @@ namespace AppointmentApi.Business
         Doctor GetDoctor(int doctorId);
 
         Doctor UpdateDoctor(Doctor doctor);
+        IEnumerable<Appointment> GetDoctorAppointments(int doctorId);
     }
 }

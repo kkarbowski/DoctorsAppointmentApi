@@ -24,10 +24,11 @@ namespace AppointmentApi.Database
         public static void InitializeDatabase()
         {
             using var dbContext = new AppDbContext();
-            dbContext.Database.EnsureDeleted();
-            dbContext.Database.EnsureCreated();
 
-            InsertTestData(dbContext);
+            dbContext.Database.EnsureDeleted();
+
+            if (dbContext.Database.EnsureCreated())
+                InsertTestData(dbContext);
         }
 
         private static void InsertTestData(AppDbContext dbContext)
@@ -58,7 +59,7 @@ namespace AppointmentApi.Database
             var reason11 = new Reason { ReasonId = 11, LangReasonDictionary = new Dictionary<string, string> { { "pl", "Inne" }, { "en", "Other" } } };
 
             //TODO: Remove dummy appointments
-            var appointmentReason1 = new Appointment2Reason { Reason = reason1, ReasonId =  1};
+            var appointmentReason1 = new Appointment2Reason { Reason = reason1, ReasonId = 1 };
             var appointmentReason3 = new Appointment2Reason { Reason = reason1, ReasonId = 1 };
             var appointmentReason2 = new Appointment2Reason { Reason = reason2, ReasonId = 2 };
 

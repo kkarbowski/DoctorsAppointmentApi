@@ -57,5 +57,10 @@ namespace AppointmentApi.Business
                 return null;
             }
         }
+
+        public IEnumerable<Appointment> GetDoctorAppointments(int doctorId)
+        {
+            return _doctorDataAccess.GetDoctorAppointments(doctorId).Select(a => a.RemoveReferenceLoop());
+        }
     }
 }
