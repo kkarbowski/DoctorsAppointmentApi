@@ -23,6 +23,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AppointmentApi.Business.Interfaces;
 using AppointmentApi.Authorization;
+using Serilog;
 
 namespace AppointmentApi
 {
@@ -35,6 +36,7 @@ namespace AppointmentApi
 
             // Recreating db.
             AppDbContext.InitializeDatabase();
+            Log.Information("Database initalized");
         }
 
         public IConfiguration Configuration { get; }
@@ -92,6 +94,7 @@ namespace AppointmentApi
         {
             if (env.IsDevelopment())
             {
+                Log.Information("Environment = Development");
                 app.UseDeveloperExceptionPage();
             }
 

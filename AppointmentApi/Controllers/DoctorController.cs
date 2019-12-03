@@ -4,7 +4,6 @@ using AppointmentModel;
 using AppointmentModel.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +18,10 @@ namespace AppointmentApi.Controllers
     [Route("[controller]")]
     public class DoctorController : ControllerBase
     {
-        private readonly ILogger<DoctorController> _logger;
         private readonly IDoctorBusiness _doctorBusiness;
 
-        public DoctorController(ILogger<DoctorController> logger, IDoctorBusiness doctorBusiness)
+        public DoctorController(IDoctorBusiness doctorBusiness)
         {
-            _logger = logger;
             _doctorBusiness = doctorBusiness;
         }
 
@@ -32,6 +29,8 @@ namespace AppointmentApi.Controllers
         [HttpGet]
         public IActionResult GetDoctors()
         {
+            Log.Debug("GET doctors");
+            Log.Information("Getting information about doctors");
             var doctors = _doctorBusiness.GetDoctors();
 
             return Ok(doctors);
@@ -40,7 +39,9 @@ namespace AppointmentApi.Controllers
         //[Authorize(Roles = Role.Patient)]
         [HttpGet("{doctorId}")]
         public IActionResult GetDoctor(int doctorId)
-        {           
+        {
+            Log.Debug($"GET doctor, doctorId=${doctorId}");
+            Log.Information("Getting information about doctor");
             var doctor = _doctorBusiness.GetDoctor(doctorId);
 
             return Ok(doctor);
@@ -50,9 +51,17 @@ namespace AppointmentApi.Controllers
         [HttpPost]
         public IActionResult AddDoctor([FromBody] Doctor doctor)
         {
+            Log.Debug($"POST doctor, FullName={doctor.FullName}, " +
+                $"Login={doctor.Login}");
+            Log.Information($"Adding new doctor {doctor.FullName}");
             var newDoctor = _doctorBusiness.AddDoctor(doctor);
             if (newDoctor == null)
+            {
+                Log.Error("Bad Request - doctor was not added properly");
                 return BadRequest();
+            }
+
+            Log.Information("Doctor was added");
             return Created(nameof(GetDoctor), newDoctor);
         }
 
@@ -61,11 +70,21 @@ namespace AppointmentApi.Controllers
         public IActionResult UpdateDoctor(int doctorId, [FromBody] Doctor doctor)
         {
             if (doctorId != doctor.UserId)
+            {
+                Log.Error("Doctor ID does not match");
                 return Forbid();
+            }
 
+            Log.Debug($"PUT doctor with Id=${doctorId}");
+            Log.Information($"Updating information about doctor {doctor.FullName}");
             var updatedDoctor = _doctorBusiness.UpdateDoctor(doctor);
             if (updatedDoctor == null)
+            {
+                Log.Error("Bad Request - doctor was not updated");
                 return BadRequest();
+            }
+
+            Log.Information("Doctor was updated");
             return Created(nameof(GetDoctor), updatedDoctor);
         }
 

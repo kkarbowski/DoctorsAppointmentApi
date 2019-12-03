@@ -4,6 +4,7 @@ using AppointmentApi.Tools.Interfaces;
 using AppointmentModel.Model;
 using AppointmentModel.ReturnModel;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,13 +30,16 @@ namespace AppointmentApi.Business
             try
             {
                 var dbUser = _userDataAccess.GetUser(user.Login);
-                if (dbUser.Password != _hashGenerator.GenerateHash(user.Password))
+                if (dbUser.Password != _hashGenerator.GenerateHash(user.Password)) {
+                    Log.Information("Login failed - wrong password");
                     throw new Exception();
+                }
 
                 return _tokenGenerator.GenerateToken(dbUser);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Log.Error(ex, "Encountered an exception while executing UserBusiness.Login");
                 return null;
             }
         }
@@ -47,8 +51,9 @@ namespace AppointmentApi.Business
                 user.Password = _hashGenerator.GenerateHash(user.Password);
                 return _userDataAccess.AddUser(user.NoRoles().NoDateTimeAdd());
             }
-            catch
+            catch (Exception ex)
             {
+                Log.Error(ex, "Encountered an exception while executing UserBusiness.Register");
                 return null;
             }
         }
