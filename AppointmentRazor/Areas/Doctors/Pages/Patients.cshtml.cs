@@ -12,9 +12,9 @@ namespace AppointmentRazor.Areas.Doctors.Pages
     public class PatientsModel : PageModel
     {
 
-        IPatientsProfileService patientsProfileService;
+        IProfileService patientsProfileService;
 
-        public PatientsModel(IPatientsProfileService patientsProfileService)
+        public PatientsModel(IProfileService patientsProfileService)
         {
             this.patientsProfileService = patientsProfileService;
         }

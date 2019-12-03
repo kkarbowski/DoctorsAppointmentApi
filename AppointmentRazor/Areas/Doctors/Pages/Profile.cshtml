@@ -1,0 +1,23 @@
+﻿@page
+@model AppointmentRazor.Areas.Doctors.Pages.ProfileModel
+@{
+        ViewData["Title"] = "Profile";
+}
+
+    <div class="d-flex justify-content-center">
+        <div class="flex-column d-flex">
+            @{
+                if (Model.Doctor == null)
+                {
+                    <h2 class="mb-3">@Localizer.Text("Could not load the profile")</h2>
+                    <img class="mx-auto" src="~/img/sad_doctor.jpg" />
+                }
+                else
+                {
+                    <h1 class="text-center my-3">@Localizer.Text("This is your profile, Doctor")</h1>
+                    <h1 class="text-center my-5">@Model.Doctor.FullName</h1>
+                    <img class="mx-auto" src="~/img/doctor_profile.jpg" />
+                }
+            }
+        </div>
+    </div>
