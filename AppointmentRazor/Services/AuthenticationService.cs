@@ -9,7 +9,9 @@ using AppointmentModel;
 using AppointmentModel.Model;
 using AppointmentModel.ReturnModel;
 using AppointmentRazor.Services.Interfaces;
+using AppointmentRazor.Utilities.Authentication;
 using AppointmentRazor.Utilities.Json;
+using Microsoft.AspNetCore.Http;
 using Serilog;
 
 namespace AppointmentRazor.Services
@@ -17,10 +19,12 @@ namespace AppointmentRazor.Services
     public class AuthenticationService : IAuthenticationService
     {
         private readonly HttpClient _httpClient;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthenticationService(HttpClient httpClient)
+        public AuthenticationService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
         {
             _httpClient = httpClient;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<AuthenticationReponse> Login(User user)
@@ -41,24 +45,28 @@ namespace AppointmentRazor.Services
             }
 
             Token token = null;
-  
+            var authenticationResponse = new AuthenticationReponse()
+            {
+                WasAuthenticationCorrect = response.IsSuccessStatusCode
+            };
+
             if (response.IsSuccessStatusCode)
             {
                 Log.Debug("POST User/login success");
                 token = JsonUtils.Deserialize<Token>(await response.Content.ReadAsStringAsync());
+
+                authenticationResponse.Roles = token?.Roles.ToList();
+                authenticationResponse.PatientId = token?.UserId;
+                authenticationResponse.Token = token?.TokenString;
+
+                AuthenticationUtils.SaveUserToSession(_httpContextAccessor.HttpContext, authenticationResponse);    
             }
             else
             {
                 Log.Error($"POST User/login failed, status code = {response.StatusCode}");
             }
 
-            return new AuthenticationReponse()
-            {
-                WasAuthenticationCorrect = response.IsSuccessStatusCode,
-                Roles = token?.Roles.ToList(),
-                PatientId = token?.UserId,
-                Token = token?.TokenString
-            };
+            return authenticationResponse;
         }
 
         public async Task<bool> Register(Patient patient)

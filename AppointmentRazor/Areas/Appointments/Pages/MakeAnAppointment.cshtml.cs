@@ -7,6 +7,7 @@ using AppointmentModel.Model;
 using AppointmentRazor.Services.Interfaces;
 using AppointmentRazor.Utilities.Authentication;
 using AppointmentRazor.Utilities.Localization;
+using AppointmentRazor.Utilities.Localization.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,10 +16,10 @@ namespace AppointmentRazor.Areas.Patients.Pages
 {
     public class MakeAnAppointmentModel : PageModel
     {
-        private readonly CultureLocalizer _cultureLocalizer;
-        private IAppointmentsService _appointmentsService;
+        private readonly ICultureLocalizer _cultureLocalizer;
+        private readonly IAppointmentsService _appointmentsService;
 
-        public MakeAnAppointmentModel([FromServices] CultureLocalizer cultureLocalizer, IAppointmentsService appointmentsService)
+        public MakeAnAppointmentModel(ICultureLocalizer cultureLocalizer, IAppointmentsService appointmentsService)
         {
             _cultureLocalizer = cultureLocalizer;
             _appointmentsService = appointmentsService;

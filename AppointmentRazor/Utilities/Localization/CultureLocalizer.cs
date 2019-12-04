@@ -1,4 +1,5 @@
 ﻿using AppointmentRazor.Resources;
+using AppointmentRazor.Utilities.Localization.Interfaces;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AppointmentRazor.Utilities.Localization
 {
-    public class CultureLocalizer
+    public class CultureLocalizer : ICultureLocalizer
     {
         private readonly IStringLocalizer _localizer;
         public CultureLocalizer(IStringLocalizerFactory factory)

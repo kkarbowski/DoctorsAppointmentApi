@@ -7,6 +7,7 @@ using AppointmentModel;
 using AppointmentModel.Model;
 using AppointmentRazor.Services.Interfaces;
 using AppointmentRazor.Utilities.Localization;
+using AppointmentRazor.Utilities.Localization.Interfaces;
 using AppointmentRazor.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,10 +19,10 @@ namespace AppointmentRazor.Pages
         [BindProperty]
         public RegistrationForm RegistrationForm { get; set; }
 
-        private readonly CultureLocalizer _cultureLocalizer;
+        private readonly ICultureLocalizer _cultureLocalizer;
         private readonly IAuthenticationService authenticationService;
 
-        public RegisterModel([FromServices] CultureLocalizer cultureLocalizer, IAuthenticationService authenticationService)
+        public RegisterModel(ICultureLocalizer cultureLocalizer, IAuthenticationService authenticationService)
         {
             _cultureLocalizer = cultureLocalizer;
             this.authenticationService = authenticationService;
