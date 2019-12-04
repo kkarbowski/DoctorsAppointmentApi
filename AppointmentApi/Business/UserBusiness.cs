@@ -1,5 +1,6 @@
 ﻿using AppointmentApi.Business.Interfaces;
 using AppointmentApi.DataAccess.Interfaces;
+using AppointmentApi.Exceptions;
 using AppointmentApi.Tools.Interfaces;
 using AppointmentModel.Model;
 using AppointmentModel.ReturnModel;
@@ -30,16 +31,15 @@ namespace AppointmentApi.Business
             try
             {
                 var dbUser = _userDataAccess.GetUser(user.Login);
-                if (dbUser.Password != _hashGenerator.GenerateHash(user.Password)) {
-                    Log.Information("Login failed - wrong password");
-                    throw new Exception();
+                if (dbUser.Password != _hashGenerator.GenerateHash(user.Password))
+                {
+                    throw new WrongPasswordException(user.Login);
                 }
 
                 return _tokenGenerator.GenerateToken(dbUser);
-            }
-            catch (Exception ex)
+            } catch (WrongPasswordException ex)
             {
-                Log.Error(ex, "Encountered an exception while executing UserBusiness.Login");
+                Log.Error(ex.Message);
                 return null;
             }
         }

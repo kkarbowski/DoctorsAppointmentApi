@@ -1,6 +1,7 @@
 ﻿using AppointmentApi.DataAccess;
 using AppointmentApi.DataAccess.Interfaces;
 using AppointmentApi.Database;
+using AppointmentApi.Exceptions;
 using AppointmentApi.Tools;
 using AppointmentApi.Tools.Interfaces;
 using AppointmentModel;
@@ -40,7 +41,14 @@ namespace AppointmentApi.Business
 
         public Patient GetPatient(int patientId)
         {
-            return (Patient)_patientDataAccess.GetPatient(patientId).NoPassword();
+            var patient = _patientDataAccess.GetPatient(patientId);
+
+            if (patient == null)
+            {
+                throw new EntityNotFoundException(nameof(Patient), patientId);
+            }
+
+            return (Patient)patient.NoPassword();
         }
 
         public Patient UpdatePatient(Patient patient)
