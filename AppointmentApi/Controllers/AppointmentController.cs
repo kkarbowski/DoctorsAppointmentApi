@@ -58,7 +58,7 @@ namespace AppointmentApi.Controllers
             if (newAppointment == null)
             {
                 Log.Warning("Bad Request - appointment was not added");
-                return BadRequest();
+                return Conflict();
             }
             
             Log.Information("Appointment was added");
