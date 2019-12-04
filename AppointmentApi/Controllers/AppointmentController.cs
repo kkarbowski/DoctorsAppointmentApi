@@ -69,10 +69,10 @@ namespace AppointmentApi.Controllers
         [HttpPut("{appointmentId}")]
         public IActionResult UpdateAppointment(int appointmentId, [FromBody] Appointment appointment)
         {
-            if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
-                return Unauthorized();
-            if (appointmentId != appointment.AppointmentId)
-                return Forbid();
+            //if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
+            //    return Unauthorized();
+            //if (appointmentId != appointment.AppointmentId)
+            //    return Forbid();
 
             Log.Information($"Updating appointment for date ${appointment.AppointmentDate.Date} with " +
                 $"patient ${appointment.Patient.FullName} " +
