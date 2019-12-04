@@ -58,7 +58,7 @@ namespace AppointmentRazor.Utilities.Authentication
 
         public static int? GetPatientId(HttpContext httpContext)
         {
-            return httpContext.Session.GetInt32(patientIdSessionKey);
+            return httpContext.Session?.GetInt32(patientIdSessionKey);
         }
     }
 }

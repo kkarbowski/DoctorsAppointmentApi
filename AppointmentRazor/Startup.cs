@@ -10,6 +10,7 @@ using AppointmentRazor.Services;
 using AppointmentRazor.Services.Interfaces;
 using AppointmentRazor.Utilities;
 using AppointmentRazor.Utilities.Localization;
+using AppointmentRazor.Utilities.Localization.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -68,7 +69,7 @@ namespace AppointmentRazor
 
             // Configure DI
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<CultureLocalizer>();
+            services.AddSingleton<ICultureLocalizer, CultureLocalizer>();
             services.AddHttpClient<IProfileService, ProfileService>();
             services.AddHttpClient<IAppointmentsService, AppointmentsService>();
             services.AddHttpClient<IAuthenticationService, AuthenticationService>();

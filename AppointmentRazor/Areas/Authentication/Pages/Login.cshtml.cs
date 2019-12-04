@@ -8,6 +8,7 @@ using AppointmentModel.Model;
 using AppointmentRazor.Services.Interfaces;
 using AppointmentRazor.Utilities.Authentication;
 using AppointmentRazor.Utilities.Localization;
+using AppointmentRazor.Utilities.Localization.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,10 +17,10 @@ namespace AppointmentRazor.Pages
 {
     public class LoginModel : PageModel
     {
-        private readonly CultureLocalizer _cultureLocalizer;
+        private readonly ICultureLocalizer _cultureLocalizer;
         private readonly IAuthenticationService authenticationService;
 
-        public LoginModel([FromServices] CultureLocalizer cultureLocalizer, IAuthenticationService authenticationService)
+        public LoginModel(ICultureLocalizer cultureLocalizer, IAuthenticationService authenticationService)
         {
             _cultureLocalizer = cultureLocalizer;
             this.authenticationService = authenticationService;
@@ -47,18 +48,15 @@ namespace AppointmentRazor.Pages
         {
             if (ModelState.IsValid)
             {
-                var authenticationReponse = 
-                    await authenticationService.Login(
-                        new User() 
-                        { 
-                            Login = LoginForm.Username, 
-                            Password = LoginForm.Password 
-                        });
+                var user = new User()
+                {
+                    Login = LoginForm.Username,
+                    Password = LoginForm.Password
+                };
+                var authenticationReponse = await authenticationService.Login(user);
 
                 if(authenticationReponse.WasAuthenticationCorrect)
                 {
-                    AuthenticationUtils.SaveUserToSession(HttpContext, authenticationReponse);
-
                     HttpContext.Response.Redirect(CurentCultureUtils.GetCurrentCultureLink("Index"));
 
                     return null;
