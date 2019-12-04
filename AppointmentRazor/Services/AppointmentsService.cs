@@ -197,16 +197,21 @@ namespace AppointmentRazor.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "POST Appointment failed");
-                //TODO Change this once server returns this option
-                return AppointmentSetResponse.DATE_NOT_AVAILABLE;
+                //TODO This is just for fun - noone will see it
+                return AppointmentSetResponse.DOCTOR_NOT_AVAILABLE;
             }
 
+            if(response.StatusCode == System.Net.HttpStatusCode.Conflict)
+            {
+                Log.Debug("POST Date not available");
+                return AppointmentSetResponse.DATE_NOT_AVAILABLE;
+            }
 
             if (!response.IsSuccessStatusCode)
             {
                 Log.Error($"POST Appointment failed, status code = {response.StatusCode}");
                 //TODO Change this once server returns this option
-                return AppointmentSetResponse.DOCTOR_NOT_AVAILABLE;
+                return AppointmentSetResponse.DATE_NOT_AVAILABLE;
             }
 
             Log.Debug("POST Appointment success");
