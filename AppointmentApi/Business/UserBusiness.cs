@@ -37,7 +37,7 @@ namespace AppointmentApi.Business
                 }
 
                 return _tokenGenerator.GenerateToken(dbUser);
-            } catch (WrongPasswordException ex)
+            } catch (Exception ex)
             {
                 Log.Error(ex.Message);
                 return null;
