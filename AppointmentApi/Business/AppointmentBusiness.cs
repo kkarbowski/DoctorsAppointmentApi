@@ -1,5 +1,6 @@
 ﻿using AppointmentApi.Controllers;
 using AppointmentApi.DataAccess;
+using AppointmentApi.Exceptions;
 using AppointmentModel.Model;
 using Serilog;
 using System;
@@ -21,7 +22,14 @@ namespace AppointmentApi.Business
 
         public Appointment GetAppointment(int appointmentId)
         {
-            return _appointmentDataAccess.GetAppointment(appointmentId).RemoveReferenceLoop();
+            var appointment = _appointmentDataAccess.GetAppointment(appointmentId);
+
+            if (appointment == null)
+            {
+                throw new EntityNotFoundException(nameof(Appointment), appointmentId);
+            }
+
+            return appointment.RemoveReferenceLoop();
         }
 
         public IEnumerable<Appointment> GetAppointments()

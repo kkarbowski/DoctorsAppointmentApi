@@ -24,7 +24,7 @@ namespace AppointmentApi.DataAccess
                 .Include(a => a.Patient)
                 .Include(a => a.AppointmentReasons)
                     .ThenInclude(ar => ar.Reason)
-                .Single(a => a.AppointmentId == appointmentId);
+                .SingleOrDefault(a => a.AppointmentId == appointmentId);
         }
 
         public IEnumerable<Appointment> GetAppointments()

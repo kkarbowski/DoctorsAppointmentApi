@@ -25,6 +25,7 @@ using AppointmentApi.Business.Interfaces;
 using AppointmentApi.Authorization;
 using Serilog;
 using AppointmentApi.Filters.Action;
+using AppointmentApi.Filters.Exception;
 
 namespace AppointmentApi
 {
@@ -45,7 +46,7 @@ namespace AppointmentApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<LoggingFilter>();
+            
 
             services.AddControllers();
 
@@ -90,6 +91,12 @@ namespace AppointmentApi
             services.AddTransient<ITokenGenerator, TokenGeneratorJWT>();
 
             services.AddTransient<IPatientAuthorization, PatientAuthorization>();
+
+            services.AddScoped<LoggingFilter>();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(CustomExceptionFilter));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
