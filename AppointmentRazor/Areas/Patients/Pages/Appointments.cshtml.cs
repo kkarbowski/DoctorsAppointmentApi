@@ -23,6 +23,8 @@ namespace AppointmentRazor.Pages
         public List<Appointment> Appointments { get; set; }
         public Dictionary<int, string> LocalizedReasons { get; set; }
 
+        public bool IsShownForDoctor { get; set; } = false;
+
         public async Task OnGetAsync()
         {
             await GetAppointments();
@@ -55,7 +57,15 @@ namespace AppointmentRazor.Pages
                 var patientId = AuthenticationUtils.GetPatientId(HttpContext);
                 if(patientId.HasValue)
                 {
-                    Appointments = await appointmentsService.GetAllAppointmentsForUser(patientId.Value);
+                    if(AuthenticationUtils.IsUserInRole(HttpContext, Role.Doctor)) {
+                        IsShownForDoctor = true;
+                        Appointments = await appointmentsService.GetAllAppointmentsForDoctor(patientId.Value);
+                    } else
+                    {
+                        IsShownForDoctor = false;
+                        Appointments = await appointmentsService.GetAllAppointmentsForUser(patientId.Value);
+                    }
+
                     if(Appointments != null)
                     {
                         Appointments.OrderBy(apt => apt.AppointmentDate).ToList();

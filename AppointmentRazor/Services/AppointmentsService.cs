@@ -88,6 +88,32 @@ namespace AppointmentRazor.Services
             return reasons;
         }
 
+        public async Task<List<Appointment>> GetAllAppointmentsForDoctor(int doctorId)
+        {
+            var uri = $"{ApiConfiguration.baseUrl}/Doctor/{doctorId}/Appointment";
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
+
+            HttpResponseMessage response;
+            try
+            {
+                response = await _httpClient.GetAsync(uri);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            List<Appointment> appointments = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                appointments = JsonUtils.Deserialize<List<Appointment>>(await response.Content.ReadAsStringAsync());
+            }
+
+            return appointments;
+        }
+
         public async Task<List<Appointment>> GetAllAppointmentsForUser(int patientId)
         {
             var uri = $"{ApiConfiguration.baseUrl}/Patient/{patientId}/Appointment";
