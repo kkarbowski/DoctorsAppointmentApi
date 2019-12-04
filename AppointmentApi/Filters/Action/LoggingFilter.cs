@@ -39,14 +39,21 @@ namespace AppointmentApi.Filters.Action
                 $"{context.HttpContext.Request.Path}, " +
                 $"response status code = {responseStatusCode}";
 
-            if (responseStatusCode == Microsoft.AspNetCore.Http.StatusCodes.Status200OK ||
-                responseStatusCode == Microsoft.AspNetCore.Http.StatusCodes.Status201Created)
+            List<int> badStatusCodes = new List<int>()
             {
-                Log.Debug(executedMessage);
+                Microsoft.AspNetCore.Http.StatusCodes.Status400BadRequest,
+                Microsoft.AspNetCore.Http.StatusCodes.Status401Unauthorized,
+                Microsoft.AspNetCore.Http.StatusCodes.Status403Forbidden,
+                Microsoft.AspNetCore.Http.StatusCodes.Status404NotFound
+            };
+
+            if (badStatusCodes.Contains(responseStatusCode))
+            {
+                Log.Error(executedMessage);
             }
             else
             {
-                Log.Error(executedMessage);
+                Log.Debug(executedMessage);
             }
         }
     }
