@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AppointmentApi.Business;
+using AppointmentApi.Filters.Action;
 using AppointmentModel.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ using Serilog;
 
 namespace AppointmentApi.Controllers
 {
+    [ServiceFilter(typeof(LoggingFilter))]
     [Route("[controller]")]
     public class ReasonController : ControllerBase
     {
@@ -25,7 +27,6 @@ namespace AppointmentApi.Controllers
         [HttpGet]
         public IActionResult GetReasons()
         {
-            Log.Debug("GET reasons");
             Log.Information("Getting information about reasons");
             var reasons = _reasonBusiness.GetReasons();
 
@@ -36,7 +37,6 @@ namespace AppointmentApi.Controllers
         [HttpGet("{reasonId}")]
         public IActionResult GetReason(int reasonId)
         {
-            Log.Debug($"GET reason, reasonId={reasonId}");
             Log.Information("Getting information about reason");
             var reason = _reasonBusiness.GetReason(reasonId);
 
@@ -47,12 +47,11 @@ namespace AppointmentApi.Controllers
         [HttpPost]
         public IActionResult AddReason([FromBody] Reason reason)
         {
-            Log.Debug("POST reason");
             Log.Information("Adding new reason");
             var newReason = _reasonBusiness.AddReason(reason);
             if (newReason == null)
             {
-                Log.Error("Bad Request - reason was not added");
+                Log.Warning("Bad Request - reason was not added");
                 return BadRequest();
             }
 
@@ -65,16 +64,14 @@ namespace AppointmentApi.Controllers
         public IActionResult UpdateReason(int reasonId, [FromBody] Reason reason)
         {
             if (reason.ReasonId != reasonId) {
-                Log.Error("Reason ID does not match");
                 return Forbid();
             }
 
-            Log.Debug($"PUT reason with Id={reasonId}");
             Log.Information("Updating reasons");
             var updatedReason = _reasonBusiness.UpdateReason(reason);
             if (updatedReason == null)
             {
-                Log.Error("Bad Request - reason was not updated");
+                Log.Warning("Bad Request - reason was not updated");
             }
 
             Log.Information("Reason was updated");

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AppointmentApi.Database;
+using AppointmentApi.Filters.Action;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AppointmentApi.Controllers
 {
     [ApiController]
+    [ServiceFilter(typeof(LoggingFilter))]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {

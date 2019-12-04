@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppointmentApi.Authorization;
 using AppointmentApi.Business;
+using AppointmentApi.Filters.Action;
 using AppointmentModel.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +13,7 @@ using Serilog;
 
 namespace AppointmentApi.Controllers
 {
+    [ServiceFilter(typeof(LoggingFilter))]
     [Route("[controller]")]
     public class AppointmentController : ControllerBase
     {
@@ -28,7 +30,6 @@ namespace AppointmentApi.Controllers
         [HttpGet]
         public IActionResult GetAppointments()
         {
-            Log.Debug("GET appointments");
             Log.Information("Getting information about appointments");
             var appointments = _appointmentBusiness.GetAppointments();
 
@@ -39,7 +40,6 @@ namespace AppointmentApi.Controllers
         [HttpGet("{appointmentId}")]
         public IActionResult GetAppointment(int appointmentId)
         {
-            Log.Debug($"GET appointment, appointmentId={appointmentId}");
             Log.Information("Getting information about appointment");
             var appointment = _appointmentBusiness.GetAppointment(appointmentId);
 
@@ -53,14 +53,11 @@ namespace AppointmentApi.Controllers
             //if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
             //    return Unauthorized();
 
-            Log.Debug($"POST appointment, AppointmentDate={appointment.AppointmentDate.Date}, " +
-                $"Doctor.FullName={appointment.Doctor.FullName}, " +
-                $"Patient.FullName={appointment.Patient.FullName}");
             Log.Information($"Adding new appointment for {appointment.AppointmentDate.Date}");
             var newAppointment = _appointmentBusiness.AddAppointment(appointment);
             if (newAppointment == null)
             {
-                Log.Error("Bad Request - appointment was not added");
+                Log.Warning("Bad Request - appointment was not added");
                 return BadRequest();
             }
             
@@ -77,14 +74,13 @@ namespace AppointmentApi.Controllers
             if (appointmentId != appointment.AppointmentId)
                 return Forbid();
 
-            Log.Debug($"PUT appointment with Id=${appointmentId}");
             Log.Information($"Updating appointment for date ${appointment.AppointmentDate.Date} with " +
                 $"patient ${appointment.Patient.FullName} " +
                 $"and doctor ${appointment.Doctor.FullName}");
             var updatedAppointment = _appointmentBusiness.UpdateAppointment(appointment);
             if (updatedAppointment == null)
             {
-                Log.Error("Bad Request - appointment was not updated");
+                Log.Warning("Bad Request - appointment was not updated");
                 return BadRequest();
             }
 
