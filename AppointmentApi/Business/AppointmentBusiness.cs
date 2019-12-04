@@ -42,7 +42,7 @@ namespace AppointmentApi.Business
             try
             {
                 if (!IsAppointmentDateAvailableForGivenDoctor(appointment.AppointmentDate, appointment.Doctor.UserId))
-                    throw new Exception();
+                    throw new OccupiedAppointmentDateException(appointment.AppointmentDate, appointment.Doctor.UserId);
 
                 return _appointmentDataAccess.AddAppointment(appointment).RemoveReferenceLoop();
             }
