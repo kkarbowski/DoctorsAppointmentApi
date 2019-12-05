@@ -43,14 +43,17 @@
                     </div>
                 </form>
             </div>
-            <div class="col-4">
-                <a class="mx-2" href="@reportUrl">
-                    @Localizer.Text("Download report")
-                </a>
-                <a class="mx-2" href="@reportUrlActive">
-                    @Localizer.Text("Download report for active")
-                </a>
-            </div>
+            @if (AuthenticationUtils.IsUserInRole(PageContext.HttpContext, Role.Doctor))
+            {
+                <div class="col-4">
+                    <a class="mx-2" href="@reportUrl">
+                        @Localizer.Text("Download report")
+                    </a>
+                    <a class="mx-2" href="@reportUrlActive">
+                        @Localizer.Text("Download report for active")
+                    </a>
+                </div>
+            }
         </div>
         <div class="table-responsive">
             <table class="table">
