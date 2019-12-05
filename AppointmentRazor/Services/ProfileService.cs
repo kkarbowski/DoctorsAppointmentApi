@@ -27,7 +27,7 @@ namespace AppointmentRazor.Services
 
         public async Task<List<Patient>> GetAllPatients()
         {
-            var uri = $"{ApiConfiguration.baseUrl}/Patient";
+            var uri = $"{ApiConfiguration.GetBaseUrl()}/Patient";
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
 
@@ -60,7 +60,7 @@ namespace AppointmentRazor.Services
 
         public async Task<Doctor> GetDoctor(int doctorId)
         {
-            var uri = $"{ApiConfiguration.baseUrl}/Doctor/{doctorId}";
+            var uri = $"{ApiConfiguration.GetBaseUrl()}/Doctor/{doctorId}";
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
 
@@ -93,7 +93,7 @@ namespace AppointmentRazor.Services
 
         public async Task<Patient> GetPatient(int patientId)
         {
-            var uri = $"{ApiConfiguration.baseUrl}/Patient/{patientId}";
+            var uri = $"{ApiConfiguration.GetBaseUrl()}/Patient/{patientId}";
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
 

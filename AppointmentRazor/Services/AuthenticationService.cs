@@ -29,7 +29,7 @@ namespace AppointmentRazor.Services
 
         public async Task<AuthenticationReponse> Login(User user)
         {
-            var uri = $"{ApiConfiguration.baseUrl}/User/login";
+            var uri = $"{ApiConfiguration.GetBaseUrl()}/User/login";
 
             var userJson = JsonUtils.Serialize(user);
 
@@ -71,7 +71,7 @@ namespace AppointmentRazor.Services
 
         public async Task<bool> Register(Patient patient)
         {
-            var uri = $"{ApiConfiguration.baseUrl}/Patient";
+            var uri = $"{ApiConfiguration.GetBaseUrl()}/Patient";
 
             var userJson = JsonUtils.Serialize(patient);
 

@@ -28,7 +28,7 @@ namespace AppointmentRazor.Services
 
         public async Task<bool> CancelAppointment(int appointmentId)
         {
-            var uri = $"{ApiConfiguration.baseUrl}/Appointment/{appointmentId}";
+            var uri = $"{ApiConfiguration.GetBaseUrl()}/Appointment/{appointmentId}";
             _httpClient.DefaultRequestHeaders.Authorization =
               new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
 
@@ -57,7 +57,7 @@ namespace AppointmentRazor.Services
 
         public async Task<List<Reason>> GetAllAppointmentReasons()
         {
-            var uri = $"{ApiConfiguration.baseUrl}/Reason";
+            var uri = $"{ApiConfiguration.GetBaseUrl()}/Reason";
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
 
@@ -90,7 +90,7 @@ namespace AppointmentRazor.Services
 
         public async Task<List<Appointment>> GetAllAppointmentsForDoctor(int doctorId)
         {
-            var uri = $"{ApiConfiguration.baseUrl}/Doctor/{doctorId}/Appointment";
+            var uri = $"{ApiConfiguration.GetBaseUrl()}/Doctor/{doctorId}/Appointment";
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
 
@@ -116,7 +116,7 @@ namespace AppointmentRazor.Services
 
         public async Task<List<Appointment>> GetAllAppointmentsForUser(int patientId)
         {
-            var uri = $"{ApiConfiguration.baseUrl}/Patient/{patientId}/Appointment";
+            var uri = $"{ApiConfiguration.GetBaseUrl()}/Patient/{patientId}/Appointment";
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
 
@@ -149,7 +149,7 @@ namespace AppointmentRazor.Services
 
         public async Task<List<Doctor>> GetAllAvailableDoctors()
         {
-            var uri = $"{ApiConfiguration.baseUrl}/Doctor";
+            var uri = $"{ApiConfiguration.GetBaseUrl()}/Doctor";
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
 
@@ -182,7 +182,7 @@ namespace AppointmentRazor.Services
 
         public async Task<AppointmentSetResponse> SetAppointment(Appointment appointment)
         {
-            var uri = $"{ApiConfiguration.baseUrl}/Appointment";
+            var uri = $"{ApiConfiguration.GetBaseUrl()}/Appointment";
             _httpClient.DefaultRequestHeaders.Authorization =
               new AuthenticationHeaderValue("Bearer", AuthenticationUtils.GetUserToken(_httpContextAccessor.HttpContext));
 

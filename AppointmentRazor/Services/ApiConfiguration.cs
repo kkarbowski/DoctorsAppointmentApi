@@ -7,6 +7,16 @@ namespace AppointmentRazor.Services
 {
     public static class ApiConfiguration
     {
-        public static string baseUrl = "http://localhost:59147";
+        public static string GetBaseUrl()
+        {
+            string url = Environment.GetEnvironmentVariable("BACKEND_URL");
+            if (url == null)
+            {
+                return BASE_URL;
+            }
+            return url;
+        }
+
+        private const string BASE_URL = "http://localhost:59147";
     }
 }
