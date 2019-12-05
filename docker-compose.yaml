@@ -7,6 +7,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.back
+    networks: 
+      - default
   frontend:
     depends_on:
       - backend
@@ -15,6 +17,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.front
+    networks: 
+      - default
   proxy:
     depends_on:
       - frontend
@@ -24,3 +28,5 @@ services:
     ports:
       - "80:80"
       - "8080:8080"
+    networks: 
+      - default
