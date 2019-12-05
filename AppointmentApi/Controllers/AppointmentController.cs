@@ -36,7 +36,7 @@ namespace AppointmentApi.Controllers
             _converter = converter;
         }
 
-        //[Authorize(Roles = Role.Doctor)]
+        [Authorize(Roles = Role.Doctor)]
         [HttpGet]
         public IActionResult GetAppointments()
         {
@@ -46,6 +46,7 @@ namespace AppointmentApi.Controllers
             return Ok(appointments);
         }
 
+        [Authorize(Roles = Role.Doctor)]
         [HttpGet("download")]
         public IActionResult GetAppointmentsReport([FromQuery]bool skipCanceled)
         {
@@ -60,7 +61,7 @@ namespace AppointmentApi.Controllers
             return File(file, "application/pdf");
         }
 
-        //[Authorize(Roles = Role.Patient)]
+        [Authorize(Roles = Role.Doctor_Patient)]
         [HttpGet("{appointmentId}")]
         public IActionResult GetAppointment(int appointmentId)
         {
@@ -70,12 +71,12 @@ namespace AppointmentApi.Controllers
             return Ok(appointment);
         }
 
-        //[Authorize(Roles = Role.Patient)]
+        [Authorize(Roles = Role.Doctor_Patient)]
         [HttpPost]
         public IActionResult AddAppointment([FromBody] Appointment appointment)
         {
-            //if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
-            //    return Unauthorized();
+            if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
+                return Unauthorized();
 
             Log.Information($"Adding new appointment for {appointment.AppointmentDate.Date}");
             var newAppointment = _appointmentBusiness.AddAppointment(appointment);
@@ -89,14 +90,14 @@ namespace AppointmentApi.Controllers
             return Created(nameof(GetAppointment), newAppointment);
         }
 
-        //[Authorize(Roles = Role.Patient)]
+        [Authorize(Roles = Role.Doctor_Patient)]
         [HttpPut("{appointmentId}")]
         public IActionResult UpdateAppointment(int appointmentId, [FromBody] Appointment appointment)
         {
-            //if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
-            //    return Unauthorized();
-            //if (appointmentId != appointment.AppointmentId)
-            //    return Forbid();
+            if (!User.IsInRole(Role.Doctor) && !_patientAuthorization.IsPatientOwnAccount(appointment.Patient.UserId, User))
+                return Unauthorized();
+            if (appointmentId != appointment.AppointmentId)
+                return Forbid();
 
             Log.Information($"Updating appointment for date ${appointment.AppointmentDate.Date} with " +
                 $"patient ${appointment.Patient.FullName} " +
@@ -112,7 +113,7 @@ namespace AppointmentApi.Controllers
             return Created(nameof(GetAppointment), updatedAppointment);
         }
 
-        //[Authorize(Roles = Role.Patient)]
+        [Authorize(Roles = Role.Doctor_Patient)]
         [HttpDelete("{appointmentId}")]
         public IActionResult CancelAppointment(int appointmentId)
         {

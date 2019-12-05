@@ -23,7 +23,7 @@ namespace AppointmentApi.Controllers
             _reasonBusiness = reasonBusiness;
         }
 
-        //[Authorize(Roles = Role.Patient)]
+        [Authorize(Roles = Role.Doctor_Patient)]
         [HttpGet]
         public IActionResult GetReasons()
         {
@@ -33,7 +33,7 @@ namespace AppointmentApi.Controllers
             return Ok(reasons);
         }
 
-        //[Authorize(Roles = Role.Patient)]
+        [Authorize(Roles = Role.Doctor_Patient)]
         [HttpGet("{reasonId}")]
         public IActionResult GetReason(int reasonId)
         {
@@ -43,7 +43,7 @@ namespace AppointmentApi.Controllers
             return Ok(reason);
         }
 
-        //[Authorize(Roles = Role.Doctor)]
+        [Authorize(Roles = Role.Doctor)]
         [HttpPost]
         public IActionResult AddReason([FromBody] Reason reason)
         {
@@ -59,7 +59,7 @@ namespace AppointmentApi.Controllers
             return Created(nameof(GetReason), newReason);
         }
 
-        //[Authorize(Roles = Role.Doctor)]
+        [Authorize(Roles = Role.Doctor)]
         [HttpPut("{reasonId}")]
         public IActionResult UpdateReason(int reasonId, [FromBody] Reason reason)
         {

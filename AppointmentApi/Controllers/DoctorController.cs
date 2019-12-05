@@ -14,8 +14,6 @@ using AppointmentApi.Filters.Action;
 
 namespace AppointmentApi.Controllers
 {
-    //[Authorize]
-    //[ApiController]
     [ServiceFilter(typeof(LoggingFilter))]
     [Route("[controller]")]
     public class DoctorController : ControllerBase
@@ -27,7 +25,7 @@ namespace AppointmentApi.Controllers
             _doctorBusiness = doctorBusiness;
         }
 
-        //[Authorize(Roles = Role.Patient)]
+        [Authorize(Roles = Role.Doctor_Patient)]
         [HttpGet]
         public IActionResult GetDoctors()
         {
@@ -37,7 +35,7 @@ namespace AppointmentApi.Controllers
             return Ok(doctors);
         }
 
-        //[Authorize(Roles = Role.Patient)]
+        [Authorize(Roles = Role.Doctor_Patient)]
         [HttpGet("{doctorId}")]
         public IActionResult GetDoctor(int doctorId)
         {
@@ -47,7 +45,7 @@ namespace AppointmentApi.Controllers
             return Ok(doctor);
         }
 
-        //[Authorize(Roles = Role.Doctor)]
+        [Authorize(Roles = Role.Doctor)]
         [HttpGet("{doctorId}/Appointment")]
         public IActionResult GetDoctorAppointments(int doctorId)
         {
@@ -56,7 +54,7 @@ namespace AppointmentApi.Controllers
             return Ok(doctorAppointments);
         }
 
-        //[Authorize(Roles = Role.Doctor)]
+        [Authorize(Roles = Role.Doctor)]
         [HttpPost]
         public IActionResult AddDoctor([FromBody] Doctor doctor)
         {
@@ -72,7 +70,7 @@ namespace AppointmentApi.Controllers
             return Created(nameof(GetDoctor), newDoctor);
         }
 
-        //[Authorize(Roles = Role.Doctor)]
+        [Authorize(Roles = Role.Doctor)]
         [HttpPut("{doctorId}")]
         public IActionResult UpdateDoctor(int doctorId, [FromBody] Doctor doctor)
         {

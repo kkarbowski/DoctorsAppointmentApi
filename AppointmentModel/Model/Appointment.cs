@@ -37,8 +37,9 @@ namespace AppointmentModel.Model
 
         public Appointment RemoveReferenceLoop()
         {
-            foreach (var ar in AppointmentReasons)
-                ar.RemoveReferenceLoop();
+            if (AppointmentReasons != null)
+                foreach (var ar in AppointmentReasons)
+                    ar.RemoveReferenceLoop();
 
             return this;
         }

@@ -35,16 +35,12 @@ namespace AppointmentApi.Database
         {
             var hashGenerator = new HashGeneratorSHA256();
 
-            string pass1 = hashGenerator.GenerateHash("Password1");
-            string pass2 = hashGenerator.GenerateHash("Password2");
+            var patient1 = new Patient { Login = "Patient1", Password = hashGenerator.GenerateHash("Password1"), Roles = new List<string> { Role.Patient }, FullName = "Jon Snow", Phone = "12323322", BirthDate = new DateTime(2010, 10, 10), Mail = "patient1@pat.ient" };
+            var patient2 = new Patient { Login = "Patient2", Password = hashGenerator.GenerateHash("Password2"), Roles = new List<string> { Role.Patient }, FullName = "Lara Croft", Phone = "76553322", BirthDate = new DateTime(1910, 10, 10), Mail = "patient2@pat.ient" };
 
-            //TODO: Remove dummy patients
-            var patient1 = new Patient { Login = "Patient1", Password = pass1, Roles = new List<string> { Role.Patient }, FullName = "Jon Snow" };
-            var patient2 = new Patient { Login = "Patient2", Password = pass2, Roles = new List<string> { Role.Patient }, FullName = "Lara Croft" };
-
-            var doctor1 = new Doctor { Login = "Doctor1", Password = pass1, Roles = new List<string> { Role.Doctor }, FullName = "Robert Bogacki", FirstName = "Robert", LastName = "Bogacki" };
-            var doctor2 = new Doctor { Login = "Doctor2", Password = pass1, Roles = new List<string> { Role.Doctor }, FullName = "Donald Trump", FirstName = "Donald", LastName = "Trump" };
-            var doctor3 = new Doctor { Login = "Doctor3", Password = pass1, Roles = new List<string> { Role.Doctor }, FullName = "Mona Lisa", FirstName = "Mona", LastName = "Lisa" };
+            var doctor1 = new Doctor { Login = "Doctor1", Password = hashGenerator.GenerateHash("Password1"), Roles = new List<string> { Role.Doctor }, FullName = "Robert Bogacki", FirstName = "Robert", LastName = "Bogacki" };
+            var doctor2 = new Doctor { Login = "Doctor2", Password = hashGenerator.GenerateHash("Password2"), Roles = new List<string> { Role.Doctor }, FullName = "Donald Trump", FirstName = "Donald", LastName = "Trump" };
+            var doctor3 = new Doctor { Login = "Doctor3", Password = hashGenerator.GenerateHash("Password3"), Roles = new List<string> { Role.Doctor }, FullName = "Mona Lisa", FirstName = "Mona", LastName = "Lisa" };
 
             var reason1 = new Reason { ReasonId = 1, LangReasonDictionary = new Dictionary<string, string> { { "pl", "Kaszel" }, { "en", "Coughing" } } };
             var reason2 = new Reason { ReasonId = 2, LangReasonDictionary = new Dictionary<string, string> { { "pl", "Katar" }, { "en", "Runny nose" } } };
@@ -58,17 +54,14 @@ namespace AppointmentApi.Database
             var reason10 = new Reason { ReasonId = 10, LangReasonDictionary = new Dictionary<string, string> { { "pl", "Złe samopoczucie" }, { "en", "Bad mood" } } };
             var reason11 = new Reason { ReasonId = 11, LangReasonDictionary = new Dictionary<string, string> { { "pl", "Inne" }, { "en", "Other" } } };
 
-            //TODO: Remove dummy appointments
             var appointmentReason1 = new Appointment2Reason { Reason = reason1, ReasonId = 1 };
             var appointmentReason3 = new Appointment2Reason { Reason = reason1, ReasonId = 1 };
             var appointmentReason2 = new Appointment2Reason { Reason = reason2, ReasonId = 2 };
 
-            //TODO: Remove dummy appointments
-            var appointment1 = new Appointment { Doctor = doctor1, Patient = patient1, Description = "Blabla1", AppointmentDate = new DateTime(2019, 5, 10), AppointmentId = 1, AppointmentReasons = new List<Appointment2Reason> { appointmentReason1 } };
-            var appointment3 = new Appointment { Doctor = doctor1, Patient = patient1, Description = "Blabla3", AppointmentDate = new DateTime(2020, 5, 10), AppointmentId = 2, AppointmentReasons = new List<Appointment2Reason> { appointmentReason3 } };
-            var appointment2 = new Appointment { Doctor = doctor1, Patient = patient2, Description = "Blabla2" , AppointmentId = 3, AppointmentDate = new DateTime(2020, 5, 10), AppointmentReasons = new List<Appointment2Reason> { appointmentReason1 } };
+            var appointment1 = new Appointment { Doctor = doctor1, Patient = patient1, Description = "Bardzo ciężka choroba", AppointmentDate = new DateTime(2019, 5, 10), AppointmentId = 1, AppointmentReasons = new List<Appointment2Reason> { appointmentReason1 } };
+            var appointment3 = new Appointment { Doctor = doctor1, Patient = patient1, Description = "Nieuleczalnie chory", AppointmentDate = new DateTime(2020, 5, 10), AppointmentId = 2, AppointmentReasons = new List<Appointment2Reason> { appointmentReason3 } };
+            var appointment2 = new Appointment { Doctor = doctor1, Patient = patient2, Description = "Przebyty zawał", AppointmentDate = new DateTime(2020, 5, 10), AppointmentReasons = new List<Appointment2Reason> { appointmentReason1 } };
 
-            //TODO: Remove dummy appointments
             appointmentReason1.Appointment = appointment1;
             appointment1.AppointmentId = 1;
             appointmentReason3.Appointment = appointment3;

@@ -9,5 +9,7 @@ namespace AppointmentModel.Model
         public const string Admin = "Admin";
         public const string Patient = "Patient";
         public const string Doctor = "Doctor";
+
+        public const string Doctor_Patient = Doctor + "," + Patient;
     }
 }
