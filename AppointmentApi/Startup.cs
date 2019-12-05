@@ -26,6 +26,8 @@ using AppointmentApi.Authorization;
 using Serilog;
 using AppointmentApi.Filters.Action;
 using AppointmentApi.Filters.Exception;
+using DinkToPdf.Contracts;
+using DinkToPdf;
 
 namespace AppointmentApi
 {
@@ -46,7 +48,7 @@ namespace AppointmentApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             services.AddControllers();
 
@@ -89,6 +91,7 @@ namespace AppointmentApi
 
             services.AddTransient<IHashGenerator, HashGeneratorSHA256>();
             services.AddTransient<ITokenGenerator, TokenGeneratorJWT>();
+            services.AddTransient<IPdfGenerator, PdfGenerator>();
 
             services.AddTransient<IPatientAuthorization, PatientAuthorization>();
 
