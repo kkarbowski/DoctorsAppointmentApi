@@ -2,6 +2,9 @@
 @model AppointmentRazor.Pages.AppointmentsModel
 @{
     ViewData["Title"] = Localizer.Text("Appointments");
+
+    var reportUrlActive = $"{ApiConfiguration.baseUrl}/appointment/download?skipCanceled=true";
+    var reportUrl = $"{ApiConfiguration.baseUrl}/appointment/download?skipCanceled=false";
 }
 
 <h1 class="mb-4">@Localizer.Text("Appointments")</h1>
@@ -27,22 +30,28 @@
     }
     else
     {
-        <form method="post" asp-page="Appointments">
-            <div class="form-group">
-                <a class="btn btn-primary" asp-page-handler="ShowOnlyActive">
-                    @Localizer.Text("Show only active")
-                </a>
-                <a class="btn btn-primary" asp-page-handler="ShowAll">
-                    @Localizer.Text("Show all appointments")
-                </a>
-                <a class="btn btn-primary" asp-page-handler="">
+        <div class="row">
+            <div class="col-8">
+                <form method="post" asp-page="Appointments">
+                    <div class="form-group">
+                        <a class="btn btn-primary" asp-page-handler="ShowOnlyActive">
+                            @Localizer.Text("Show only active")
+                        </a>
+                        <a class="btn btn-primary" asp-page-handler="ShowAll">
+                            @Localizer.Text("Show all appointments")
+                        </a>
+                    </div>
+                </form>
+            </div>
+            <div class="col-4">
+                <a class="mx-2" href="@reportUrl">
                     @Localizer.Text("Download report")
                 </a>
-                <a class="btn btn-primary" asp-page-handler="">
+                <a class="mx-2" href="@reportUrlActive">
                     @Localizer.Text("Download report for active")
                 </a>
             </div>
-        </form>
+        </div>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -77,55 +86,55 @@
                 <tbody>
                     @foreach (var appointment in Model.Appointments)
                     {
-                    <tr class="@(appointment.IsCanceled ? "table-danger" :  appointment.AppointmentDate > DateTime.UtcNow ? "table-warning" : "")">
-                        <td>
-                            @appointment.AppointmentDate.ToString("yyyy-MM-dd hh:mm")
-                        </td>
-                        <td>
-                            @{
-                                if (Model.IsShownForDoctor)
-                                {
-                                    @Html.DisplayFor(modelItem => appointment.Patient.FullName)
+                        <tr class="@(appointment.IsCanceled ? "table-danger" :  appointment.AppointmentDate > DateTime.UtcNow ? "table-warning" : "")">
+                            <td>
+                                @appointment.AppointmentDate.ToString("yyyy-MM-dd hh:mm")
+                            </td>
+                            <td>
+                                @{
+                                    if (Model.IsShownForDoctor)
+                                    {
+                                        @Html.DisplayFor(modelItem => appointment.Patient.FullName)
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(modelItem => appointment.Doctor.FullName)
+                                    }
                                 }
-                                else
-                                {
-                                    @Html.DisplayFor(modelItem => appointment.Doctor.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.LocalizedReasons[appointment.AppointmentId])
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => appointment.Description)
+                            </td>
+                            <td>
+                                @{
+                                    if (appointment.IsCanceled)
+                                    {
+                                        @Localizer.Text("Cancelled");
+                                    }
+                                    else if (appointment.AppointmentDate < DateTime.UtcNow)
+                                    {
+                                        @Localizer.Text("Made");
+                                    }
+                                    else
+                                    {
+                                        @Localizer.Text("In Future");
+                                    }
                                 }
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.LocalizedReasons[appointment.AppointmentId])
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => appointment.Description)
-                        </td>
-                        <td>
-                            @{
-                                if (appointment.IsCanceled)
-                                {
-                                    @Localizer.Text("Cancelled");
+                            </td>
+                            <td>
+                                @{
+                                    if (appointment.AppointmentDate > DateTime.UtcNow && !appointment.IsCanceled)
+                                    {
+                                        <a class="btn btn-primary" asp-page-handler="CancelAppointment" asp-route-id="@appointment.AppointmentId">
+                                            @Localizer.Text("Cancel appointment")
+                                        </a>
+                                    }
                                 }
-                                else if (appointment.AppointmentDate < DateTime.UtcNow)
-                                {
-                                    @Localizer.Text("Made");
-                                }
-                                else
-                                {
-                                    @Localizer.Text("In Future");
-                                }
-                            }
-                        </td>
-                        <td>
-                            @{
-                                if (appointment.AppointmentDate > DateTime.UtcNow && !appointment.IsCanceled)
-                                {
-                                    <a class="btn btn-primary" asp-page-handler="CancelAppointment" asp-route-id="@appointment.AppointmentId">
-                                        @Localizer.Text("Cancel appointment")
-                                    </a>
-                                }
-                            }
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
