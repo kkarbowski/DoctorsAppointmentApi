@@ -35,7 +35,7 @@ namespace AppointmentRazor.Pages
             await GetAppointments();
             if(Appointments != null)
             {
-                Appointments = Appointments.Where(apt => apt.AppointmentDate > DateTime.UtcNow).ToList();
+                Appointments = Appointments.Where(apt => apt.AppointmentDate > DateTime.UtcNow && !apt.IsCanceled).ToList();
             }
         }
 
