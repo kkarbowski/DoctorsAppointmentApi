@@ -41,8 +41,8 @@ namespace AppointmentApi.DataAccess
         {
             _appDbContext.Entry(appointment).State = EntityState.Modified;
 
-            foreach (var ar in appointment.AppointmentReasons)
-                _appDbContext.Entry(ar).State = EntityState.Modified;
+            appointment.AppointmentReasons.ToList().ForEach(ar =>
+                _appDbContext.Entry(ar).State = EntityState.Modified);
 
             _appDbContext.SaveChanges();
 
@@ -53,8 +53,8 @@ namespace AppointmentApi.DataAccess
         {
             _appDbContext.Entry(appointment).State = EntityState.Added;
 
-            foreach (var ar in appointment.AppointmentReasons)
-                _appDbContext.Entry(ar).State = EntityState.Added;
+            appointment.AppointmentReasons.ToList().ForEach(ar =>
+                _appDbContext.Entry(ar).State = EntityState.Added);
 
             _appDbContext.SaveChanges();
 
@@ -69,5 +69,7 @@ namespace AppointmentApi.DataAccess
                     && a.AppointmentDate > appointmentDate.AddMinutes(-15))
                 .FirstOrDefault();
         }
+
+
     }
 }
