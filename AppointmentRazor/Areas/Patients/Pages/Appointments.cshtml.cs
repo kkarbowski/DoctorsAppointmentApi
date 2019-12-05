@@ -68,7 +68,11 @@ namespace AppointmentRazor.Pages
 
                     if(Appointments != null)
                     {
-                        Appointments.OrderBy(apt => apt.AppointmentDate).ToList();
+                        var futureAppointments = Appointments.Where(apt => apt.AppointmentDate >= DateTime.UtcNow).ToList();
+                        var pastAppointments = Appointments.Where(apt => apt.AppointmentDate < DateTime.UtcNow).ToList();
+                        futureAppointments = futureAppointments.OrderBy(apt => apt.AppointmentDate).ToList();
+                        pastAppointments = pastAppointments.OrderByDescending(apt => apt.AppointmentDate).ToList();
+                        Appointments = futureAppointments.Concat(pastAppointments).ToList();
 
                         LocalizedReasons = new Dictionary<int, string>();
 
