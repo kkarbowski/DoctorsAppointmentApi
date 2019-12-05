@@ -28,6 +28,7 @@ using AppointmentApi.Filters.Action;
 using AppointmentApi.Filters.Exception;
 using DinkToPdf.Contracts;
 using DinkToPdf;
+using StackExchange.Redis;
 
 namespace AppointmentApi
 {
@@ -99,6 +100,12 @@ namespace AppointmentApi
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(CustomExceptionFilter));
+            });
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = RedisConfiguration.GetRedisIp();
+                options.InstanceName = "master";
             });
         }
 
