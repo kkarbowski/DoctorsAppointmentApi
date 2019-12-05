@@ -12,11 +12,11 @@ namespace AppointmentRazor.Services
             string url = Environment.GetEnvironmentVariable("BACKEND_URL");
             if (url == null)
             {
-                return "http://localhost:59147";
+                return BASE_URL;
             }
             return url;
         }
 
-        public static string baseUrl = "http://localhost:59147";
+        private const string BASE_URL = "http://localhost:59147";
     }
 }
