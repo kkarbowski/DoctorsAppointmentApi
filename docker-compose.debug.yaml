@@ -13,6 +13,7 @@ services:
     container_name: doctor-backend
     environment:
       - ASPNETCORE_URLS=http://+:59147
+      - REDIS_IP=doctor-redis
     build:
       context: .
       dockerfile: Dockerfile.back

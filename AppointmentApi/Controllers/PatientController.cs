@@ -11,6 +11,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Serilog;
 using AppointmentApi.Filters.Action;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 
 namespace AppointmentApi.Controllers
 {
@@ -20,11 +22,14 @@ namespace AppointmentApi.Controllers
     {
         private readonly IPatientBusiness _patientBusiness;
         private readonly IPatientAuthorization _patientAuthorization;
+        private readonly IDistributedCache _distributedCache;
 
-        public PatientController(IPatientBusiness patientBusiness, IPatientAuthorization patientAuthorization)
+        public PatientController(IPatientBusiness patientBusiness, IPatientAuthorization patientAuthorization,
+            IDistributedCache distributedCache)
         {
             _patientBusiness = patientBusiness;
             _patientAuthorization = patientAuthorization;
+            _distributedCache = distributedCache;
         }
 
         [Authorize(Roles = Role.Doctor)]
@@ -32,7 +37,17 @@ namespace AppointmentApi.Controllers
         public IActionResult GetPatients()
         {
             Log.Information("Getting information about patients");
+            var cacheKey = "Patients";
+
+            var patientsData = _distributedCache.GetString(cacheKey);
+            if (!string.IsNullOrEmpty(patientsData))
+            {
+                Log.Information("Using cached data");
+                return Ok(JsonConvert.DeserializeObject<List<Patient>>(patientsData));
+            }
             var patients = _patientBusiness.GetPatients();
+            _distributedCache.SetString(cacheKey, JsonConvert.SerializeObject(patients));
+            Log.Information("Added new data to cache");
 
             return Ok(patients);
         }
