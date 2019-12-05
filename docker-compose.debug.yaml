@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  
+  backend:
+    environment:
+      - ASPNETCORE_URLS=http://+:59147
+    build:
+      context: .
+      dockerfile: Dockerfile.back
+    ports:
+        - "8080:59147"
+  frontend:
+    depends_on:
+      - backend
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+    build:
+      context: .
+      dockerfile: Dockerfile.front
+    ports:
+        - "80:5000"
