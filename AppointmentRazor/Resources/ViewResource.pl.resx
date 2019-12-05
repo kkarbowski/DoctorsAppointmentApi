@@ -165,6 +165,12 @@
   <data name="Doctor not available" xml:space="preserve">
     <value>Doktor nie jest dostępny</value>
   </data>
+  <data name="Download report" xml:space="preserve">
+    <value>Pobierz raport</value>
+  </data>
+  <data name="Download raport for active" xml:space="preserve">
+    <value>Pobierz raport dla aktywnych</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>

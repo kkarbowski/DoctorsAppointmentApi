@@ -5,10 +5,15 @@ using System.Threading.Tasks;
 using AppointmentApi.Authorization;
 using AppointmentApi.Business;
 using AppointmentApi.Filters.Action;
+using AppointmentApi.Tools;
+using AppointmentApi.Tools.Interfaces;
 using AppointmentModel.Model;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 namespace AppointmentApi.Controllers
@@ -19,11 +24,16 @@ namespace AppointmentApi.Controllers
     {
         private readonly IAppointmentBusiness _appointmentBusiness;
         private readonly IPatientAuthorization _patientAuthorization;
+        private readonly IPdfGenerator _pdfGenerator;
+        private readonly IConverter _converter;
 
-        public AppointmentController(IAppointmentBusiness appointmentBusiness, IPatientAuthorization patientAuthorization)
+        public AppointmentController(IAppointmentBusiness appointmentBusiness, IPatientAuthorization patientAuthorization, 
+                IPdfGenerator pdfGenerator, IConverter converter)
         {
             _appointmentBusiness = appointmentBusiness;
             _patientAuthorization = patientAuthorization;
+            _pdfGenerator = pdfGenerator;
+            _converter = converter;
         }
 
         //[Authorize(Roles = Role.Doctor)]
@@ -34,6 +44,20 @@ namespace AppointmentApi.Controllers
             var appointments = _appointmentBusiness.GetAppointments();
 
             return Ok(appointments);
+        }
+
+        [HttpGet("download")]
+        public IActionResult GetAppointmentsReport([FromQuery]bool skipCanceled)
+        {
+            var appointments = _appointmentBusiness.GetAppointments();
+            Log.Information("Generating appointment PDF report");
+            
+            var pdf = _pdfGenerator.GenerateHtmlToPdfDocument(appointments, skipCanceled);
+            var file = _converter.Convert(pdf);
+
+            Log.Information("Successfully generated PDF document");
+            
+            return File(file, "application/pdf");
         }
 
         //[Authorize(Roles = Role.Patient)]
