@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = Localizer.Text("Appointments");
 
-    var reportUrlActive = $"{ApiConfiguration.baseUrl}/appointment/download?skipCanceled=true";
-    var reportUrl = $"{ApiConfiguration.baseUrl}/appointment/download?skipCanceled=false";
+    var reportUrlActive = $"http://localhost:59147/appointment/download?skipCanceled=true";
+    var reportUrl = $"http://localhost:59147/appointment/download?skipCanceled=false";
 }
 
 <h1 class="mb-4">@Localizer.Text("Appointments")</h1>
