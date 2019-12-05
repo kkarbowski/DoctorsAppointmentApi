@@ -2,13 +2,14 @@ version: "3.7"
 services:
   
   backend:
+    container_name: doctor-backend
     environment:
       - ASPNETCORE_URLS=http://+:59147
     build:
       context: .
       dockerfile: Dockerfile.back
     ports:
-      - "8080:59147"
+      - "59147:59147"
     networks: 
       - default
   frontend:
@@ -16,10 +17,11 @@ services:
       - backend
     environment:
       - ASPNETCORE_URLS=http://+:5000
+      - BACKEND_URL=http://doctor-backend:59147
     build:
       context: .
       dockerfile: Dockerfile.front
     ports:
-      - "80:5000"
+      - "5000:5000"
     networks: 
       - default
