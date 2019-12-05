@@ -46,7 +46,13 @@ namespace AppointmentApi.Controllers
                 return Ok(JsonConvert.DeserializeObject<List<Patient>>(patientsData));
             }
             var patients = _patientBusiness.GetPatients();
-            _distributedCache.SetString(cacheKey, JsonConvert.SerializeObject(patients));
+
+            DistributedCacheEntryOptions patientsExpiration = new DistributedCacheEntryOptions
+            {
+                AbsoluteExpiration =  DateTimeOffset.UtcNow.AddSeconds(30)
+            };
+            _distributedCache.SetString(cacheKey, JsonConvert.SerializeObject(patients), patientsExpiration);
+
             Log.Information("Added new data to cache");
 
             return Ok(patients);
@@ -91,6 +97,7 @@ namespace AppointmentApi.Controllers
             }
 
             Log.Information("Patient was added");
+            _distributedCache.Remove("Patients");
             return Created(nameof(GetPatient), newPatient);
         }
 
@@ -117,6 +124,7 @@ namespace AppointmentApi.Controllers
             }
 
             Log.Information("Patient was updated");
+            _distributedCache.Remove("Patients");
             return Created(nameof(GetPatient), updatedPatient);
         }
     }
