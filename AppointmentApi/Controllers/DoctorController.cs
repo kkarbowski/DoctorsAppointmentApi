@@ -49,6 +49,7 @@ namespace AppointmentApi.Controllers
         [HttpGet("{doctorId}/Appointment")]
         public IActionResult GetDoctorAppointments(int doctorId)
         {
+            Log.Information("Getting information about doctor's appointments");
             var doctorAppointments = _doctorBusiness.GetDoctorAppointments(doctorId);
 
             return Ok(doctorAppointments);
