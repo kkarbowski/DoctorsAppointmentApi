@@ -1,32 +1,38 @@
 version: "3.7"
 services:
-  
+  redis:
+    container_name: doctor-redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+    networks: 
+      - default
   backend:
+    depends_on: 
+      - redis
+    container_name: doctor-backend
     environment:
       - ASPNETCORE_URLS=http://+:59147
+      - REDIS_IP=doctor-redis
     build:
       context: .
       dockerfile: Dockerfile.back
+    ports:
+      - "59147:59147"
     networks: 
       - default
   frontend:
     depends_on:
+      - redis
       - backend
+    container_name: doctor-frontend
     environment:
       - ASPNETCORE_URLS=http://+:5000
+      - BACKEND_URL=http://doctor-backend:59147
     build:
       context: .
       dockerfile: Dockerfile.front
-    networks: 
-      - default
-  proxy:
-    depends_on:
-      - frontend
-      - backend
-    build:
-      context: Proxy
     ports:
-      - "80:80"
-      - "8080:8080"
+      - "5000:5000"
     networks: 
       - default
