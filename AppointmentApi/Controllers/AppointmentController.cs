@@ -46,7 +46,6 @@ namespace AppointmentApi.Controllers
             return Ok(appointments);
         }
 
-        [Authorize(Roles = Role.Doctor)]
         [HttpGet("download")]
         public IActionResult GetAppointmentsReport([FromQuery]bool skipCanceled)
         {
